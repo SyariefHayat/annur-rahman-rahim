@@ -6,7 +6,7 @@ const useDataArticles = () => {
 
     useEffect(() => {
         getDataArticles().then((result) => {
-            setDataArticles(result.data);
+            setDataArticles(result?.data);
         })
     });
 

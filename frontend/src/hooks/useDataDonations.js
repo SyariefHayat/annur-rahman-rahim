@@ -6,7 +6,7 @@ const useDataDonations = () => {
 
     useEffect(() => {
         getDataDonations().then((result) => {
-            setDataDonations(result.data);
+            setDataDonations(result?.data);
         })
     });
 
