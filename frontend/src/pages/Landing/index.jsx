@@ -12,7 +12,7 @@ const Landing = () => {
         <DefaultLayout>
             <Navbar />
             <HeroSection />
-            {/* <WelcomeSection /> */}
+            <WelcomeSection />
             {/* <CampaignSection /> */}
             {/* <ArticleSection /> */}
             {/* <Footer /> */}
