@@ -11,7 +11,7 @@ const Landing = () => {
     return (
         <DefaultLayout>
             <Navbar />
-            {/* <HeroSection /> */}
+            <HeroSection />
             {/* <WelcomeSection /> */}
             {/* <CampaignSection /> */}
             {/* <ArticleSection /> */}
