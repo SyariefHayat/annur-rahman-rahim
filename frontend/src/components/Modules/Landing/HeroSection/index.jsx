@@ -20,17 +20,21 @@ const HeroSection = () => {
 
     return (
         <section 
-            className="w-full h-screen rounded-2xl bg-cover bg-center flex items-end justify-center p-5 animate-fadeIn"
-            style={{ backgroundImage: `url(${slides[currentIndex]})` }}
+            className="w-full h-96 sm:h-screen px-5"
         >
-            <div className="flex items-center justify-center gap-3">
-            {slides.map((_, index) => (
-                <button
-                    key={index}
-                    className={`w-4 h-4 cursor-pointer hover:scale-120 rounded-full ${currentIndex === index ? "bg-white" : "bg-gray-400"}`}
-                    onClick={() => setCurrentIndex(index)}
-                />
-            ))}
+            <div  
+                className="w-full h-full p-5 animate-fadeIn rounded-2xl flex items-end justify-center bg-cover bg-center"
+                style={{ backgroundImage: `url(${slides[currentIndex]})` }}
+            >
+                <div className="flex items-center justify-center gap-3">
+                    {slides.map((_, index) => (
+                        <button
+                        key={index}
+                        className={`w-4 h-4 cursor-pointer hover:scale-120 rounded-full ${currentIndex === index ? "bg-white" : "bg-gray-400"}`}
+                        onClick={() => setCurrentIndex(index)}
+                        />
+                    ))}
+                </div>
             </div>
         </section>
     )

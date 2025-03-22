@@ -11,11 +11,11 @@ const Landing = () => {
     return (
         <DefaultLayout>
             <Navbar />
-            <HeroSection />
-            <WelcomeSection />
-            <CampaignSection />
-            <ArticleSection />
-            <Footer />
+            {/* <HeroSection /> */}
+            {/* <WelcomeSection /> */}
+            {/* <CampaignSection /> */}
+            {/* <ArticleSection /> */}
+            {/* <Footer /> */}
         </DefaultLayout>
     )
 }
