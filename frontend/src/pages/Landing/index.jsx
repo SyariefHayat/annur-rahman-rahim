@@ -14,7 +14,7 @@ const Landing = () => {
             <HeroSection />
             <WelcomeSection />
             <CampaignSection />
-            {/* <ArticleSection /> */}
+            <ArticleSection />
             {/* <Footer /> */}
         </DefaultLayout>
     )

@@ -1,4 +1,5 @@
 import SectionLayout from '@/components/Layouts/SectionLayout'
+import { LIST_ARTICLE } from '@/constants/listArticle'
 import useDataArticles from '@/hooks/useDataArticles'
 import { apiInstanceExpress } from '@/services/express/apiInstance'
 import EachUtils from '@/utils/EachUtils'
@@ -6,11 +7,65 @@ import React, { useEffect, useState } from 'react'
 import { FaAnglesRight } from 'react-icons/fa6'
 
 const ArticleSection = () => {
-    const { dataArticles } = useDataArticles();
+    // const { dataArticles } = useDataArticles();
 
     return (
-        <section className="w-full h-full flex flex-col px-5">
-            <div className="w-full flex items-center justify-center gap-5">
+        <section className="relative py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="mx-auto max-w-2xl lg:mx-0">
+                    <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Berita dan Cerita Terbaru</h2>
+                    <p className="mt-2 text-lg/8 text-gray-600">Ikuti perjalanan kami dalam menyebarkan kebaikan melalui berbagai program dan inisiatif.</p>
+                </div>
+
+                <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    <EachUtils
+                        of={LIST_ARTICLE}
+                        render={(item, index) => (
+                            <article key={index} className="flex max-w-xl flex-col items-start justify-between">
+                                <div className="flex items-center gap-x-4 text-xs">
+                                <time dateTime={item.datetime} className="text-gray-500">
+                                    {item.date}
+                                </time>
+                                <a
+                                    href={item.category.href}
+                                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                >
+                                    {item.category.title}
+                                </a>
+                                </div>
+                                <div className="group relative">
+                                <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                                    <a href={item.href}>
+                                    <span className="absolute inset-0" />
+                                    {item.title}
+                                    </a>
+                                </h3>
+                                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{item.description}</p>
+                                </div>
+                                <div className="relative mt-8 flex items-center gap-x-4">
+                                <img alt="" src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
+                                <div className="text-sm/6">
+                                    <p className="font-semibold text-gray-900">
+                                    <a href={item.author.href}>
+                                        <span className="absolute inset-0" />
+                                        {item.author.name}
+                                    </a>
+                                    </p>
+                                    <p className="text-gray-600">{item.author.role}</p>
+                                </div>
+                                </div>
+                            </article>
+                        )}
+                    />
+                </div>
+            </div>
+        </section>
+    )
+}
+
+export default ArticleSection
+
+{/* <div className="w-full flex items-center justify-center gap-5">
                 <div className="w-full hidden h-1 rounded-md bg-gray-400"></div>
                 <div className="w-full text-center">
                     <h3 className="text-2xl sm:text-4xl font-medium">Berita Terbaru</h3>
@@ -38,9 +93,4 @@ const ArticleSection = () => {
                         )}
                     />
                 )}
-            </div>
-        </section>
-    )
-}
-
-export default ArticleSection
+            </div> */}
