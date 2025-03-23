@@ -1,26 +1,20 @@
-import { LIST_NAVBAR } from '@/constants/listNavbar';
-import EachUtils from '@/utils/EachUtils';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Menu } from 'lucide-react';
 
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { Menu } from 'lucide-react';
+import EachUtils from '@/utils/EachUtils';
 import { Button } from '@/components/ui/button';
+import { LIST_NAVBAR } from '@/constants/listNavbar';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const navigate = useNavigate();
-
     return (
         <header className="absolute w-full">
             <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">

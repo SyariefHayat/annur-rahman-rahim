@@ -1,10 +1,11 @@
-import { LIST_FOOTER, LIST_SOCIAL_MEDIA } from '@/constants/listFooter'
-import EachUtils from '@/utils/EachUtils'
 import React from 'react'
+
+import EachUtils from '@/utils/EachUtils'
+import { LIST_FOOTER, LIST_SOCIAL_MEDIA } from '@/constants/listFooter'
 
 const Footer = () => {
     return (
-        <section className="bg-gray-900 px-6 pt-16 pb-6 flex flex-col items-center">
+        <section className="bg-gray-900 mt-14 sm:mt-24 px-6 pt-16 pb-6 flex flex-col items-center">
             <div className="flex flex-col md:flex-row justify-between w-full max-w-7xl">
                 {/* Logo dan Deskripsi */}
                 <div className="flex-1 flex flex-col mr-10 mb-8 md:mb-0">

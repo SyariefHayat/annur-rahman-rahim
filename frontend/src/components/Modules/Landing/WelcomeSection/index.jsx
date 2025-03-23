@@ -1,11 +1,11 @@
-import { LIST_FEATURES } from '@/constants/listFeatures'
-import EachUtils from '@/utils/EachUtils'
-import { CheckCheck } from 'lucide-react'
 import React from 'react'
+
+import EachUtils from '@/utils/EachUtils'
+import { LIST_FEATURES } from '@/constants/listFeatures'
 
 const WelcomeSection = () => {
     return (
-        <section className="overflow-hidden py-24 sm:py-32">
+        <section className="overflow-hidden py-14 sm:py-24">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div className="lg:pt-4 lg:pr-8">
