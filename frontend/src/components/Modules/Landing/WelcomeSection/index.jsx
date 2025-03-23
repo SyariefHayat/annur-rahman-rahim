@@ -32,7 +32,7 @@ const WelcomeSection = () => {
                         </div>
                     </div>
 
-                    <div className="bg-[url(slide-2.png)] bg-cover bg-center w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"></div>
+                    <img src="slide-2.png" alt="" className="w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0 object-cover object-center" />
                 </div>
             </div>
         </section>

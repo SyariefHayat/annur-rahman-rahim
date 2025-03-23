@@ -13,7 +13,7 @@ const Landing = () => {
             <Navbar />
             <HeroSection />
             <WelcomeSection />
-            {/* <CampaignSection /> */}
+            <CampaignSection />
             {/* <ArticleSection /> */}
             {/* <Footer /> */}
         </DefaultLayout>

@@ -1,18 +1,53 @@
 export const LIST_CAMPAIGN = [
     {
-        title: "Bantuan Pendidikan Anak Yatim",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa odio, quaerat dicta, quibusdam accusamus quas eius possimus consequatur saepe at pariatur asperiores. Facilis mollitia accusantium nihil nobis! Vel, reprehenderit quae!",
-        createdBy: "Yayasan Yatalatop",
-        targetAmount: "Rp 10.000.000",
-        collectedAmount: "Rp 8.000.000",
-        status: "Ongoing"
+        datetime: "2024-03-23",
+        date: "March 23, 2024",
+        category: {
+            href: "#",
+            title: "Kesehatan",
+        },
+        href: "#",
+        title: "Bantu Anak-Anak yang Membutuhkan Pengobatan",
+        description: "Bantu anak-anak yang sedang berjuang melawan penyakit serius mendapatkan perawatan medis yang mereka butuhkan.",
+        author: {
+            imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+            href: "#",
+            name: "Yayasan Peduli Sehat",
+            role: "Organisasi Kesehatan",
+        },
     },
     {
-        title: "Bantuan Pembangunan Masjid",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa odio, quaerat dicta, quibusdam accusamus quas eius possimus consequatur saepe at pariatur asperiores. Facilis mollitia accusantium nihil nobis! Vel, reprehenderit quae!",
-        createdBy: "Yayasan Yatalatop",
-        targetAmount: "Rp10.000.000",
-        collectedAmount: "Rp5.000.000",
-        status: "Ongoing"
-    }
+        datetime: "2024-03-20",
+        date: "March 20, 2024",
+        category: {
+            href: "#",
+            title: "Pendidikan",
+        },
+        href: "#",
+        title: "Bantu Anak-Anak di Daerah Terpencil Mendapatkan Pendidikan",
+        description: "Donasi Anda akan digunakan untuk menyediakan buku, seragam, dan biaya sekolah bagi anak-anak yang kurang mampu.",
+        author: {
+            imageUrl: "https://randomuser.me/api/portraits/women/45.jpg",
+            href: "#",
+            name: "Gerakan Pendidikan Untuk Semua",
+            role: "Lembaga Sosial",
+        },
+    },
+    {
+        datetime: "2024-03-18",
+        date: "March 18, 2024",
+        category: {
+            href: "#",
+            title: "Bencana Alam",
+        },
+        href: "#",
+        title: "Bantu Korban Bencana Alam Kembali Bangkit",
+        description: "Dukung mereka yang terkena dampak bencana alam dengan memberikan bantuan makanan, pakaian, dan tempat tinggal sementara.",
+        author: {
+            imageUrl: "https://randomuser.me/api/portraits/men/50.jpg",
+            href: "#",
+            name: "Relawan Kemanusiaan",
+            role: "Organisasi Bantuan",
+        },
+    },
 ]
