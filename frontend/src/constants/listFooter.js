@@ -2,65 +2,73 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export const LIST_FOOTER = [
     {
-        title: "Useful Links",
+        title: "Tentang Kami",
         links: [
             {
-                name: "Content",
-                link: "https://www.hoobank.com/content/",
+                name: "Profil Yayasan",
+                link: "/tentang-kami",
             },
             {
-                name: "How it Works",
-                link: "https://www.hoobank.com/how-it-works/",
+                name: "Visi & Misi",
+                link: "/visi-misi",
             },
             {
-                name: "Create",
-                link: "https://www.hoobank.com/create/",
+                name: "Struktur Organisasi",
+                link: "/struktur-organisasi",
             },
             {
-                name: "Explore",
-                link: "https://www.hoobank.com/explore/",
+                name: "Laporan Keuangan",
+                link: "/laporan-keuangan",
             },
             {
-                name: "Terms & Services",
-                link: "https://www.hoobank.com/terms-and-services/",
+                name: "Kontak Kami",
+                link: "/kontak",
             },
         ],
     },
     {
-        title: "Community",
+        title: "Program Kami",
         links: [
             {
-                name: "Help Center",
-                link: "https://www.hoobank.com/help-center/",
+                name: "Bantuan Pendidikan",
+                link: "/program/pendidikan",
             },
             {
-                name: "Partners",
-                link: "https://www.hoobank.com/partners/",
+                name: "Bantuan Kesehatan",
+                link: "/program/kesehatan",
             },
             {
-                name: "Suggestions",
-                link: "https://www.hoobank.com/suggestions/",
+                name: "Pemberdayaan Ekonomi",
+                link: "/program/ekonomi",
             },
             {
-                name: "Blog",
-                link: "https://www.hoobank.com/blog/",
+                name: "Lingkungan & Sosial",
+                link: "/program/lingkungan",
             },
             {
-                name: "Newsletters",
-                link: "https://www.hoobank.com/newsletters/",
+                name: "Kisah Inspiratif",
+                link: "/kisah-inspiratif",
             },
         ],
     },
     {
-        title: "Partner",
+        title: "Dukung Kami",
         links: [
             {
-            name: "Our Partner",
-            link: "https://www.hoobank.com/our-partner/",
+                name: "Donasi Sekarang",
+                link: "/donasi",
             },
             {
-            name: "Become a Partner",
-            link: "https://www.hoobank.com/become-a-partner/",
+                name: "Gabung Relawan",
+                link: "/relawan",
+            },
+            {
+                name: "Sponsorship",
+                link: "/sponsorship",
+            },
+            {
+                name: "Mitra & Kerjasama",
+                link: "/mitra",
             },
         ],
     },

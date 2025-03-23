@@ -15,7 +15,7 @@ const Footer = () => {
                         className="w-[200px] h-auto object-contain"
                     />
                     <p className="text-gray-400 text-[16px] mt-4 leading-[28px] max-w-[300px]">
-                        A new way to make payments easy, reliable, and secure.
+                        Memberi dengan mudah, berbagi dengan aman, dan membangun harapan bersama.
                     </p>
                 </div>
 
@@ -28,11 +28,11 @@ const Footer = () => {
                                 <h4 className="text-white text-lg font-semibold mb-3">
                                     {item.title}
                                 </h4>
-                                <ul className="space-y-2">
+                                <ul className="space-y-4">
                                     {item.links.map((link) => (
                                         <li
                                             key={link.name}
-                                            className="text-gray-400 text-sm hover:text-secondary cursor-pointer"
+                                            className="text-gray-400 text-[16px] hover:text-secondary cursor-pointer"
                                         >
                                             {link.name}
                                         </li>
@@ -47,7 +47,7 @@ const Footer = () => {
             {/* Footer Bottom */}
             <div className="w-full max-w-7xl border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between">
                 <p className="text-gray-400 text-sm text-center md:text-left">
-                    2021 Hoobank, All Rights Reserved.
+                    2025 Yayasan Yatallatop, All Rights Reserved.
                 </p>
                 {/* Social Media Icons */}
                 <div className="flex gap-6 mt-4 md:mt-0">
