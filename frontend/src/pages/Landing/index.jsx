@@ -6,6 +6,7 @@ import CampaignSection from '@/components/Modules/Landing/CampaignSection'
 import ArticleSection from '@/components/Modules/Landing/ArticleSection'
 import WelcomeSection from '@/components/Modules/Landing/WelcomeSection'
 import Footer from '@/components/Modules/Landing/Footer'
+import ImpactSection from '@/components/Modules/Landing/ImpactSection'
 
 const Landing = () => {
     return (
@@ -14,6 +15,7 @@ const Landing = () => {
             <HeroSection />
             <WelcomeSection />
             <CampaignSection />
+            <ImpactSection />
             <ArticleSection />
             {/* <Footer /> */}
         </DefaultLayout>
