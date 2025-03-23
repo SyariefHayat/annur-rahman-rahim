@@ -17,7 +17,7 @@ const Landing = () => {
             <CampaignSection />
             <ImpactSection />
             <ArticleSection />
-            {/* <Footer /> */}
+            <Footer />
         </DefaultLayout>
     )
 }
