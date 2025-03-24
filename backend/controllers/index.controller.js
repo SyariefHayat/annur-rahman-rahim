@@ -20,9 +20,7 @@ const SignUpUser = async (req, res) => {
     const hassPass = await argon2.hash(password);
 
     try {
-        if (!name || !email || !password) {
-            return ERR(res, 400, "Name, Email and Password are required");
-        }
+        if (!name || !email || !password) return ERR(res, 400, "Name, Email and Password are required");
 
         const userName = await User.findOne({ name });
         if (userName) return ERR(res, 409, "Name alredy exists");
@@ -44,6 +42,8 @@ const SignInUser = async (req, res) => {
     const { email, password, token } = req.body;
 
     try {
+        if(!email || !password || !token) return ERR(res, 400, "Email, password, token are required");
+
         let user = await User.findOne({ email });
         if (!user) return ERR(res, 404, "User not found");
 

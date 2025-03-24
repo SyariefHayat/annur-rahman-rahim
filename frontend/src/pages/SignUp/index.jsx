@@ -1,24 +1,24 @@
-import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import { apiInstanceExpress } from '@/services/express/apiInstance';
-import { auth, provider } from '@/services/firebase/firebase';
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import React, { useState } from 'react'
+import { toast } from "sonner"
+import { Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2 } from 'lucide-react';
+import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/sonner"
-import { toast } from "sonner"
+import { auth, provider } from '@/services/firebase/firebase';
+import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const SignUp = ({ className, ...props }) => {
     const [name, setName] = useState("");
@@ -56,7 +56,7 @@ const SignUp = ({ className, ...props }) => {
 
                     setTimeout(() => {
                         navigate("/sign-in")
-                    }, 2000)
+                    }, 2000);
                 }
             }
         } catch (error) {
@@ -134,19 +134,43 @@ const SignUp = ({ className, ...props }) => {
                             <form className="flex flex-col gap-6">
                                 <div className="grid gap-2">
                                     <Label htmlFor="name">Nama Lengkap</Label>
-                                    <Input id="name" type="text" placeholder="Masukkan nama Anda" onChange={(e) => setName(e.target.value)} required />
+                                    <Input 
+                                        id="name" 
+                                        type="text" 
+                                        placeholder="Masukkan nama Anda" 
+                                        onChange={(e) => setName(e.target.value)} 
+                                        required 
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" placeholder="contoh@email.com" onChange={(e) => setEmail(e.target.value)} required />
+                                    <Input 
+                                        id="email" 
+                                        type="email" 
+                                        placeholder="contoh@email.com" 
+                                        onChange={(e) => setEmail(e.target.value)} 
+                                        required 
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="password">Kata Sandi</Label>
-                                    <Input id="password" type="password" placeholder="Masukkan kata sandi" onChange={(e) => setPassword(e.target.value)} required />
+                                    <Input 
+                                        id="password" 
+                                        type="password" 
+                                        placeholder="Masukkan kata sandi" 
+                                        onChange={(e) => setPassword(e.target.value)} 
+                                        required 
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="confirm-password">Konfirmasi Kata Sandi</Label>
-                                    <Input id="confirm-password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Ulangi kata sandi" required />
+                                    <Input 
+                                        id="confirm-password" 
+                                        type="password" 
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder="Ulangi kata sandi" 
+                                        required 
+                                    />
                                 </div>
                                 {isLoading ? (
                                     <Button className="w-full" disabled>
@@ -163,7 +187,7 @@ const SignUp = ({ className, ...props }) => {
                                 </Button>
                                 <p className="mt-4 text-center text-sm">
                                     Sudah punya akun?{" "}
-                                    <a href="#" className="text-blue-500 underline">Masuk</a>
+                                    <a href="/sign-in" className="text-blue-500 underline">Masuk</a>
                                 </p>
                             </form>
                         </CardContent>

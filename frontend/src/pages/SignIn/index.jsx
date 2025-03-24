@@ -1,4 +1,6 @@
+import { toast } from "sonner";
 import { useAtom } from 'jotai';
+import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getIdToken, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
@@ -15,17 +17,18 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { auth, provider } from '@/services/firebase/firebase';
 import { emailStorageAtom, tokenStorageAtom } from '@/jotai/atoms';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const SignIn = ({ className, ...props }) => {
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [data, setData] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [emailStorage, setEmailStorage] = useAtom(emailStorageAtom);
-    const [tokenStorage, setTokenStorage] = useAtom(tokenStorageAtom);
+    const [, setEmailStorage] = useAtom(emailStorageAtom);
+    const [, setTokenStorage] = useAtom(tokenStorageAtom);
 
     const navigate = useNavigate();
 
@@ -44,16 +47,32 @@ const SignIn = ({ className, ...props }) => {
                 });
 
                 if (addToken.status === 200) {
+                    setIsLoading(true);
+
                     setEmailStorage(signIn.user.email);
                     setTokenStorage(firebaseToken)
-
+                    
                     setTimeout(() => {
                         navigate("/dashboard")
-                    }, 2000)
+                    }, 2000);
                 }
             }
         } catch (error) {
-            console.error("Sign-in Error", error);
+            let errorMessage = "Gagal masuk. Silakan coba lagi.";
+
+            if (error.code === "auth/user-not-found") {
+                errorMessage = "Akun tidak ditemukan. Silakan periksa kembali email Anda.";
+            } else if (error.code === "auth/wrong-password") {
+                errorMessage = "Kata sandi salah. Silakan coba lagi.";
+            } else if (error.code === "auth/invalid-email") {
+                errorMessage = "Format email tidak valid. Silakan masukkan email yang benar.";
+            } else if (error.code === "auth/too-many-requests") {
+                errorMessage = "Terlalu banyak percobaan masuk. Silakan coba lagi nanti.";
+            }
+    
+            toast.error(errorMessage, {
+                duration: 3000,
+            });
         }
     };
 
@@ -87,6 +106,8 @@ const SignIn = ({ className, ...props }) => {
 
     return (
         <div className="relative flex min-h-svh w-full items-center justify-center p-6 md:p-10 overflow-hidden">
+            <Toaster />
+
             <div
                 aria-hidden="true"
                 className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -115,10 +136,11 @@ const SignIn = ({ className, ...props }) => {
                                     <div className="grid gap-2">
                                         <Label htmlFor="email">Email</Label>
                                         <Input
-                                        id="email"
-                                        type="email"
-                                        placeholder="m@example.com"
-                                        required
+                                            id="email"
+                                            type="email"
+                                            placeholder="m@example.com"
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
                                         />
                                     </div>
                                     <div className="grid gap-2">
@@ -131,11 +153,23 @@ const SignIn = ({ className, ...props }) => {
                                                 Lupa kata sandi?
                                             </a>
                                         </div>
-                                        <Input id="password" type="password" required />
+                                        <Input 
+                                            id="password" 
+                                            type="password" 
+                                            onChange={(e) => setPassword(e.target.value)} 
+                                            required 
+                                        />
                                     </div>
-                                    <Button type="submit" className="w-full">
-                                        Login
-                                    </Button>
+                                    {isLoading ? (
+                                        <Button className="w-full" disabled>
+                                            <Loader2 className="animate-spin" />
+                                            Sedang memeriksa akun anda
+                                        </Button>
+                                    ) : (
+                                        <Button className="w-full cursor-pointer" onClick={handleSignIn}>
+                                            Login
+                                        </Button>
+                                    )}
                                     <Button variant="outline" className="w-full">
                                         Login dengan Google
                                     </Button>
