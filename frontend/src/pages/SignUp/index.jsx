@@ -16,15 +16,24 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Loader2 } from 'lucide-react';
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 
 const SignUp = ({ className, ...props }) => {
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+
+        if (password !== confirmPassword) return;
 
         try {
             const register = await createUserWithEmailAndPassword(
@@ -37,18 +46,33 @@ const SignUp = ({ className, ...props }) => {
                 await signOut(auth);
 
                 const addUser = await apiInstanceExpress.post("sign-up", {
+                    name,
                     email,
                     password,
                 });
 
                 if (addUser.status === 201) {
+                    setIsLoading(true);
+
                     setTimeout(() => {
                         navigate("/sign-in")
                     }, 2000)
                 }
             }
         } catch (error) {
-            console.error(error);
+            let errorMessage = "Pendaftaran gagal. Silakan coba lagi.";
+    
+            if (error.code === "auth/email-already-in-use") {
+                errorMessage = "Email ini sudah terdaftar. Silakan gunakan email lain.";
+            } else if (error.code === "auth/invalid-email") {
+                errorMessage = "Format email tidak valid. Silakan masukkan email yang benar.";
+            } else if (error.code === "auth/weak-password") {
+                errorMessage = "Kata sandi terlalu lemah. Gunakan minimal 6 karakter.";
+            }
+        
+            toast.error(errorMessage, {
+                duration: 3000,
+            });
         }
     };
 
@@ -62,6 +86,7 @@ const SignUp = ({ className, ...props }) => {
                 await signOut(auth);
 
                 const addToken = await apiInstanceExpress.post("sign-up", {
+                    name: signUp.user.name,
                     email: signUp.user.email,
                     password: "asdfghjkl",
                 });
@@ -74,12 +99,17 @@ const SignUp = ({ className, ...props }) => {
             }
         } catch (error) {
             console.error("Sign-up Error", error);
+            toast.error(`Sign up Error: ${error}`, {
+                duration: 3000,
+            });
         }
     };
 
 
     return (
         <div className="realtive flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+            <Toaster />
+            
             <div
                 aria-hidden="true"
                 className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -93,7 +123,7 @@ const SignUp = ({ className, ...props }) => {
                 />
             </div>
 
-            <div className="w-full max-w-sm">
+            <div className="w-full max-w-sm mt-14">
                 <div className={cn("flex flex-col gap-6", className)} {...props}>
                     <Card>
                         <CardHeader>
@@ -101,28 +131,34 @@ const SignUp = ({ className, ...props }) => {
                             <CardDescription>Buat akun baru dengan mengisi formulir di bawah ini</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {/* <form onSubmit={handleSubmit} className="flex flex-col gap-6"> */}
                             <form className="flex flex-col gap-6">
                                 <div className="grid gap-2">
                                     <Label htmlFor="name">Nama Lengkap</Label>
-                                    <Input id="name" type="text" placeholder="Masukkan nama Anda" required />
+                                    <Input id="name" type="text" placeholder="Masukkan nama Anda" onChange={(e) => setName(e.target.value)} required />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" placeholder="contoh@email.com" required />
+                                    <Input id="email" type="email" placeholder="contoh@email.com" onChange={(e) => setEmail(e.target.value)} required />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="password">Kata Sandi</Label>
-                                    <Input id="password" type="password" placeholder="Masukkan kata sandi" required />
+                                    <Input id="password" type="password" placeholder="Masukkan kata sandi" onChange={(e) => setPassword(e.target.value)} required />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="confirm-password">Konfirmasi Kata Sandi</Label>
-                                    <Input id="confirm-password" type="password" placeholder="Ulangi kata sandi" required />
+                                    <Input id="confirm-password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Ulangi kata sandi" required />
                                 </div>
-                                <Button type="submit" className="w-full">
-                                    Daftar
-                                </Button>
-                                <Button variant="outline" className="w-full">
+                                {isLoading ? (
+                                    <Button className="w-full" disabled>
+                                        <Loader2 className="animate-spin" />
+                                        Sedang membuat akun anda
+                                    </Button>
+                                ) : (
+                                    <Button className="w-full cursor-pointer" onClick={handleSignUp}>
+                                        Daftar
+                                    </Button>
+                                )}
+                                <Button variant="outline" onClick={handleGoogleSignUp} className="w-full">
                                     Daftar dengan Google
                                 </Button>
                                 <p className="mt-4 text-center text-sm">

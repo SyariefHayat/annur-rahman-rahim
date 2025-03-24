@@ -16,26 +16,27 @@ const snap = new midtransClient.Snap({
 });
 
 const SignUpUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     const hassPass = await argon2.hash(password);
 
     try {
-        if (!email || !password) {
-            return ERR(res, 400, "Email and password are required");
+        if (!name || !email || !password) {
+            return ERR(res, 400, "Name, Email and Password are required");
         }
+
+        const userName = await User.findOne({ name });
+        if (userName) return ERR(res, 409, "Name alredy exists");
 
         const user = await User.findOne({ email });
-        if (user) {
-            return ERR(res, 409, "Email already exists");
-        }
+        if (user) return ERR(res, 409, "Email already exists");
 
-        const addNewUser = new User({ email, password: hassPass });
+        const addNewUser = new User({ name, email, password: hassPass });
         await addNewUser.save();
 
         return SUCC(res, 201, addNewUser._id, "User created succesfully");
     } catch (error) {
         console.error(error);
-        return ERR(res, 500, "Signup failed");
+        return ERR(res, 500, error);
     }
 }
 
