@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'lucide-react';
+import { ArrowRight, Menu } from 'lucide-react';
 
 import {
     Sheet,
@@ -16,13 +16,13 @@ import { LIST_NAVBAR } from '@/constants/listNavbar';
 
 const Navbar = () => {
     return (
-        <header className="absolute w-full">
+        <header className="absolute z-10 w-full">
             <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Yayasan Yatallatop</span>
                         <img
-                            alt=""
+                            alt="logo yayasan yatallatop"
                             src="logo2.png"
                             className="h-14 w-auto"
                         />
@@ -65,7 +65,7 @@ const Navbar = () => {
                             </div>
                             <SheetFooter>
                                 <a
-                                    href="#"
+                                    href="/login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                 >
                                     Log in
@@ -79,7 +79,7 @@ const Navbar = () => {
                     <EachUtils
                         of={LIST_NAVBAR}
                         render={(item, index) => (
-                            <a key={index} href={item.url} className="text-sm/6 font-semibold text-gray-900">
+                            <a key={index} href={item.url} className="text-sm/6 font-semibold text-gray-900 cursor-pointer">
                                 {item.title}
                             </a>
                         )}
@@ -87,7 +87,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-sm/6 font-semibold text-gray-900">
+                    <a href="/login" className="text-sm/6 font-semibold text-gray-900">
                     Log in <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>

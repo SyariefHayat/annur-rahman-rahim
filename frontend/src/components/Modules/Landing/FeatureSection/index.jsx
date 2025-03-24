@@ -3,7 +3,7 @@ import React from 'react'
 import EachUtils from '@/utils/EachUtils'
 import { LIST_FEATURES } from '@/constants/listFeatures'
 
-const WelcomeSection = () => {
+const FeatureSection = () => {
     return (
         <section className="overflow-hidden py-14 sm:py-24">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -39,4 +39,4 @@ const WelcomeSection = () => {
     )
 }
 
-export default WelcomeSection
+export default FeatureSection

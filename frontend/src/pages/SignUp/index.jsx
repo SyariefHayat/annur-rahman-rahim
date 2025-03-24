@@ -5,7 +5,19 @@ import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'fireba
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+const SignUp = ({ className, ...props }) => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
@@ -67,47 +79,49 @@ const SignUp = () => {
 
 
     return (
-        <DefaultLayout>
-            <div className="flex items-center justify-center mt-20">
-                <div className="w-96 border rounded bg-white px-7 py-10">
-                    <form>
-                        <h4 className="text-2xl mb-7">SignUp</h4>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Masukkan password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none"
-                        />
-                        <button 
-                            type="submit"
-                            onClick={handleSignUp}
-                            className="w-full text-sm bg-primary text-white p-2 rounded my-1 bg-blue-600">
-                            Create Account
-                        </button>
-                        <p className="text-sm text-center mt-4">
-                            Alredy have an account?{" "}
-                            <a href="/sign-in" className="text-blue-600">
-                                Login
-                            </a>
-                        </p>
-                    </form>
-                    <div className="w-full h-0.5 rounded bg-gray-400"></div>
-                    <button
-                        type="submit"
-                        onClick={handleGoogleSignUp}
-                        className="w-full text-sm bg-primary text-white p-2 rounded my-1 bg-blue-600 cursor-pointer"
-                    >
-                        Login with google
-                    </button>
+        <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+            <div className="w-full max-w-sm">
+                <div className={cn("flex flex-col gap-6", className)} {...props}>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-2xl">Daftar</CardTitle>
+                            <CardDescription>Buat akun baru dengan mengisi formulir di bawah ini</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {/* <form onSubmit={handleSubmit} className="flex flex-col gap-6"> */}
+                            <form className="flex flex-col gap-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Nama Lengkap</Label>
+                                <Input id="name" type="text" placeholder="Masukkan nama Anda" required />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email</Label>
+                                <Input id="email" type="email" placeholder="contoh@email.com" required />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="password">Kata Sandi</Label>
+                                <Input id="password" type="password" placeholder="Masukkan kata sandi" required />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="confirm-password">Konfirmasi Kata Sandi</Label>
+                                <Input id="confirm-password" type="password" placeholder="Ulangi kata sandi" required />
+                            </div>
+                            <Button type="submit" className="w-full">
+                                Daftar
+                            </Button>
+                            <Button variant="outline" className="w-full">
+                                Daftar dengan Google
+                            </Button>
+                            <p className="mt-4 text-center text-sm">
+                                Sudah punya akun?{" "}
+                                <a href="#" className="text-blue-500 underline">Masuk</a>
+                            </p>
+                            </form>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
-        </DefaultLayout>
+        </div>
     )
 }
 

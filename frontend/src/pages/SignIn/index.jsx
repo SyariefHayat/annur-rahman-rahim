@@ -7,7 +7,19 @@ import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const SignIn = () => {
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+const SignIn = ({ className, ...props }) => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [data, setData] = useState(null);
@@ -74,51 +86,59 @@ const SignIn = () => {
     };
 
     return (
-        <DefaultLayout>
-            <div className="bg-white flex items-center justify-between px-6 py-2 drop-shadow">
-                <h2 className="text-xl font-medium text-black py-2">Yatalatop</h2>
-            </div>
-            <div className="flex items-center justify-center mt-20">
-                <div className="w-96 border rounded bg-white px-7 py-10">
-                    <form>
-                        <h4 className="text-2xl mb-7">Login</h4>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Masukkan Password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none"
-                        />
-                        <button 
-                            type="submit"
-                            onClick={handleSignIn}
-                            className="w-full text-sm bg-primary text-white p-2 rounded my-1 bg-blue-600 cursor-pointer"
-                        >
-                            Login
-                        </button>
-                        <div className="w-full h-0.5 rounded bg-gray-400"></div>
-                        <button
-                            type="submit"
-                            onClick={handleGoogleSignIn}
-                            className="w-full text-sm bg-primary text-white p-2 rounded my-1 bg-blue-600 cursor-pointer"
-                        >
-                            Login with google
-                        </button>
-                        <p className="text-sm text-center mt-4">
-                            Not Registered yet?{" "}
-                            <a href="/sign-up" className="text-blue-600">
-                                Create an Account
-                            </a>
-                        </p>
-                    </form>
+        <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+            <div className="w-full max-w-sm">
+                <div className={cn("flex flex-col gap-6", className)} {...props}>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-2xl">Login</CardTitle>
+                            <CardDescription>
+                                Masukkan email Anda untuk masuk ke akun
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <form>
+                                <div className="flex flex-col gap-6">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="email">Email</Label>
+                                        <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="m@example.com"
+                                        required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center">
+                                            <Label htmlFor="password">Password</Label>
+                                            <a
+                                                href="#"
+                                                className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                                            >
+                                                Lupa kata sandi?
+                                            </a>
+                                        </div>
+                                        <Input id="password" type="password" required />
+                                    </div>
+                                    <Button type="submit" className="w-full">
+                                        Login
+                                    </Button>
+                                    <Button variant="outline" className="w-full">
+                                        Login dengan Google
+                                    </Button>
+                                </div>
+                                <div className="mt-4 text-center text-sm">
+                                    Belum punya akun?{" "}
+                                    <a href="#" className="underline underline-offset-4">
+                                        Sign up
+                                    </a>
+                                </div>
+                            </form>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
-        </DefaultLayout>
+        </div>
     )
 }
 
