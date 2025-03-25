@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
-import GoogleButton from "@/components/Modules/Landing/GoogleBtn";
+import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const SignUp = ({ className, ...props }) => {

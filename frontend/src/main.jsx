@@ -13,6 +13,7 @@ import Article from "./pages/Article";
 import DetailArticle from "./pages/DetailArticle";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import ForgotPassword from "./components/Modules/SignIn/ForgotPassword";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     {
         path: "/sign-up",
         element: <SignUp />
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgotPassword />
     },
     {
         path: "/dashboard",

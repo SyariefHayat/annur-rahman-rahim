@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
-import GoogleButton from "@/components/Modules/Landing/GoogleBtn";
+import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
 import { emailStorageAtom, tokenStorageAtom } from '@/jotai/atoms';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
@@ -124,7 +124,7 @@ const SignIn = ({ className, ...props }) => {
                                         <div className="flex items-center">
                                             <Label htmlFor="password">Password</Label>
                                             <a
-                                                href="#"
+                                                href="/forgot-password"
                                                 className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                                             >
                                                 Lupa kata sandi?
