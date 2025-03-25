@@ -15,12 +15,30 @@ const snap = new midtransClient.Snap({
     clientKey: CLIENT_KEY,
 });
 
-const SignUpUser = async (req, res) => {
-    const { name, email, password } = req.body;
-    const hassPass = await argon2.hash(password);
+const CheckEmail = async (req, res) => {
+    const email = req.params.email;
 
     try {
-        if (!name || !email || !password) return ERR(res, 400, "Name, Email and Password are required");
+        if (!email) return ERR(res, 400, "Email is required");
+
+        const user = await User.findOne({ email });
+        if (!user) return ERR(res, 404, "Email not registered yet");
+
+        return SUCC(res, 200, user, "Email registered");
+    } catch (error) {
+        console.error(error);
+        return ERR(res, 500, "Error checking email");
+    }
+}
+
+const SignUpUser = async (req, res) => {
+    const { name, email, password } = req.body;
+    let hassPass;
+
+    try {
+        if (!name || !email) return ERR(res, 400, "Name and email is required");
+
+        if (password) hassPass = await argon2.hash(password);
 
         const userName = await User.findOne({ name });
         if (userName) return ERR(res, 409, "Name alredy exists");
@@ -42,14 +60,16 @@ const SignInUser = async (req, res) => {
     const { email, password, token } = req.body;
 
     try {
-        if(!email || !password || !token) return ERR(res, 400, "Email, password, token are required");
+        if(!email || !token) return ERR(res, 400, "Email and token is required");
 
         let user = await User.findOne({ email });
         if (!user) return ERR(res, 404, "User not found");
 
-        const decodedPass = await argon2.verify(user.password, password);
-        if (!decodedPass) return ERR(res, 401, "Invalid password");
-
+        if (password) {
+            const decodedPass = await argon2.verify(user.password, password);
+            if (!decodedPass) return ERR(res, 401, "Invalid password");
+        }
+        
         user.token = token;
         await user.save();
 
@@ -329,7 +349,8 @@ const DeleteArticle = async (req, res) => {
     }
 };
 
-module.exports = { 
+module.exports = {
+    CheckEmail,
     SignUpUser, 
     SignInUser, 
     SignOutUser, 

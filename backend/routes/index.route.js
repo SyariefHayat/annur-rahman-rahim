@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
 
 router.post("/sign-up", userController.SignUpUser);
 router.post("/sign-in", userController.SignInUser);
+router.get("/check-user/:email", userController.CheckEmail);
 router.delete("/sign-in", checkToken, userController.SignOutUser);
 
 router.post("/donation", checkToken, upload.single('image'), userController.AddDonation);

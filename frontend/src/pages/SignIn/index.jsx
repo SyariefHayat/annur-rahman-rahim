@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getIdToken, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
 
 import {
     Card,
@@ -18,7 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
-import { auth, provider } from '@/services/firebase/firebase';
+import { auth } from '@/services/firebase/firebase';
+import GoogleButton from "@/components/Modules/Landing/GoogleBtn";
 import { emailStorageAtom, tokenStorageAtom } from '@/jotai/atoms';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
@@ -34,7 +35,8 @@ const SignIn = ({ className, ...props }) => {
 
     const handleSignIn = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
+        
         try {
             const signIn = await signInWithEmailAndPassword(auth, email, password);
 
@@ -47,8 +49,10 @@ const SignIn = ({ className, ...props }) => {
                 });
 
                 if (addToken.status === 200) {
-                    setIsLoading(true);
-
+                    toast.success("Login berhasil! Mengarahkan ke halaman dashboard...", {
+                        duration: 3000,
+                    });
+    
                     setEmailStorage(signIn.user.email);
                     setTokenStorage(firebaseToken)
                     
@@ -60,52 +64,25 @@ const SignIn = ({ className, ...props }) => {
         } catch (error) {
             let errorMessage = "Gagal masuk. Silakan coba lagi.";
 
-            if (error.code === "auth/user-not-found") {
-                errorMessage = "Akun tidak ditemukan. Silakan periksa kembali email Anda.";
-            } else if (error.code === "auth/wrong-password") {
-                errorMessage = "Kata sandi salah. Silakan coba lagi.";
-            } else if (error.code === "auth/invalid-email") {
+            if (error.code === "auth/invalid-email") {
                 errorMessage = "Format email tidak valid. Silakan masukkan email yang benar.";
             } else if (error.code === "auth/too-many-requests") {
                 errorMessage = "Terlalu banyak percobaan masuk. Silakan coba lagi nanti.";
+            } else if (error.code === "auth/invalid-credential") {
+                errorMessage = "Email atau kata sandi salah. Silakan coba lagi.";
             }
-    
+
             toast.error(errorMessage, {
                 duration: 3000,
             });
-        }
-    };
 
-    const handleGoogleSignIn = async (e) => {
-        e.preventDefault();
-
-        try {
-            const signIn = await signInWithPopup(auth, provider);
-            
-            if (signIn) {
-                const firebaseToken = await getIdToken(signIn.user);
-                const addToken = await apiInstanceExpress.post("sign-in", {
-                    email: signIn.user.email,
-                    password: "asdfghjkl",
-                    token: firebaseToken,
-                });
-
-                if (addToken.status === 200) {
-                    setEmailStorage(signIn.user.email);
-                    setTokenStorage(firebaseToken)
-
-                    setTimeout(() => {
-                        navigate("/dashboard")
-                    }, 2000)
-                }
-            }
-        } catch (error) {
-            console.error("Sign-in Error", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className="relative flex min-h-svh w-full items-center justify-center p-6 md:p-10 overflow-hidden">
+        <div className="relative flex flex-col min-h-svh w-full items-center justify-center p-6 md:p-10 overflow-hidden">
             <Toaster />
 
             <div
@@ -170,9 +147,7 @@ const SignIn = ({ className, ...props }) => {
                                             Login
                                         </Button>
                                     )}
-                                    <Button variant="outline" className="w-full">
-                                        Login dengan Google
-                                    </Button>
+                                    <GoogleButton text={"Login dengan Google"} />
                                 </div>
                                 <div className="mt-4 text-center text-sm">
                                     Belum punya akun?{" "}

@@ -1,8 +1,8 @@
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 import {
     Card,
@@ -10,14 +10,15 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Toaster } from "@/components/ui/sonner"
-import { auth, provider } from '@/services/firebase/firebase';
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
+import { auth } from '@/services/firebase/firebase';
+import GoogleButton from "@/components/Modules/Landing/GoogleBtn";
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const SignUp = ({ className, ...props }) => {
@@ -32,8 +33,14 @@ const SignUp = ({ className, ...props }) => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        if (password !== confirmPassword) return;
+        if (password !== confirmPassword) {
+            toast.error("Password dan Konfirmasi Password tidak cocok!", {
+                duration: 3000,
+            });
+            return setIsLoading(false);
+        }
 
         try {
             const register = await createUserWithEmailAndPassword(
@@ -52,8 +59,10 @@ const SignUp = ({ className, ...props }) => {
                 });
 
                 if (addUser.status === 201) {
-                    setIsLoading(true);
-
+                    toast.success("Pendaftaran berhasil! Mengarahkan ke halaman login...", {
+                        duration: 3000,
+                    });
+                    
                     setTimeout(() => {
                         navigate("/sign-in")
                     }, 2000);
@@ -73,38 +82,11 @@ const SignUp = ({ className, ...props }) => {
             toast.error(errorMessage, {
                 duration: 3000,
             });
-        }
-    };
-
-    const handleGoogleSignUp = async (e) => {
-        e.preventDefault();
-
-        try {
-            const signUp = await signInWithPopup(auth, provider);
             
-            if (signUp) {
-                await signOut(auth);
-
-                const addToken = await apiInstanceExpress.post("sign-up", {
-                    name: signUp.user.name,
-                    email: signUp.user.email,
-                    password: "asdfghjkl",
-                });
-
-                if (addToken.status === 201) {
-                    setTimeout(() => {
-                        navigate("/sign-in")
-                    }, 2000)
-                }
-            }
-        } catch (error) {
-            console.error("Sign-up Error", error);
-            toast.error(`Sign up Error: ${error}`, {
-                duration: 3000,
-            });
+        } finally {
+            setIsLoading(false);
         }
     };
-
 
     return (
         <div className="realtive flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -182,9 +164,7 @@ const SignUp = ({ className, ...props }) => {
                                         Daftar
                                     </Button>
                                 )}
-                                <Button variant="outline" onClick={handleGoogleSignUp} className="w-full">
-                                    Daftar dengan Google
-                                </Button>
+                                <GoogleButton text={"Daftar dengan Google"}/>
                                 <p className="mt-4 text-center text-sm">
                                     Sudah punya akun?{" "}
                                     <a href="/sign-in" className="text-blue-500 underline">Masuk</a>
