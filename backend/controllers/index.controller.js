@@ -81,8 +81,10 @@ const SignInUser = async (req, res) => {
 }
 
 const SignOutUser = async (req, res) => {
+    const email = req.user.email;
     try {
-        const user = await User.findById(req.user._id);
+        const user = await User.findOne({ email });
+        console.log(user);
         
         user.token = null;
         await user.save();

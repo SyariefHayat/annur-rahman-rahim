@@ -1,38 +1,36 @@
-import useUserRole from '@/hooks/useUserRole';
-import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms'
+import { userAtom } from '@/jotai/atoms'
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 import { auth } from '@/services/firebase/firebase';
 import { signOut } from 'firebase/auth';
 import { useAtom } from 'jotai'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-    const [emailStorage, setEmailStorage] = useAtom(emailStorageAtom);
-    const [tokenStorage, setTokenStorage] = useAtom(tokenStorageAtom);
-    const [user] = useAtom(userAtom);
-
-    // const { role, loading } = useUserRole();
+    const [user, setUser] = useAtom(userAtom);
 
     const navigate = useNavigate();
 
     const handleSignOut = async () => {
         try {
-            const data = { email: emailStorage, token: tokenStorage }
             const signOutToken = await apiInstanceExpress.delete("sign-in", {
-                data,
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
             });
 
             if (signOutToken.status === 204) {
                 signOut(auth).then(() => {
-                    setEmailStorage(null);
-                    setTokenStorage(null);
-
-                    navigate("/")
+                    setUser(null);
+                    navigate("/");
                 });
             }
         } catch (error) {
             console.log(error);
+            toast.error("Logout gagal, coba lagi !", {
+                duration: 3000,
+            });
         }
     };
 
