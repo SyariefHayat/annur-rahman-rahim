@@ -1,10 +1,16 @@
 import React from 'react'
 
+import { 
+    Card, 
+    CardContent, 
+    CardFooter, 
+    CardHeader, 
+    CardTitle 
+} from '@/components/ui/card'
+
 import EachUtils from '@/utils/EachUtils'
-import { LIST_CAMPAIGN } from '@/constants/listCampaign'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 
 const CampaignSection = () => {
     return (

@@ -1,9 +1,8 @@
-import SectionLayout from '@/components/Layouts/SectionLayout'
-import { LIST_ARTICLE } from '@/constants/listArticle'
-import useDataArticles from '@/hooks/useDataArticles'
 import React from 'react'
 
 import EachUtils from '@/utils/EachUtils'
+import { Badge } from '@/components/ui/badge'
+import { LIST_ARTICLE } from '@/constants/listArticle'
 
 const ArticleSection = () => {
     return (
@@ -28,20 +27,17 @@ const ArticleSection = () => {
                     <EachUtils
                         of={LIST_ARTICLE}
                         render={(item, index) => (
-                            <article key={index} className="flex max-w-xl flex-col items-start justify-between">
+                            <article key={index} className="group flex max-w-xl flex-col items-start justify-between cursor-pointer">
                                 <div className="flex items-center gap-x-4 text-xs">
                                     <time dateTime={item.datetime} className="text-gray-500">
                                         {item.date}
                                     </time>
-                                    <a
-                                        href={item.category.href}
-                                        className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                                    >
+                                    <Badge className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 group-hover:bg-gray-100">
                                         {item.category.title}
-                                    </a>
+                                    </Badge>
                                 </div>
 
-                                <div className="group relative">
+                                <div className="relative">
                                     <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
                                         <a href={item.href}>
                                         <span className="absolute inset-0" />
