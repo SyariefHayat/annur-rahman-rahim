@@ -2,6 +2,9 @@ import React from 'react'
 
 import EachUtils from '@/utils/EachUtils'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
 
 const CampaignSection = () => {
     return (
@@ -26,42 +29,40 @@ const CampaignSection = () => {
                     <EachUtils
                         of={LIST_CAMPAIGN}
                         render={(item, index) => (
-                            <article key={index} className="flex max-w-xl flex-col items-start justify-between">
-                                <div className="flex items-center gap-x-4 text-xs">
-                                    <time dateTime={item.datetime} className="text-gray-500">
-                                        {item.date}
-                                    </time>
-                                    <a
-                                        href={item.category.href}
-                                        className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                                    >
-                                        {item.category.title}
-                                    </a>
-                                </div>
-
-                                <div className="group relative">
-                                    <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                                        <a href={item.href}>
-                                        <span className="absolute inset-0" />
-                                        {item.title}
-                                        </a>
-                                    </h3>
-                                    <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{item.description}</p>
-                                </div>
-                                
-                                <div className="relative mt-8 flex items-center gap-x-4">
-                                    <img alt="" src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
-                                    <div className="text-sm/6">
-                                        <p className="font-semibold text-gray-900">
-                                        <a href={item.author.href}>
-                                            <span className="absolute inset-0" />
-                                            {item.author.name}
-                                        </a>
-                                        </p>
-                                        <p className="text-gray-600">{item.author.role}</p>
+                            <Card 
+                                key={index} 
+                                style={{ backgroundImage: `url(${item.backgroundImage})` }} 
+                                className="group flex max-w-xl h-[450px] flex-col items-start justify-between rounded-xl ring-1 shadow-xl ring-gray-400/10 bg-cover bg-center relative overflow-hidden"
+                            >
+                                <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent cursor-pointer"></div>
+                                <CardHeader>
+                                    <CardTitle>
+                                        <Badge className="relative rounded-full bg-[#f3f3f3] px-3 py-1 text-xs font-medium text-gray-800 shadow-md transition-colors duration-200 group-hover:bg-gray-300">
+                                            {item.category.title}
+                                        </Badge>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent></CardContent>
+                                <CardFooter className="relative flex flex-col">
+                                    <div className="w-full flex items-center gap-x-4">
+                                        <time dateTime={item.datetime} className="text-sm text-gray-200">
+                                            {item.date}
+                                        </time>
                                     </div>
-                                </div>
-                            </article>
+
+                                    <div>
+                                        <h3 className="mt-3 text-lg/6 font-semibold text-white transition-colors duration-200 group-hover:text-gray-200">
+                                            <a href={item.href}>
+                                            <span className="absolute inset-0" />
+                                            {item.title}
+                                            </a>
+                                        </h3>
+                                        <p className="mt-5 line-clamp-3 text-sm/6 text-gray-200"> 
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </CardFooter>
+                            </Card>
                         )}
                     />
                 </div>
