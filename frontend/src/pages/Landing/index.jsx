@@ -7,6 +7,7 @@ import ArticleSection from '@/components/Modules/Landing/ArticleSection'
 import Footer from '@/components/Modules/Landing/Footer'
 import ImpactSection from '@/components/Modules/Landing/ImpactSection'
 import FeatureSection from '@/components/Modules/Landing/FeatureSection'
+import FaqSection from '@/components/Modules/Landing/FaqSection'
 
 const Landing = () => {
     return (
@@ -17,6 +18,7 @@ const Landing = () => {
             <CampaignSection />
             <ImpactSection />
             <ArticleSection />
+            <FaqSection />
             <Footer />
         </DefaultLayout>
     )
