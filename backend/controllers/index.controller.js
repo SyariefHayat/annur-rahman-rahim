@@ -73,7 +73,7 @@ const SignInUser = async (req, res) => {
         user.token = token;
         await user.save();
 
-        return SUCC(res, 200, null, "Success signing in token")
+        return SUCC(res, 200, user, "Success signing in token")
     } catch (error) {
         console.error(error);
         return ERR(res, 500, "Error signing in token")

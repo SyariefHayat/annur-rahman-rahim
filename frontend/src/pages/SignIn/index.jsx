@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
 import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
-import { emailStorageAtom, tokenStorageAtom } from '@/jotai/atoms';
+import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const SignIn = ({ className, ...props }) => {
@@ -30,6 +30,7 @@ const SignIn = ({ className, ...props }) => {
 
     const [, setEmailStorage] = useAtom(emailStorageAtom);
     const [, setTokenStorage] = useAtom(tokenStorageAtom);
+    const [, setUser] = useAtom(userAtom);
 
     const navigate = useNavigate();
 
@@ -49,12 +50,11 @@ const SignIn = ({ className, ...props }) => {
                 });
 
                 if (addToken.status === 200) {
-                    toast.success("Login berhasil! Mengarahkan ke halaman dashboard...", {
-                        duration: 3000,
-                    });
+                    toast.success("Login berhasil !");
     
                     setEmailStorage(signIn.user.email);
                     setTokenStorage(firebaseToken)
+                    setUser(addToken.data.data);
                     
                     setTimeout(() => {
                         navigate("/dashboard")

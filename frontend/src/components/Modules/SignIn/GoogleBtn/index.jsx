@@ -6,12 +6,13 @@ import { getIdToken, signInWithPopup } from 'firebase/auth';
 
 import { Button } from '@/components/ui/button';
 import { auth, provider } from '@/services/firebase/firebase';
-import { emailStorageAtom, tokenStorageAtom } from '@/jotai/atoms';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
+import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms';
 
 const GoogleButton = ({ text }) => {
     const [, setEmailStorage] = useAtom(emailStorageAtom);
     const [, setTokenStorage] = useAtom(tokenStorageAtom);
+    const [, setUser] = useAtom(userAtom);
 
     const navigate = useNavigate();
 
@@ -40,7 +41,9 @@ const GoogleButton = ({ text }) => {
                         userExists = false;
                     } else {
                         console.error("Error checking user:", error);
-                        toast.error("Terjadi kesalahan saat memeriksa email anda.");
+                        toast.error("Terjadi kesalahan saat memeriksa email anda.", {
+                            duration: 3000,
+                        });
                         return;
                     }
                 }
@@ -54,7 +57,9 @@ const GoogleButton = ({ text }) => {
                         });
                     } catch (error) {
                         console.error("Error signing up:", error);
-                        toast.error("Gagal mendaftarkan akun.");
+                        toast.error("Gagal mendaftarkan akun.", {
+                            duration: 3000,
+                        });
                         return;
                     }
                 }
@@ -65,25 +70,30 @@ const GoogleButton = ({ text }) => {
                         email,
                         token: firebaseToken,
                     });
-    
+
                     if (addToken.status === 200) {
+                        toast.success("Login berhasil !");
+
                         setEmailStorage(email);
                         setTokenStorage(firebaseToken);
+                        setUser(addToken.data.data);
 
-                        toast.success("Login berhasil !");
-    
                         setTimeout(() => {
                             navigate("/dashboard");
                         }, 2000);
                     }
                 } catch (error) {
                     console.error("Error signing in:", error);
-                    toast.error("Login gagal. Silakan coba lagi.");
+                    toast.error("Login gagal. Silakan coba lagi.", {
+                        duration: 3000,
+                    });
                 }
             }
         } catch (error) {
             console.error("Sign-in Error:", error);
-            toast.error("Gagal login dengan Google.");
+            toast.error("Gagal login dengan Google.", {
+                duration: 3000,
+            });
         }
     };
 
