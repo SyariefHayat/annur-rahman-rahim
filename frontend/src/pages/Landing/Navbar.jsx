@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 import {
     Sheet,
@@ -14,16 +14,16 @@ import EachUtils from '@/utils/EachUtils';
 import { Button } from '@/components/ui/button';
 import { LIST_NAVBAR } from '@/constants/listNavbar';
 
-const Navbar = () => {
+const Navbar = ({ position }) => {
     return (
-        <header className="absolute z-10 w-full">
+        <header className={`w-full ${position ? `${position}` : "absolute z-10"}`}>
             <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Yayasan Yatallatop</span>
                         <img
                             alt="logo yayasan yatallatop"
-                            src="logo2.png"
+                            src="/logo2.png"
                             className="h-14 w-auto"
                         />
                     </a>
@@ -43,7 +43,7 @@ const Navbar = () => {
                                         <span className="sr-only">Yatallatop</span>
                                         <img
                                         alt=""
-                                        src="logo2.png"
+                                        src="/logo2.png"
                                         className="h-8 w-auto"
                                         />
                                     </a>

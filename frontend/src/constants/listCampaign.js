@@ -6,7 +6,7 @@ export const LIST_CAMPAIGN = [
             href: "#",
             title: "Kesehatan",
         },
-        href: "#",
+        href: "/donation/0",
         title: "Bantu Anak-Anak yang Membutuhkan Pengobatan",
         description: "Bantu anak-anak yang sedang berjuang melawan penyakit serius mendapatkan perawatan medis yang mereka butuhkan.",
         author: {
@@ -24,7 +24,7 @@ export const LIST_CAMPAIGN = [
             href: "#",
             title: "Pendidikan",
         },
-        href: "#",
+        href: "/donation/1",
         title: "Bantu Anak-Anak di Daerah Terpencil Mendapatkan Pendidikan",
         description: "Donasi Anda akan digunakan untuk menyediakan buku, seragam, dan biaya sekolah bagi anak-anak yang kurang mampu.",
         author: {
@@ -42,7 +42,7 @@ export const LIST_CAMPAIGN = [
             href: "#",
             title: "Bencana Alam",
         },
-        href: "#",
+        href: "/donation/2",
         title: "Bantu Korban Bencana Alam Kembali Bangkit",
         description: "Dukung mereka yang terkena dampak bencana alam dengan memberikan bantuan makanan, pakaian, dan tempat tinggal sementara.",
         author: {

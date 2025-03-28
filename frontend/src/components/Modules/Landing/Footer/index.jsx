@@ -10,8 +10,8 @@ const Footer = () => {
                 {/* Logo dan Deskripsi */}
                 <div className="flex-1 flex flex-col mr-10 mb-8 md:mb-0">
                     <img
-                        src="logo.png"
-                        alt="Hoobank Logo"
+                        src="/logo.png"
+                        alt="Yayasan Yatalatop Logo"
                         className="w-[200px] h-auto object-contain"
                     />
                     <p className="text-gray-400 text-[16px] mt-4 leading-[28px] max-w-[300px]">

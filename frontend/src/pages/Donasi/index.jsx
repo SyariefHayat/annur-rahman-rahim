@@ -66,8 +66,8 @@ const Donasi = () => {
                                         <div>
                                             <h3 className="mt-4 text-lg/6 font-semibold transition-colors duration-200 group-hover:text-gray-200 relative">
                                                 <a href={item.href}>
-                                                <span className="absolute inset-0" />
-                                                {item.title}
+                                                    <span className="absolute inset-0" />
+                                                    {item.title}
                                                 </a>
                                             </h3>
                                             <p className="mt-4 line-clamp-3 text-sm/6 text-gray-600"> 
