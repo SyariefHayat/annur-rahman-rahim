@@ -6,6 +6,9 @@ import EachUtils from '@/utils/EachUtils'
 import { FaAnglesRight } from 'react-icons/fa6'
 import Footer from '@/components/Modules/Landing/Footer'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
+import { LIST_ARTICLE } from '@/constants/listArticle'
+import { Badge } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
 
 const Article = () => {
     const { dataArticles } = useDataArticles();
@@ -47,10 +50,63 @@ const Article = () => {
                 </div>
             </section>
 
-            <section className="relative">
+            <section className="relative py-12">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        
+                    <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-10 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none">
+                        <EachUtils
+                            of={LIST_ARTICLE}
+                            render={(item, index) => (
+                                <div 
+                                    key={index} 
+                                    className="mx-auto flex flex-col lg:flex-row gap-6 w-full h-full lg:w-4xl lg:h-72 items-start justify-between bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition"
+                                >
+                                    {/* Gambar Artikel */}
+                                    <img 
+                                        src={`/slide-${index + 1}.png`} 
+                                        alt={item.title} 
+                                        className="lg:w-[35%] lg:h-full w-full h-60 object-cover object-center rounded-lg"
+                                    />
+                                    
+                                    {/* Konten Artikel */}
+                                    <div className="w-full h-full flex flex-col justify-between">
+                                        {/* Info Kategori & Tanggal */}
+                                        <div className="flex items-center gap-x-4 text-xs text-gray-500">
+                                            <time dateTime={item.datetime}>{item.date}</time>
+                                            <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-700">
+                                                {item.category.title}
+                                            </Badge>
+                                        </div>
+
+                                        {/* Judul & Deskripsi */}
+                                        <div className="relative">
+                                            <h3 className="mt-3 text-lg font-semibold text-gray-900 hover:text-blue-600 transition">
+                                                <a href={item.href} className="block">
+                                                    {item.title}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-4 text-sm text-gray-700 line-clamp-3">{item.description}</p>
+                                        </div>
+
+                                        <Separator className="my-4" />
+
+                                        {/* Informasi Penulis */}
+                                        <div className="flex items-center gap-x-4">
+                                            <img 
+                                                alt={item.author.name} 
+                                                src={item.author.imageUrl} 
+                                                className="w-10 h-10 rounded-full bg-gray-200 object-cover"
+                                            />
+                                            <div className="text-sm">
+                                                <p className="font-semibold text-gray-900 truncate">
+                                                    <a href={item.author.href} className="hover:underline">{item.author.name}</a>
+                                                </p>
+                                                <p className="text-gray-600">{item.author.role}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        />
                     </div>
                 </div>
             </section>
