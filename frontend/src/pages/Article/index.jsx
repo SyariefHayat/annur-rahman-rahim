@@ -7,11 +7,11 @@ import { FaAnglesRight } from 'react-icons/fa6'
 import Footer from '@/components/Modules/Landing/Footer'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import { LIST_ARTICLE } from '@/constants/listArticle'
-import { Badge } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
+import { Badge } from '@/components/ui/badge'
 
 const Article = () => {
-    const { dataArticles } = useDataArticles();
+    // const { dataArticles } = useDataArticles();
 
     return (
         <DefaultLayout>
@@ -58,7 +58,7 @@ const Article = () => {
                             render={(item, index) => (
                                 <div 
                                     key={index} 
-                                    className="mx-auto flex flex-col lg:flex-row gap-6 w-full h-full lg:w-4xl lg:h-72 items-start justify-between bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition"
+                                    className="mx-auto flex flex-col lg:flex-row gap-6 w-full h-full lg:w-4xl lg:h-72 items-start justify-between rounded-xl"
                                 >
                                     {/* Gambar Artikel */}
                                     <img 
@@ -68,11 +68,11 @@ const Article = () => {
                                     />
                                     
                                     {/* Konten Artikel */}
-                                    <div className="w-full h-full flex flex-col justify-between">
+                                    <div className="w-full h-full flex flex-col justify-between py-6">
                                         {/* Info Kategori & Tanggal */}
                                         <div className="flex items-center gap-x-4 text-xs text-gray-500">
                                             <time dateTime={item.datetime}>{item.date}</time>
-                                            <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-700">
+                                            <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600">
                                                 {item.category.title}
                                             </Badge>
                                         </div>

@@ -6,7 +6,7 @@ export const LIST_ARTICLE = [
             href: "#",
             title: "Kegiatan Sosial",
         },
-        href: "#",
+        href: "/article/0",
         title: "Program Beasiswa untuk Anak Yatim Berprestasi",
         description: "Yayasan memberikan beasiswa kepada 50 anak yatim berprestasi sebagai bentuk dukungan terhadap pendidikan mereka.",
         author: {
@@ -23,7 +23,7 @@ export const LIST_ARTICLE = [
             href: "#",
             title: "Kesehatan",
         },
-        href: "#",
+        href: "/article/1",
         title: "Layanan Kesehatan Gratis di Desa Terpencil",
         description: "Tim medis yayasan berhasil memberikan layanan kesehatan gratis bagi lebih dari 300 warga di daerah terpencil.",
         author: {
@@ -40,7 +40,7 @@ export const LIST_ARTICLE = [
             href: "#",
             title: "Lingkungan",
         },
-        href: "#",
+        href: "/article/2",
         title: "Gerakan Penanaman 1.000 Pohon oleh Relawan",
         description: "Dalam rangka menjaga kelestarian lingkungan, yayasan bersama relawan menanam 1.000 pohon di area rawan longsor.",
         author: {
