@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { MessageCircle, Share2, ThumbsUp } from 'lucide-react'
+import { MessageCircle, Share2, ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import Navbar from '../Landing/Navbar'
 import { Badge } from '@/components/ui/badge'
@@ -9,6 +9,16 @@ import { Toggle } from "@/components/ui/toggle"
 import { LIST_ARTICLE } from '@/constants/listArticle'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 const DetailArticle = () => {
     const { id } = useParams();
@@ -74,7 +84,7 @@ const DetailArticle = () => {
 
                     <p className="text-gray-700 leading-relaxed">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur reiciendis ducimus fuga repellendus numquam incidunt quibusdam tempore veniam dicta quam, nobis libero ipsum ipsam repellat minus blanditiis voluptatibus voluptas aut.</p>
 
-                    <div className="w-full flex gap-3">
+                    <div className="w-full flex gap-3 flex-wrap items-center">
                         <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1">
                             <ThumbsUp />
                             <span className="w-10 text-center">{formatNumber(totalLike)}</span>
@@ -87,6 +97,110 @@ const DetailArticle = () => {
                         <Button>
                             <Share2 /> 39 
                         </Button>
+                    </div>
+
+
+                    <div className="w-full h-full">
+                        <div className="w-full flex items-center gap-5">
+                            <Avatar className="w-10 h-10">
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+
+                            <Input placeholder="Tambahkan Komentar..."/>
+
+                            <Button>
+                                Tambahkan Komentar
+                            </Button>
+                        </div>
+
+                        <div className="w-full my-3">
+                            <div className="w-full flex items-center justify-between">
+                                <p>Komentar</p>
+
+                                <Select>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Disarankan" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="latest">Terbaru</SelectItem>
+                                        <SelectItem value="longest">Terlama</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="w-full">
+                            <div className="w-full">
+                                <div className="flex gap-x-4">
+                                    <Avatar className="w-10 h-10">
+                                        <AvatarImage src="https://github.com/shadcn.png" />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+
+                                    <div className="flex flex-col gap-5 text-sm">
+                                        <p className="flex gap-3 font-semibold text-gray-900 truncate">
+                                            <a href={article.author.href} className="hover:underline">{article.author.name}</a>
+                                            <p>.</p>
+                                            <p className="text-sm text-gray-600">29 Maret</p>
+                                        </p>
+
+                                        <div className="w-full flex gap-3">
+                                            <p className="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, nemo quasi. Quidem ducimus placeat magni mollitia cumque perferendis maiores architecto sint voluptatibus reprehenderit corporis sed officiis aliquam natus, quia quam tempora modi, quae ab! Itaque cum quisquam obcaecati illo non ex illum eaque molestiae, soluta optio praesentium modi architecto amet?</p>
+                                        </div>
+
+                                        <div className="flex gap-3">
+                                            <Button>
+                                                <ThumbsUp /> 10
+                                            </Button>
+
+                                            <Button>
+                                                <ThumbsDown /> 0
+                                            </Button>
+
+                                            <Button>
+                                                Balas
+                                            </Button>
+                                        </div>
+
+                                        <div className="w-full">
+                                            <div className="flex gap-x-4">
+                                                <Avatar className="w-8 h-8">
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
+
+                                                <div className="flex flex-col gap-5 text-sm">
+                                                <p className="flex gap-3 font-semibold text-gray-900 truncate">
+                                            <a href={article.author.href} className="hover:underline">{article.author.name}</a>
+                                            <p>.</p>
+                                            <p className="text-sm text-gray-600">29 Maret</p>
+                                        </p>
+
+                                        <div className="w-full flex gap-3">
+                                            <p className="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, nemo quasi. Quidem ducimus placeat magni mollitia cumque perferendis maiores architecto sint voluptatibus reprehenderit corporis sed officiis aliquam natus, quia quam tempora modi, quae ab! Itaque cum quisquam obcaecati illo non ex illum eaque molestiae, soluta optio praesentium modi architecto amet?</p>
+                                        </div>
+
+                                        <div className="flex gap-3">
+                                            <Button>
+                                                <ThumbsUp /> 10
+                                            </Button>
+
+                                            <Button>
+                                                <ThumbsDown /> 0
+                                            </Button>
+
+                                            <Button>
+                                                Balas
+                                            </Button>
+                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
