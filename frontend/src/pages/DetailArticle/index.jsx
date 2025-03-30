@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { MessageCircle, Share2, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Check, Copy, MessageCircle, Share2, ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import Navbar from '../Landing/Navbar'
 import { Badge } from '@/components/ui/badge'
@@ -21,20 +21,49 @@ import {
 } from "@/components/ui/select"
 import Comment from '@/components/Modules/Landing/Comment'
 
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from '@/components/ui/label'
+
 const DetailArticle = () => {
     const { id } = useParams();
     const index = parseInt(id, 10);
     const article = LIST_ARTICLE[index];
 
-    const [totalLike, setTotalLike] = useState(999);
+    const [like, setLike] = useState(999);
     const [isLiked, setIsLiked] = useState(false);
+
+    const [shareCount, setShareCount] = useState(39);
+    const [copied, setCopied] = useState(false);
+
     const [isComment, setIsComment] = useState(false);
+    
+    const articleUrl = window.location.href;
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(articleUrl);
+
+            if (!copied) setShareCount(prev => prev + 1);
+            setCopied(true);
+        } catch (err) {
+            console.error("Gagal menyalin link:", err);
+        }
+    };
 
     const handleToggleLike = () => {
         if (isLiked) {
-            setTotalLike((prev) => prev - 1);
+            setLike((prev) => prev - 1);
         } else {
-            setTotalLike((prev) => prev + 1);
+            setLike((prev) => prev + 1);
         }
 
         setIsLiked(!isLiked);
@@ -89,16 +118,48 @@ const DetailArticle = () => {
                     <div className="w-full flex gap-3 flex-wrap items-center">
                         <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
                             <ThumbsUp />
-                            <span className="w-10 text-center">{formatNumber(totalLike)}</span>
+                            <span className="w-10 text-center">{formatNumber(like)}</span>
                         </Toggle>
 
                         <Button variant="outline" onClick={() => setIsComment(!isComment)} className={`${isComment ? "bg-accent" : ""} cursor-pointer`}>
                             <MessageCircle /> 55
                         </Button>
 
-                        <Button>
-                            <Share2 /> 39 
-                        </Button>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="outline">
+                                    <Share2 /> {shareCount}
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle>Share link</DialogTitle>
+                                    <DialogDescription>
+                                        Anyone who has this link will be able to view this.
+                                    </DialogDescription>
+                                </DialogHeader>
+
+                                <div className="flex items-center space-x-2">
+                                    <div className="grid flex-1 gap-2">
+                                        <Label htmlFor="link" className="sr-only">Link</Label>
+                                        <Input
+                                            id="link"
+                                            value={articleUrl}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <Button type="submit" size="sm" className="px-3" onClick={handleCopy}>
+                                        {copied ? <Check /> : <Copy />}
+                                    </Button>
+                                </div>
+
+                                <DialogFooter className="sm:justify-start">
+                                    <DialogClose asChild>
+                                        <Button>Close</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                     {isComment && (
