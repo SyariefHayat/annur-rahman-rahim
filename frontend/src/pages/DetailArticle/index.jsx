@@ -28,6 +28,7 @@ const DetailArticle = () => {
 
     const [totalLike, setTotalLike] = useState(999);
     const [isLiked, setIsLiked] = useState(false);
+    const [isComment, setIsComment] = useState(false);
 
     const handleToggleLike = () => {
         if (isLiked) {
@@ -86,12 +87,12 @@ const DetailArticle = () => {
                     <p className="text-gray-700 leading-relaxed">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur reiciendis ducimus fuga repellendus numquam incidunt quibusdam tempore veniam dicta quam, nobis libero ipsum ipsam repellat minus blanditiis voluptatibus voluptas aut.</p>
 
                     <div className="w-full flex gap-3 flex-wrap items-center">
-                        <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1">
+                        <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
                             <ThumbsUp />
                             <span className="w-10 text-center">{formatNumber(totalLike)}</span>
                         </Toggle>
 
-                        <Button>
+                        <Button variant="outline" onClick={() => setIsComment(!isComment)} className={`${isComment ? "bg-accent" : ""} cursor-pointer`}>
                             <MessageCircle /> 55
                         </Button>
 
@@ -100,45 +101,46 @@ const DetailArticle = () => {
                         </Button>
                     </div>
 
+                    {isComment && (
+                        <div className="w-full h-full">
+                            <div className="w-full flex items-center gap-5">
+                                <Avatar className="w-10 h-10">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
 
-                    <div className="w-full h-full">
-                        <div className="w-full flex items-center gap-5">
-                            <Avatar className="w-10 h-10">
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
+                                <Input placeholder="Tambahkan Komentar..."/>
 
-                            <Input placeholder="Tambahkan Komentar..."/>
-
-                            <Button>
-                                Tambahkan Komentar
-                            </Button>
-                        </div>
-
-                        <div className="w-full my-3">
-                            <div className="w-full flex items-center justify-between">
-                                <p>Komentar</p>
-
-                                <Select>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Disarankan" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="latest">Terbaru</SelectItem>
-                                        <SelectItem value="longest">Terlama</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                <Button>
+                                    Tambahkan Komentar
+                                </Button>
                             </div>
-                        </div>
 
-                        <div className="w-full">
+                            <div className="w-full my-3">
+                                <div className="w-full flex items-center justify-between">
+                                    <p>Komentar</p>
+
+                                    <Select>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Disarankan" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="latest">Terbaru</SelectItem>
+                                            <SelectItem value="longest">Terlama</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
                             <div className="w-full">
-                                <Comment article={article}>
-                                    <Comment article={article} size={"w-8 h-8"} />
-                                </Comment>
+                                <div className="w-full">
+                                    <Comment article={article}>
+                                        <Comment article={article} size={"w-8 h-8"} />
+                                    </Comment>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </section>
             <Footer />
