@@ -7,12 +7,7 @@ import EachUtils from '@/utils/EachUtils'
 import { LIST_CONTACT } from '@/constants/listContact'
 import { ChevronDown } from 'lucide-react'
 import { Label } from '@/components/ui/label'
-
-const stats = [
-    { name: 'Senin - Jumat', value: '09.00 - 17.00 WIB' },
-    { name: 'Sabtu', value: '10.00 - 15.00 WIB' },
-    { name: 'Ahad', value: 'TUTUP' },
-]
+import { LIST_OPERASIONAL } from '@/constants/listOperasional'
 
 const Contact = () => {
     return (
@@ -204,14 +199,18 @@ const Contact = () => {
                             Yayasan kami beroperasi pada hari kerja untuk memastikan pelayanan terbaik bagi Anda.
                         </p>
                     </div>
+                    
                     <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
                         <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
-                            {stats.map((stat) => (
-                            <div key={stat.name} className="flex flex-col-reverse gap-1">
-                                <dt className="text-base/7 text-gray-300">{stat.name}</dt>
-                                <dd className="text-4xl font-semibold tracking-tight text-white">{stat.value}</dd>
-                            </div>
-                            ))}
+                            <EachUtils
+                                of={LIST_OPERASIONAL}
+                                render={(item, index) => (
+                                    <div key={index} className="flex flex-col-reverse gap-1">
+                                        <dt className="text-base/7 text-gray-300">{item.name}</dt>
+                                        <dd className="text-4xl font-semibold tracking-tight text-white">{item.value}</dd>
+                                    </div>
+                                )}
+                            />
                         </dl>
                     </div>
                 </div>
