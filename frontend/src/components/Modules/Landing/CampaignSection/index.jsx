@@ -41,14 +41,15 @@ const CampaignSection = () => {
                                 className="flex max-w-xl h-[450px] flex-col items-start justify-between rounded-xl ring-1 shadow-xl ring-gray-400/10 bg-cover bg-center relative overflow-hidden"
                             >
                                 <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
+
                                 <CardHeader>
                                     <CardTitle>
-                                        <Badge className="relative rounded-full bg-[#f3f3f3] px-3 py-1 text-xs font-medium text-gray-800 shadow-md transition-colors duration-200 hover:bg-gray-300">
+                                        <Badge className="relative rounded-full bg-[#f3f3f3] px-3 py-1 text-xs font-medium text-gray-800 shadow-md">
                                             {item.category.title}
                                         </Badge>
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent></CardContent>
+
                                 <CardFooter className="relative flex flex-col">
                                     <div className="w-full flex items-center gap-x-4">
                                         <time dateTime={item.datetime} className="text-sm text-gray-200">
@@ -57,9 +58,8 @@ const CampaignSection = () => {
                                     </div>
 
                                     <div>
-                                        <h3 className="relative mt-3 text-lg/6 font-semibold text-white transition-colors duration-200 hover:text-gray-300">
+                                        <h3 className="mt-3 text-lg/6 font-semibold text-white">
                                             <a href={item.href}>
-                                                <span className="absolute inset-0" />
                                                 {item.title}
                                             </a>
                                         </h3>

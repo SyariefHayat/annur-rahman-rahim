@@ -64,9 +64,8 @@ const Donasi = () => {
                                         </div>
 
                                         <div>
-                                            <h3 className="mt-4 text-lg/6 font-semibold transition-colors duration-200 group-hover:text-gray-200 relative">
+                                            <h3 className="mt-4 text-lg/6 font-semibold transition-colors duration-200">
                                                 <a href={item.href}>
-                                                    <span className="absolute inset-0" />
                                                     {item.title}
                                                 </a>
                                             </h3>
@@ -79,10 +78,9 @@ const Donasi = () => {
                                             <img alt="" src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
 
                                             <div className="text-sm/6">
-                                                <p className="font-semibold text-gray-900">
-                                                    <a href={item.author.href}>
-                                                    <span className="absolute inset-0" />
-                                                    {item.author.name}
+                                                <p className="relative font-semibold text-gray-900">
+                                                    <a href={item.author.href} className="hover:underline">
+                                                        {item.author.name}
                                                     </a>
                                                 </p>
                                                 <p className="text-gray-600">{item.author.role}</p>

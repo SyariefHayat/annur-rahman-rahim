@@ -1,17 +1,14 @@
-import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import React from 'react'
+
 import Navbar from '../Landing/Navbar'
-import useDataArticles from '@/hooks/useDataArticles'
 import EachUtils from '@/utils/EachUtils'
-import { FaAnglesRight } from 'react-icons/fa6'
-import Footer from '@/components/Modules/Landing/Footer'
-import { LIST_CAMPAIGN } from '@/constants/listCampaign'
-import { LIST_ARTICLE } from '@/constants/listArticle'
-import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { LIST_ARTICLE } from '@/constants/listArticle'
+import Footer from '@/components/Modules/Landing/Footer'
+import DefaultLayout from '@/components/Layouts/DefaultLayout'
 
 const Article = () => {
-    // const { dataArticles } = useDataArticles();
 
     return (
         <DefaultLayout>
@@ -58,18 +55,15 @@ const Article = () => {
                             render={(item, index) => (
                                 <div 
                                     key={index} 
-                                    className="mx-auto flex flex-col lg:flex-row gap-6 w-full h-full lg:w-4xl lg:h-72 items-start justify-between rounded-xl"
+                                    className="mx-auto flex flex-col lg:flex-row gap-6 w-full h-[650px] lg:w-4xl lg:h-72 items-start justify-between rounded-xl"
                                 >
-                                    {/* Gambar Artikel */}
                                     <img 
                                         src={`/slide-${index + 1}.png`} 
                                         alt={item.title} 
-                                        className="lg:w-[35%] lg:h-full w-full h-60 object-cover object-center rounded-lg"
+                                        className="lg:w-[35%] lg:h-full w-full h-full object-cover object-center rounded-lg"
                                     />
                                     
-                                    {/* Konten Artikel */}
                                     <div className="w-full h-full flex flex-col justify-between py-6">
-                                        {/* Info Kategori & Tanggal */}
                                         <div className="flex items-center gap-x-4 text-xs text-gray-500">
                                             <time dateTime={item.datetime}>{item.date}</time>
                                             <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600">
@@ -77,9 +71,8 @@ const Article = () => {
                                             </Badge>
                                         </div>
 
-                                        {/* Judul & Deskripsi */}
                                         <div className="relative">
-                                            <h3 className="mt-3 text-lg font-semibold text-gray-900 hover:text-blue-600 transition">
+                                            <h3 className="mt-3 text-lg font-semibold text-gray-900 transition">
                                                 <a href={item.href} className="block">
                                                     {item.title}
                                                 </a>
@@ -89,7 +82,6 @@ const Article = () => {
 
                                         <Separator className="my-4" />
 
-                                        {/* Informasi Penulis */}
                                         <div className="flex items-center gap-x-4">
                                             <img 
                                                 alt={item.author.name} 
