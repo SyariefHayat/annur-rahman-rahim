@@ -42,8 +42,6 @@ const ImpactSection = () => {
                         <img
                         alt="App screenshot"
                         src="img.jpg"
-                        width={1824}
-                        height={1080}
                         className="absolute top-0 left-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
                         />
                     </div>

@@ -27,21 +27,21 @@ const ArticleSection = () => {
                     <EachUtils
                         of={LIST_ARTICLE}
                         render={(item, index) => (
-                            <article key={index} className="group flex max-w-xl flex-col items-start justify-between cursor-pointer">
+                            <article key={index} className="flex max-w-xl flex-col items-start justify-between">
                                 <div className="flex items-center gap-x-4 text-xs">
                                     <time dateTime={item.datetime} className="text-gray-500">
                                         {item.date}
                                     </time>
-                                    <Badge className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 group-hover:bg-gray-100">
+                                    <Badge className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                                         {item.category.title}
                                     </Badge>
                                 </div>
 
-                                <div className="relative">
-                                    <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                                <div>
+                                    <h3 className="relative mt-3 text-lg/6 font-semibold text-gray-900 hover:text-gray-600">
                                         <a href={item.href}>
-                                        <span className="absolute inset-0" />
-                                        {item.title}
+                                            <span className="absolute inset-0" />
+                                            {item.title}
                                         </a>
                                     </h3>
                                     <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{item.description}</p>
@@ -50,11 +50,11 @@ const ArticleSection = () => {
                                 <div className="relative mt-8 flex items-center gap-x-4">
                                     <img alt="" src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
                                     <div className="text-sm/6">
-                                        <p className="font-semibold text-gray-900">
-                                        <a href={item.author.href}>
-                                            <span className="absolute inset-0" />
-                                            {item.author.name}
-                                        </a>
+                                        <p className="relative font-semibold text-gray-900">
+                                            <a href={item.author.href}>
+                                                <span className="absolute inset-0" />
+                                                {item.author.name}
+                                            </a>
                                         </p>
                                         <p className="text-gray-600">{item.author.role}</p>
                                     </div>

@@ -38,12 +38,12 @@ const CampaignSection = () => {
                             <Card 
                                 key={index} 
                                 style={{ backgroundImage: `url(${item.backgroundImage})` }} 
-                                className="group flex max-w-xl h-[450px] flex-col items-start justify-between rounded-xl ring-1 shadow-xl ring-gray-400/10 bg-cover bg-center relative overflow-hidden"
+                                className="flex max-w-xl h-[450px] flex-col items-start justify-between rounded-xl ring-1 shadow-xl ring-gray-400/10 bg-cover bg-center relative overflow-hidden"
                             >
-                                <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent cursor-pointer"></div>
+                                <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
                                 <CardHeader>
                                     <CardTitle>
-                                        <Badge className="relative rounded-full bg-[#f3f3f3] px-3 py-1 text-xs font-medium text-gray-800 shadow-md transition-colors duration-200 group-hover:bg-gray-300">
+                                        <Badge className="relative rounded-full bg-[#f3f3f3] px-3 py-1 text-xs font-medium text-gray-800 shadow-md transition-colors duration-200 hover:bg-gray-300">
                                             {item.category.title}
                                         </Badge>
                                     </CardTitle>
@@ -57,10 +57,10 @@ const CampaignSection = () => {
                                     </div>
 
                                     <div>
-                                        <h3 className="mt-3 text-lg/6 font-semibold text-white transition-colors duration-200 group-hover:text-gray-200">
+                                        <h3 className="relative mt-3 text-lg/6 font-semibold text-white transition-colors duration-200 hover:text-gray-300">
                                             <a href={item.href}>
-                                            <span className="absolute inset-0" />
-                                            {item.title}
+                                                <span className="absolute inset-0" />
+                                                {item.title}
                                             </a>
                                         </h3>
                                         <p className="mt-5 line-clamp-3 text-sm/6 text-gray-200"> 
