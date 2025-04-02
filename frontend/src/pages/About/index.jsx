@@ -6,6 +6,7 @@ import EachUtils from '@/utils/EachUtils'
 import { LIST_TEAM } from '@/constants/listTeam'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
+import { LIST_MISI } from '@/constants/listMisi'
 
 const About = () => {
     return (
@@ -45,9 +46,9 @@ const About = () => {
                     </div>
                 </section>
 
-                <section className="overflow-hidden py-14 sm:py-24">
+                <section className="py-14 sm:py-24">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                        <div className="mx-auto grid max-w-2xl lg:h-screen grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                             <div className="lg:pt-4 lg:pr-8">
                                 <div className="lg:max-w-lg">
                                     <h2 className="text-base/7 font-semibold text-indigo-600">Perjalanan Menuju Perubahan</h2>
@@ -64,7 +65,7 @@ const About = () => {
                                 </div>
                             </div>
 
-                            <img src="campaign2.png" alt="" className="w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
+                            <img src="campaign2.png" alt="" className="hidden lg:block w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
                         </div>
                     </div>
                 </section>
@@ -84,8 +85,8 @@ const About = () => {
                     </div>
 
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-                            <img src="slide-2.png" alt="" className="w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
+                        <div className="mx-auto grid max-w-2xl lg:h-screen grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                            <img src="slide-2.png" alt="" className="hidden lg:block w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
 
                             <div className="lg:pt-4 lg:pr-8">
                                 <div className="lg:max-w-lg">
@@ -116,41 +117,27 @@ const About = () => {
                     </div>
                 </section>
 
-                <section className="overflow-hidden py-14 sm:py-24">
+                <section className="py-14 sm:py-24">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                        <div className="mx-auto grid max-w-2xl lg:h-screen grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                             <div className="lg:pt-4 lg:pr-8">
                                 <div className="lg:max-w-lg">
                                     <h2 className="text-base/7 font-semibold text-indigo-600">Perjalanan Menuju Perubahan</h2>
                                     <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Misi Kami</p>
-                                    <ol className="list-decimal pl-4">
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Memberdayakan proses pembelajaran yang optimal</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Melakukan penataan administrasi dan sarana prasarana</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Pembelajaran</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Mengintensifkan pembinaan kegiatan ekstrakurikuler</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Menciptakan lingkungan belajar yang kondusif dan
-                                            bernuansa religious</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Memotivasi siswa untuk berakhlak mulia</p>
-                                        </li>
-                                        <li>
-                                            <p className="mt-6 text-lg/8 text-gray-600">Meningkatkan pengamalan ajaran keagamaan</p>
-                                        </li>
+                                    <ol className="list-decimal pl-4 text-gray-600 text-lg/8">
+                                        <EachUtils
+                                            of={LIST_MISI}
+                                            render={(item, index) => (
+                                                <li key={index} className="mt-6">
+                                                    {item.content}
+                                                </li>
+                                            )}
+                                        />
                                     </ol>
                                 </div>
                             </div>
 
-                            <img src="slide-3.png" alt="" className="w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
+                            <img src="slide-3.png" alt="" className="hidden lg:block w-[48rem] h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-full md:-ml-4 lg:-ml-0 object-cover object-center" />
                         </div>
                     </div>
                 </section>
@@ -172,7 +159,7 @@ const About = () => {
                             <p className="mt-2 text-lg/8 text-gray-600">Kenali orang-orang hebat di balik Yatallatop. Mereka adalah individu yang berdedikasi untuk menciptakan perubahan positif.</p>
                         </div>
 
-                        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        <div className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                             <EachUtils
                                 of={LIST_TEAM}
                                 render={(item, index) => (

@@ -1,5 +1,5 @@
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Landing/Navbar'
 import Footer from '@/components/Modules/Landing/Footer'
 import EachUtils from '@/utils/EachUtils'
@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { LIST_OPERASIONAL } from '@/constants/listOperasional'
 
 const Contact = () => {
+
     return (
         <DefaultLayout>
             <Navbar />
@@ -114,6 +115,7 @@ const Contact = () => {
                                     id="first-name"
                                     name="first-name"
                                     type="text"
+                                    placeholder="John"
                                     autoComplete="given-name"
                                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                 />
@@ -126,6 +128,7 @@ const Contact = () => {
                                     id="last-name"
                                     name="last-name"
                                     type="text"
+                                    placeholder="Doe"
                                     autoComplete="family-name"
                                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                 />
@@ -139,6 +142,7 @@ const Contact = () => {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    placeholder="example@gmail.com"
                                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                 />
                             </div>
@@ -151,6 +155,7 @@ const Contact = () => {
                                     name="subject"
                                     type="text"
                                     autoComplete="organization"
+                                    placeholder="Masalah"
                                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                 />
                             </div>
@@ -159,23 +164,17 @@ const Contact = () => {
                             <Label htmlFor="phone-number" className="block text-sm/6 font-semibold text-gray-900">No Hp</Label>
                             <div className="mt-2.5">
                                 <div className="flex rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                    <div className="grid shrink-0 grid-cols-1 focus-within:relative">
-                                        <select
-                                            id="country"
-                                            name="country"
-                                            autoComplete="country"
-                                            aria-label="Country"
-                                            className="col-start-1 row-start-1 w-full appearance-none rounded-md py-2 pr-7 pl-3.5 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                        >
-                                            <option>+ 62</option>
-                                        </select>
-                                    </div>
                                     <input
                                     id="phone-number"
                                     name="phone-number"
                                     type="text"
-                                    placeholder="123-456-7890"
-                                    className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    placeholder="081456456789"
+                                    onInput={(e) => {
+                                        e.target.value = e.target.value.replace(/\D/g, "");
+                                    }}
+                                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                     />
                                 </div>
                             </div>
@@ -198,12 +197,11 @@ const Contact = () => {
                             type="submit"
                             className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Let's talk
+                            Kirim Pesan
                         </button>
                     </div>
                 </form>
             </div>
-
 
             <Footer />
         </DefaultLayout>

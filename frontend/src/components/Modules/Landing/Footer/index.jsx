@@ -7,7 +7,6 @@ const Footer = () => {
     return (
         <section className="bg-gray-900 mt-14 sm:mt-24 px-6 pt-16 pb-6 flex flex-col items-center">
             <div className="flex flex-col md:flex-row justify-between w-full max-w-7xl">
-                {/* Logo dan Deskripsi */}
                 <div className="flex-1 flex flex-col mr-10 mb-8 md:mb-0">
                     <img
                         src="/logo.png"
@@ -19,7 +18,6 @@ const Footer = () => {
                     </p>
                 </div>
 
-                {/* List Footer */}
                 <div className="flex-[1.5] w-full flex flex-wrap justify-between gap-6">
                     <EachUtils
                         of={LIST_FOOTER}
@@ -44,12 +42,10 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Footer Bottom */}
             <div className="w-full max-w-7xl border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between">
                 <p className="text-gray-400 text-sm text-center md:text-left">
                     2025 Yayasan Yatallatop, All Rights Reserved.
                 </p>
-                {/* Social Media Icons */}
                 <div className="flex gap-6 mt-4 md:mt-0">
                     <EachUtils
                         of={LIST_SOCIAL_MEDIA}
