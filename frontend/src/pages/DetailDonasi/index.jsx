@@ -9,8 +9,18 @@ import {
     FormControl,
     FormField,
     FormItem,
+    FormLabel,
     FormMessage,
 } from "@/components/ui/form"
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 import Navbar from '../Landing/Navbar'
 import EachUtils from "@/utils/EachUtils"
@@ -99,26 +109,39 @@ const DetailDonasi = () => {
                                     />
                                 </dl>
 
-                                <Form {...form}>
-                                    <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col sm:flex-row gap-3 sm:gap-0 w-full items-start space-x-2">
-                                        <FormField control={form.control} name="amount" render={() => (
-                                            <FormItem className="w-full">
-                                                <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        inputMode="numeric"
-                                                        value={formatAmount}
-                                                        onChange={handleAmountChange}
-                                                        placeholder="Rp"
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                        />
-                                        <Button type="submit">Pilih Metode Pembayaran</Button>
-                                    </form>
-                                </Form>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button className="my-6">Donasi Sekarang</Button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>Ingin Berdonasi ?</DialogTitle>
+                                            <DialogDescription>
+                                                Terima kasih atas niat baik Anda untuk berdonasi. Silakan lanjutkan proses donasi dengan mengisi informasi yang diperlukan.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <Form {...form}>
+                                            <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col sm:flex-row gap-3 sm:gap-0 w-full items-start space-x-2">
+                                                <FormField control={form.control} name="amount" render={() => (
+                                                    <FormItem className="w-full">
+                                                        <FormLabel>Nominal</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                type="text"
+                                                                inputMode="numeric"
+                                                                value={formatAmount}
+                                                                onChange={handleAmountChange}
+                                                                placeholder="Rp"
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                                />
+                                            </form>
+                                        </Form>
+                                    </DialogContent>
+                                </Dialog>
                             </div>
                         </section>
                     </article>
