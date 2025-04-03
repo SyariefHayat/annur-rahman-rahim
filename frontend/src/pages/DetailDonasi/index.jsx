@@ -1,14 +1,35 @@
+import { z } from "zod"
 import React, { useState } from 'react'
+import { useForm } from "react-hook-form"
 import { useParams } from 'react-router-dom'
+import { zodResolver } from "@hookform/resolvers/zod"
+
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@/components/ui/form"
 
 import Navbar from '../Landing/Navbar'
-import { Input } from '@/components/ui/input'
+import EachUtils from "@/utils/EachUtils"
+import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
+import { LIST_STATS } from "@/constants/listStat"
 import Footer from '@/components/Modules/Landing/Footer'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+const AmountSchema = z.object({
+    amount: z.string()
+        .min(1, { message: "Masukkan nominal" })
+        .regex(/^\d+$/, { message: "Nominal harus berupa angka" })
+        .transform((val) => Number(val))
+        .refine((val) => val >= 5000, { message: "Nominal minimal Rp 5000" })
+})
 
 const DetailDonasi = () => {
     const { id } = useParams();
@@ -16,18 +37,23 @@ const DetailDonasi = () => {
     const campaign = LIST_CAMPAIGN[index];
     const [formatAmount, setFormatAmount] = useState("");
 
-    const stats = [
-        { id: 1, name: 'Target Pendanaan', value: '1.000.000' },
-        { id: 2, name: 'Dana Terkumpul', value: '100.000' },
-        { id: 3, name: 'Presentase', value: '10%' },
-    ]
+    const form = useForm({
+        resolver: zodResolver(AmountSchema),
+        defaultValues: {
+            amount: "",
+        },
+    })
 
     const handleAmountChange = (e) => {
-        const rawValue = e.target.value.replace(/\D/g, ""); // Hanya angka
-        setFormatAmount(rawValue ? `Rp ${parseInt(rawValue).toLocaleString("id-ID")}` : "Rp ");
+        const rawValue = e.target.value.replace(/\D/g, "");
+        setFormatAmount(rawValue ? `Rp ${parseInt(rawValue).toLocaleString("id-ID")}` : "");
         
         form.setValue("amount", rawValue);
     };
+
+    const onSubmit = async (data) => {
+        alert("Jumlah uang: " + data.amount)
+    } 
 
     return (
         <DefaultLayout>
@@ -36,7 +62,7 @@ const DetailDonasi = () => {
                 <div className="mx-auto max-w-7xl">
                     <article className="mx-auto max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                         <figure>
-                            <img src={campaign.backgroundImage} alt={campaign.title} className="w-full h-full max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 md:-ml-4 lg:-ml-0 object-cover object-center" />
+                            <img src={campaign.backgroundImage} alt={campaign.title} className="w-full h-screen max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 md:-ml-4 lg:-ml-0 object-cover object-center" />
                         </figure>
                         
                         <section className="lg:pt-4 lg:pr-8">
@@ -54,34 +80,43 @@ const DetailDonasi = () => {
                             <header className="lg:max-w-lg">
                                 <h2 className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">{campaign.title}</h2>
                             </header>
-                            <p className="mt-6 text-lg/8 text-gray-600">{campaign.description}</p>
+                            <p className="my-6 text-lg/8 text-gray-600">{campaign.description}</p>
                             
-                            {/* <Progress value={33} /> */}
-                            <div className="bg-white my-8">
-                                <div className="mx-auto max-w-7xl">
-                                    <dl className="flex flex-wrap justify-between gap-8 text-center">
-                                    {stats.map((stat) => (
-                                        <div key={stat.id} className="flex flex-col items-center max-w-xs gap-y-4 border p-6 rounded-lg shadow-md">
-                                        <dt className="text-base text-gray-600">{stat.name}</dt>
-                                        <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
-                                            {stat.value}
-                                        </dd>
-                                        </div>
-                                    ))}
-                                    </dl>
-                                </div>
-                                <div className="my-8">
-                                    <Input
-                                        type="text"
-                                        value={formatAmount}
-                                        onChange={handleAmountChange}
-                                        placeholder="Masukkan nominal"
-                                        className="py-5"
+                            <div>
+                                <dl className="grid gap-8 grid-cols-2 lg:grid-cols-3">
+                                    <EachUtils
+                                        of={LIST_STATS}
+                                        render={(item, index) => (
+                                            <div key={index} className="flex flex-col-reverse gap-1">
+                                                <dt className="text-base text-gray-600">{item.name}</dt>
+                                                <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
+                                                    {item.value}
+                                                </dd>
+                                            </div>
+                                        )}
                                     />
-                                    <Button className="w-full mt-5 cursor-pointer">
-                                        Pilih Metode Pembayaran
-                                    </Button>
-                                </div>
+                                </dl>
+
+                                <Form {...form}>
+                                    <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col sm:flex-row gap-3 sm:gap-0 w-full items-start space-x-2">
+                                        <FormField control={form.control} name="amount" render={() => (
+                                            <FormItem className="w-full">
+                                                <FormControl>
+                                                    <Input
+                                                        type="text"
+                                                        inputMode="numeric"
+                                                        value={formatAmount}
+                                                        onChange={handleAmountChange}
+                                                        placeholder="Rp"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                        />
+                                        <Button type="submit">Pilih Metode Pembayaran</Button>
+                                    </form>
+                                </Form>
                             </div>
                         </section>
                     </article>
