@@ -34,8 +34,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { LIST_DONATUR } from "@/constants/listDonatur"
 import { LIST_PRAY } from "@/constants/listPray"
+import { Switch } from "@/components/ui/switch"
 
-const AmountSchema = z.object({
+const FormSchema = z.object({
+    fullName: z.string()
+        .min(1, { message: "Masukkan Nama Lengkap" }),
+    email: z.string()
+        .min(1, { message: "Masukkan email anda" }),
     amount: z.string()
         .min(1, { message: "Masukkan nominal" })
         .regex(/^\d+$/, { message: "Nominal harus berupa angka" })
@@ -50,8 +55,10 @@ const DetailDonasi = () => {
     const [formatAmount, setFormatAmount] = useState("");
 
     const form = useForm({
-        resolver: zodResolver(AmountSchema),
+        resolver: zodResolver(FormSchema),
         defaultValues: {
+            fullName: "",
+            email: "",
             amount: "",
         },
     })
@@ -111,7 +118,7 @@ const DetailDonasi = () => {
 
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button className="my-6">Donasi Sekarang</Button>
+                                        <Button className="my-6 cursor-pointer">Donasi Sekarang</Button>
                                     </DialogTrigger>
                                     <DialogContent>
                                         <DialogHeader>
@@ -121,22 +128,55 @@ const DetailDonasi = () => {
                                             </DialogDescription>
                                         </DialogHeader>
                                         <Form {...form}>
-                                            <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col sm:flex-row gap-3 sm:gap-0 w-full items-start space-x-2">
+                                            <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col gap-3 w-full">
+                                                <FormField control={form.control} name="full-name" render={() => (
+                                                        <FormItem>
+                                                            <FormLabel>Nama Lengkap</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    type="text"
+                                                                    placeholder="Masukkan nama lengkap"
+                                                                />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField control={form.control} name="email" render={() => (
+                                                        <FormItem>
+                                                            <FormLabel>Email</FormLabel>
+                                                            <FormControl>
+                                                                <Input type="email" placeholder="example@gmail.com"/>
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+
                                                 <FormField control={form.control} name="amount" render={() => (
-                                                    <FormItem className="w-full">
-                                                        <FormLabel>Nominal</FormLabel>
-                                                        <FormControl>
-                                                            <Input
-                                                                type="text"
-                                                                inputMode="numeric"
-                                                                value={formatAmount}
-                                                                onChange={handleAmountChange}
-                                                                placeholder="Rp"
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
+                                                        <FormItem>
+                                                            <FormLabel>Nominal</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    type="text"
+                                                                    inputMode="numeric"
+                                                                    value={formatAmount}
+                                                                    onChange={handleAmountChange}
+                                                                    placeholder="Rp"
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField control={form.control} name="anonim" render={() => (
+                                                        <FormItem className="flex items-center space-x-2">
+                                                            <FormLabel>Sembunyikan nama saya</FormLabel>
+                                                            <FormControl>
+                                                                <Switch/>
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
                                                 />
                                             </form>
                                         </Form>
