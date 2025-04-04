@@ -1,5 +1,5 @@
 import { z } from "zod"
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from "react-hook-form"
 import { useParams } from 'react-router-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -26,33 +26,48 @@ import Navbar from '../Landing/Navbar'
 import EachUtils from "@/utils/EachUtils"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
+import { Switch } from "@/components/ui/switch"
+import { LIST_PRAY } from "@/constants/listPray"
 import { LIST_STATS } from "@/constants/listStat"
+import { Textarea } from "@/components/ui/textarea"
+import { LIST_DONATUR } from "@/constants/listDonatur"
 import Footer from '@/components/Modules/Landing/Footer'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { LIST_DONATUR } from "@/constants/listDonatur"
-import { LIST_PRAY } from "@/constants/listPray"
-import { Switch } from "@/components/ui/switch"
 
 const FormSchema = z.object({
     fullName: z.string()
-        .min(1, { message: "Masukkan Nama Lengkap" }),
+        .min(1, { message: "Masukkan Nama Lengkap" })
+        .trim()
+        .refine((val) => /^[a-zA-Z\s']+$/.test(val), {
+            message: "Nama hanya boleh berisi huruf"
+        }),
+
     email: z.string()
-        .min(1, { message: "Masukkan email anda" }),
+        .min(1, { message: "Masukkan email anda" })
+        .email({ message: "Format email tidak valid" }),
+
     amount: z.string()
         .min(1, { message: "Masukkan nominal" })
         .regex(/^\d+$/, { message: "Nominal harus berupa angka" })
-        .transform((val) => Number(val))
-        .refine((val) => val >= 5000, { message: "Nominal minimal Rp 5000" })
+        .transform((val) => parseInt(val, 10))
+        .refine((val) => val >= 5000, { message: "Nominal minimal Rp 5000" }),
+
+    message: z.string()
+        .optional()
+        .refine((val) => !val || val.length <= 280, {
+            message: "Pesan maksimal 280 karakter",
+        }),
+
+    isAnonymous: z.boolean().default(false),
 })
 
 const DetailDonasi = () => {
     const { id } = useParams();
     const index = parseInt(id, 10);
     const campaign = LIST_CAMPAIGN[index];
-    const [formatAmount, setFormatAmount] = useState("");
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -60,18 +75,23 @@ const DetailDonasi = () => {
             fullName: "",
             email: "",
             amount: "",
+            message: "",
+            isAnonymous: false,
         },
     })
 
-    const handleAmountChange = (e) => {
-        const rawValue = e.target.value.replace(/\D/g, "");
-        setFormatAmount(rawValue ? `Rp ${parseInt(rawValue).toLocaleString("id-ID")}` : "");
-        
-        form.setValue("amount", rawValue);
-    };
+    const formatAmount = (value) => {
+        if (!value) return "";
+        return `Rp ${Number(value).toLocaleString("id-ID")}`;
+    }
 
     const onSubmit = async (data) => {
-        alert("Jumlah uang: " + data.amount)
+        alert(`Nama Lengkap: ${data.fullName}
+Email: ${data.email}
+Nominal: ${data.amount}
+Message: ${data.message}
+isAnonim: ${data.isAnonymous}
+            `)
     } 
 
     return (
@@ -128,39 +148,40 @@ const DetailDonasi = () => {
                                             </DialogDescription>
                                         </DialogHeader>
                                         <Form {...form}>
-                                            <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 flex flex-col gap-3 w-full">
-                                                <FormField control={form.control} name="full-name" render={() => (
+                                            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-5 w-full">
+                                                <FormField control={form.control} name="fullName" render={({ field }) => (
                                                         <FormItem>
                                                             <FormLabel>Nama Lengkap</FormLabel>
                                                             <FormControl>
-                                                                <Input
-                                                                    type="text"
-                                                                    placeholder="Masukkan nama lengkap"
+                                                                <Input type="text" placeholder="John Doe" {...field}
                                                                 />
                                                             </FormControl>
                                                         </FormItem>
                                                     )}
                                                 />
 
-                                                <FormField control={form.control} name="email" render={() => (
+                                                <FormField control={form.control} name="email" render={({ field }) => (
                                                         <FormItem>
                                                             <FormLabel>Email</FormLabel>
                                                             <FormControl>
-                                                                <Input type="email" placeholder="example@gmail.com"/>
+                                                                <Input type="email" placeholder="example@gmail.com" {...field}/>
                                                             </FormControl>
                                                         </FormItem>
                                                     )}
                                                 />
 
-                                                <FormField control={form.control} name="amount" render={() => (
+                                                <FormField control={form.control} name="amount" render={({ field }) => (
                                                         <FormItem>
                                                             <FormLabel>Nominal</FormLabel>
                                                             <FormControl>
                                                                 <Input
                                                                     type="text"
                                                                     inputMode="numeric"
-                                                                    value={formatAmount}
-                                                                    onChange={handleAmountChange}
+                                                                    value={formatAmount(field.value)}
+                                                                    onChange={(e) => {
+                                                                        const raw = e.target.value.replace(/[^\d]/g, "");
+                                                                        field.onChange(raw);
+                                                                    }}
                                                                     placeholder="Rp"
                                                                 />
                                                             </FormControl>
@@ -169,15 +190,25 @@ const DetailDonasi = () => {
                                                     )}
                                                 />
 
-                                                <FormField control={form.control} name="anonim" render={() => (
+                                                <FormField control={form.control} name="message" render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Sertakan doa dan dukungan (opsional)</FormLabel>
+                                                            <Textarea placeholder="Tulis doa untuk penggalang dana atau dirimu agar bisa diamini oleh orang baik lainnya" {...field} />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField control={form.control} name="isAnonymous" render={({ field }) => (
                                                         <FormItem className="flex items-center space-x-2">
                                                             <FormLabel>Sembunyikan nama saya</FormLabel>
                                                             <FormControl>
-                                                                <Switch/>
+                                                                <Switch checked={field.value} onCheckedChange={field.onChange}/>
                                                             </FormControl>
                                                         </FormItem>
                                                     )}
                                                 />
+
+                                                <Button>Pilih Metode Pembayaran</Button>
                                             </form>
                                         </Form>
                                     </DialogContent>
