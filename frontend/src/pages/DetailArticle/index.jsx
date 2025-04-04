@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Check, Copy, MessageCircle, Share2, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Check, Copy, Image, MessageCircle, Share2, ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import Navbar from '../Landing/Navbar'
 import { Badge } from '@/components/ui/badge'
@@ -31,7 +31,20 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
+
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 const DetailArticle = () => {
     const { id } = useParams();
@@ -170,9 +183,32 @@ const DetailArticle = () => {
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
 
-                                <Input placeholder="Tambahkan Komentar..."/>
+                                <Input className="hidden sm:block" placeholder="Tambahkan Komentar..."/>
 
-                                <Button>
+                                <Drawer>
+                                    <DrawerTrigger asChild>
+                                        <button className="block sm:hidden w-full text-left text-gray-500 border rounded-md px-3 py-2">
+                                            Tambahkan Komentar...
+                                        </button>
+                                    </DrawerTrigger>
+                                    <DrawerContent className="h-[90vh]">
+                                        <DrawerHeader>
+                                            <DrawerTitle>Tambah Komentar</DrawerTitle>
+                                            <DrawerDescription>Silakan tuliskan komentar Anda di bawah ini.</DrawerDescription>
+                                        </DrawerHeader>
+                                        <div className="flex-1 px-4 space-y-4 overflow-auto">
+                                            <Textarea className="w-full h-full border-none outline-none" placeholder="Tambahkan Komentar..." />
+                                        </div>
+                                        <DrawerFooter>
+                                            <Button>Kirim</Button>
+                                            <DrawerClose asChild>
+                                                <Button variant="outline">Batal</Button>
+                                            </DrawerClose>
+                                        </DrawerFooter>
+                                    </DrawerContent>
+                                </Drawer>
+
+                                <Button className="hidden sm:block">
                                     Tambahkan Komentar
                                 </Button>
                             </div>
@@ -196,7 +232,7 @@ const DetailArticle = () => {
                             <div className="w-full">
                                 <div className="w-full">
                                     <Comment article={article}>
-                                        <Comment article={article} size={"w-8 h-8"} />
+                                        <Comment article={article} size={"w-9 h-9"} />
                                     </Comment>
                                 </div>
                             </div>
