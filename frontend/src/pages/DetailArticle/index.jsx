@@ -84,18 +84,18 @@ const DetailArticle = () => {
             <Navbar position={"relative"} />
             <section>
                 <img src={`/slide-${index + 1}.png`} alt="" className="w-full h-screen object-cover object-center" />
-                <div className="mx-auto my-12 flex flex-col gap-6 w-full h-full lg:w-4xl items-start">
+                <div className="mx-auto my-12 flex flex-col gap-6 w-full h-full lg:w-4xl items-start px-6">
                     <div className="flex items-center gap-x-4">
                         <img 
                             alt={article.author.name} 
                             src={article.author.imageUrl} 
                             className="w-10 h-10 rounded-full bg-gray-200 object-cover"
                         />
-                        <div className="text-sm">
+                        <div className="text-sm/6">
                             <p className="font-semibold text-gray-900 truncate">
                                 <a href={article.author.href} className="hover:underline">{article.author.name}</a>
                             </p>
-                            <div className="w-full flex gap-3">
+                            <div className="w-full flex items-center justify-center gap-3">
                                 <p className="text-gray-600">{article.author.role}</p>
                                 <p>.</p>
                                 <p className="text-sm text-gray-600">29 Maret</p>
@@ -103,13 +103,13 @@ const DetailArticle = () => {
                         </div>
                     </div>
 
-                    <h1 className="text-5xl font-semibold tracking-tight text-gray-900">{article.title}</h1>
+                    <h2 className="text-4xl font-semibold tracking-tight text-gray-900">{article.title}</h2>
 
                     <Badge className="rounded-full px-3 py-1.5 font-medium">{article.category.title}</Badge>
                     
-                    <p className="text-gray-700 leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta culpa ipsum corrupti maxime eos iusto explicabo provident minima odit, sunt possimus. Commodi voluptate doloremque tempore repellat possimus esse laborum iusto.</p>
+                    <p className="text-gray-600 leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta culpa ipsum corrupti maxime eos iusto explicabo provident minima odit, sunt possimus. Commodi voluptate doloremque tempore repellat possimus esse laborum iusto.</p>
 
-                    <p className="text-gray-700 leading-relaxed">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque reprehenderit sunt itaque atque repellat libero explicabo nam facere quibusdam consequatur doloribus, error eum sequi dolor tempora magnam ab! Impedit, rem illo! Rem consectetur ullam itaque voluptates quaerat exercitationem sapiente explicabo? Voluptatibus reprehenderit, expedita nulla dicta possimus saepe dolorum rerum tenetur quae obcaecati doloribus, non quis fugiat? Eaque incidunt autem cumque, neque numquam officia similique quis id accusantium voluptates ad, quos eos corrupti quaerat hic reprehenderit! Excepturi impedit quaerat, vero doloremque nisi dolorem ducimus, dicta odit perspiciatis cum illum ipsa debitis quam molestias harum esse vitae eaque aliquam cupiditate reiciendis incidunt?</p>
+                    <p className="text-gray-600 leading-relaxed">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque reprehenderit sunt itaque atque repellat libero explicabo nam facere quibusdam consequatur doloribus, error eum sequi dolor tempora magnam ab! Impedit, rem illo! Rem consectetur ullam itaque voluptates quaerat exercitationem sapiente explicabo? Voluptatibus reprehenderit, expedita nulla dicta possimus saepe dolorum rerum tenetur quae obcaecati doloribus, non quis fugiat? Eaque incidunt autem cumque, neque numquam officia similique quis id accusantium voluptates ad, quos eos corrupti quaerat hic reprehenderit! Excepturi impedit quaerat, vero doloremque nisi dolorem ducimus, dicta odit perspiciatis cum illum ipsa debitis quam molestias harum esse vitae eaque aliquam cupiditate reiciendis incidunt?</p>
 
                     <p className="text-gray-700 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dolores animi, inventore eaque ipsam sapiente quisquam, facere iure repudiandae repellendus, eveniet numquam temporibus atque sed corrupti ad similique corporis soluta. Soluta voluptatum consectetur inventore, velit fugiat ducimus praesentium exercitationem nam saepe, quam pariatur aperiam maiores eaque sequi vel id. Mollitia.</p>
 
