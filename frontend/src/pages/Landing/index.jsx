@@ -3,12 +3,12 @@ import React from 'react'
 import Navbar from './Navbar'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import FaqSection from '@/components/Modules/Landing/FaqSection'
-import HeroSection from '@/components/Modules/Landing/HeroSection'
-import ImpactSection from '@/components/Modules/Landing/ImpactSection'
-import FeatureSection from '@/components/Modules/Landing/FeatureSection'
-import ArticleSection from '@/components/Modules/Landing/ArticleSection'
-import CampaignSection from '@/components/Modules/Landing/CampaignSection'
+import HeroSection from '@/components/Modules/Landing/SectionContents/HeroSection'
+import FeatureSection from '@/components/Modules/Landing/SectionContents/FeatureSection'
+import CampaignSection from '@/components/Modules/Landing/SectionContents/CampaignSection'
+import ImpactSection from '@/components/Modules/Landing/SectionContents/ImpactSection'
+import ArticleSection from '@/components/Modules/Landing/SectionContents/ArticleSection'
+import FaqSection from '@/components/Modules/Landing/SectionContents/FaqSection'
 
 const Landing = () => {
     return (

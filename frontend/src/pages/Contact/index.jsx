@@ -20,7 +20,7 @@ const Contact = () => {
                 <ClipPathUp />
 
                 <div className="mx-auto max-w-3xl mt-20 px-3 sm:px-0 text-center">
-                    <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Hubungi Yayasan Yatallatop</h1>
+                    <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Hubungi Yayasan Annur Rahman Rahim</h1>
 
                     <p className="mt-8 text-lg font-medium text-gray-500 sm:text-xl">Kami percaya bahwa setiap kontribusi, besar atau kecil, dapat membawa perubahan positif. Jangan ragu untuk menghubungi kami.</p>
                 </div>
