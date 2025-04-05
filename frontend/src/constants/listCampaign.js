@@ -2,6 +2,8 @@ export const LIST_CAMPAIGN = [
     {
         datetime: "2024-03-23",
         date: "March 23, 2024",
+        target: 10_000_000,
+        collected: 1_250_000,
         category: {
             href: "#",
             title: "Kesehatan",
@@ -20,6 +22,8 @@ export const LIST_CAMPAIGN = [
     {
         datetime: "2024-03-20",
         date: "March 20, 2024",
+        target: 5_000_000,
+        collected: 3_000_000,
         category: {
             href: "#",
             title: "Pendidikan",
@@ -38,6 +42,8 @@ export const LIST_CAMPAIGN = [
     {
         datetime: "2024-03-18",
         date: "March 18, 2024",
+        target: 30_000_000,
+        collected: 10_000_000,
         category: {
             href: "#",
             title: "Bencana Alam",

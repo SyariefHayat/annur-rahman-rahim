@@ -4,7 +4,7 @@ import ClipPathDown from '../../Element/ClipPathDown';
 
 const HeroSection = () => {
     return (
-        <section className="relative w-full h-screen flex items-center justify-center">
+        <section aria-label="Hero section" className="relative w-full h-screen flex items-center justify-center">
             <ClipPathUp/>
 
             <div className="mx-auto max-w-3xl mt-20 px-3 sm:px-0 text-center">
