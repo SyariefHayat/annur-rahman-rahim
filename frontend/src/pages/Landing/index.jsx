@@ -1,13 +1,14 @@
-import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import React from 'react'
+
 import Navbar from './Navbar'
-import HeroSection from '@/components/Modules/Landing/HeroSection'
-import CampaignSection from '@/components/Modules/Landing/CampaignSection'
-import ArticleSection from '@/components/Modules/Landing/ArticleSection'
 import Footer from '@/components/Modules/Landing/Footer'
+import DefaultLayout from '@/components/Layouts/DefaultLayout'
+import FaqSection from '@/components/Modules/Landing/FaqSection'
+import HeroSection from '@/components/Modules/Landing/HeroSection'
 import ImpactSection from '@/components/Modules/Landing/ImpactSection'
 import FeatureSection from '@/components/Modules/Landing/FeatureSection'
-import FaqSection from '@/components/Modules/Landing/FaqSection'
+import ArticleSection from '@/components/Modules/Landing/ArticleSection'
+import CampaignSection from '@/components/Modules/Landing/CampaignSection'
 
 const Landing = () => {
     return (

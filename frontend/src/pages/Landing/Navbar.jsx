@@ -20,11 +20,11 @@ const Navbar = ({ position }) => {
             <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Yayasan Yatallatop</span>
+                        <span className="sr-only">Yayasan Annur Rahman Rahim</span>
                         <img
-                            alt="logo yayasan yatallatop"
-                            src="/logo2.png"
-                            className="h-14 w-auto"
+                            alt="logo yayasan annur rahman rahim"
+                            src="/logo.png"
+                            className="h-10 w-auto"
                         />
                     </a>
                 </div>
@@ -40,10 +40,10 @@ const Navbar = ({ position }) => {
                             <SheetHeader>
                                 <SheetTitle>
                                     <a href="#" className="-m-1.5 p-1.5">
-                                        <span className="sr-only">Yatallatop</span>
+                                        <span className="sr-only">Annur Rahman Rahim</span>
                                         <img
-                                        alt=""
-                                        src="/logo2.png"
+                                        alt="logo yayasan annur rahman rahim"
+                                        src="/logo.png"
                                         className="h-8 w-auto"
                                         />
                                     </a>

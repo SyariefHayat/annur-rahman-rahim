@@ -1,11 +1,9 @@
-import styles from '@/style'
 import React from 'react'
 
-const SectionLayout = ({ size ,bgColor, title, style , children }) => {
+const SectionLayout = ({ children }) => {
     return (
-        <section className={`w-full ${size} flex flex-col justify-between ${styles.padding} ${bgColor}`}>
-            <h3 className="text-5xl font-medium text-center mb-12">{title}</h3>
-            <div className={`${style}`}>
+        <section className="relative py-14 sm:py-24">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 {children}
             </div>
         </section>
