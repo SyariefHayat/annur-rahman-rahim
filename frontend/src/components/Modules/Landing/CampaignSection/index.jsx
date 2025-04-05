@@ -23,16 +23,16 @@ const CampaignSection = () => {
                     of={LIST_CAMPAIGN}
                     render={(item, index) => (
                         <article key={index} className="relative flex max-w-xl h-[650px] flex-col items-start justify-between overflow-hidden">
-                            <div className="w-full h-full rounded-xl overflow-hidden">
+                            <figure className="w-full h-full rounded-xl overflow-hidden">
                                 <img src={`${item.backgroundImage}`} alt={item.title} className="w-full h-full object-cover object-center" />
-                            </div>
+                            </figure>
                             <div className="w-full h-full flex flex-col pt-8">
-                                <div className="flex items-center gap-x-4 text-xs text-gray-600">
+                                <header className="flex items-center gap-x-4 text-xs text-gray-600">
                                     <time dateTime={item.datetime}>{item.date}</time>
                                     <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600">
                                         {item.category.title}
                                     </Badge>
-                                </div>
+                                </header>
                                 
                                 <div>
                                     <a href={item.href}>
@@ -56,7 +56,7 @@ const CampaignSection = () => {
                                     </div>
                                 </div>
 
-                                <div className="relative flex items-center gap-x-4">
+                                <footer className="relative flex items-center gap-x-4">
                                     <img alt={item.author.name} src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
                                     <div className="text-sm/6">
                                         <p className="relative font-semibold text-gray-900">
@@ -66,7 +66,7 @@ const CampaignSection = () => {
                                         </p>
                                         <p className="text-gray-600">{item.author.role}</p>
                                     </div>
-                                </div>
+                                </footer>
                             </div>
                         </article>
                     )}
