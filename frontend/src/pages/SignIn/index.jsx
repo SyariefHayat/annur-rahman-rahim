@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useAtom } from 'jotai';
 import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
@@ -27,7 +27,6 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
@@ -52,8 +51,6 @@ const LoginSchema = z.object({
 })
 
 const SignIn = ({ className, ...props }) => {
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const [, setEmailStorage] = useAtom(emailStorageAtom);
@@ -184,7 +181,7 @@ const SignIn = ({ className, ...props }) => {
                                         <Separator />
                                     </div>
 
-                                    <GoogleButton text="Lanjutkan dengan Google" />
+                                    <GoogleButton />
                                 </form>
                             </Form>
 

@@ -9,7 +9,7 @@ import { auth, provider } from '@/services/firebase/firebase';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms';
 
-const GoogleButton = ({ text }) => {
+const GoogleButton = () => {
     const [, setEmailStorage] = useAtom(emailStorageAtom);
     const [, setTokenStorage] = useAtom(tokenStorageAtom);
     const [, setUser] = useAtom(userAtom);
@@ -99,7 +99,7 @@ const GoogleButton = ({ text }) => {
 
     return (
         <Button variant="outline" onClick={handleGoogleSignIn} className="w-full cursor-pointer">
-            {text}
+            Lanjutkan dengan Google
         </Button>
     );
 };
