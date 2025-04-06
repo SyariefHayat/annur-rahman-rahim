@@ -9,6 +9,8 @@ import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
 import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { getInitial } from '@/utils/getInitial'
 
 const Article = () => {
 
@@ -62,7 +64,11 @@ const Article = () => {
                                         <Separator className="my-4" />
 
                                         <footer className="relative flex items-center gap-x-4">
-                                            <img alt={item.author.name} src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
+                                            <Avatar className="size-10 bg-gray-50">
+                                                <AvatarImage src={item.author.imageUrl} />
+                                                <AvatarFallback>{getInitial(item.author?.name)}</AvatarFallback>
+                                            </Avatar>
+
                                             <div className="text-sm/6">
                                                 <p className="relative font-semibold text-gray-900">
                                                     <a href={item.author.href} className="hover:underline">

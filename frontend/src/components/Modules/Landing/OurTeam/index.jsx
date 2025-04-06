@@ -6,6 +6,8 @@ import { LIST_TEAM } from '@/constants/listTeam'
 import ClipPathUp from '../../Element/ClipPathUp'
 import ClipPathDown from '../../Element/ClipPathDown'
 import SectionLayout from '@/components/Layouts/SectionLayout'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { getInitial } from '@/utils/getInitial'
 
 const OurTeam = () => {
     return (
@@ -25,21 +27,19 @@ const OurTeam = () => {
                             key={index} 
                             className="group flex max-w-xl h-[450px] flex-col items-center justify-center gap-5 rounded-xl ring-1 shadow-lg ring-gray-400/10 relative overflow-hidden bg-gray-100 transition-transform hover:scale-105"
                         >
-                            <figure className="w-40 h-40 border-4 border-white rounded-full overflow-hidden">
-                                <img 
-                                    src="https://github.com/shadcn.png" 
-                                    alt="Profile" 
-                                    className="w-full h-full object-cover"
-                                />
-                            </figure>
+                            <Avatar className="w-40 h-40 border-4 border-white rounded-full overflow-hidden">
+                                <AvatarImage src={item.image} />
+                                <AvatarFallback>{getInitial(item.name)}</AvatarFallback>
+                            </Avatar>
+                            
                             <header className="text-center">
                                 <p className="text-lg font-semibold text-gray-900">{item.name}</p>
                                 <p className="text-sm text-gray-600">{item.job}</p>
                             </header>
                             <footer className="flex gap-4 text-gray-500">
-                                <FaFacebook className="text-xl hover:text-blue-600 transition-colors" />
-                                <FaInstagram className="text-xl hover:text-pink-500 transition-colors" />
-                                <FaTwitter className="text-xl hover:text-blue-400 transition-colors" />
+                                <FaFacebook className="text-xl hover:text-blue-600 transition-colors cursor-pointer" />
+                                <FaInstagram className="text-xl hover:text-pink-500 transition-colors cursor-pointer" />
+                                <FaTwitter className="text-xl hover:text-blue-400 transition-colors cursor-pointer" />
                             </footer>
                         </article>
                     )}

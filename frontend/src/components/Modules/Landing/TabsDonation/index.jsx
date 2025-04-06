@@ -10,6 +10,7 @@ import {
 
 import EachUtils from '@/utils/EachUtils'
 import { Toggle } from "@/components/ui/toggle"
+import { getInitial } from '@/utils/getInitial'
 import { LIST_PRAY } from "@/constants/listPray"
 import { Separator } from "@/components/ui/separator"
 import { LIST_DONATUR } from "@/constants/listDonatur"
@@ -18,8 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const TabsDonation = () => {
-    const [prayers, setPrayers] = useState([10, 17, 4]);
-    const [isPrays, setIsPrays] = useState([false, false, false]);
+    const [prayers, setPrayers] = useState([10, 17, 4, 27, 8]);
+    const [isPrays, setIsPrays] = useState([false, false, false, false, false]);
 
     const handleTogglePray = (index) => {
         setPrayers((prev) => {
@@ -61,8 +62,8 @@ const TabsDonation = () => {
                                 <Card key={index}>
                                     <CardContent className="flex items-center gap-x-4">
                                         <Avatar className="w-14 h-14">
-                                            <AvatarImage src="https://github.com/shadcn.png" />
-                                            <AvatarFallback>CN</AvatarFallback>
+                                            <AvatarImage src={item.isAnonim ? "https://github.com/shadcn.png" : item.imageUrl} />
+                                            <AvatarFallback>{item.isAnonim ? getInitial("Orang Baik") : getInitial(item.name)}</AvatarFallback>
                                         </Avatar>
 
                                         <div className="text-sm/6">
@@ -91,9 +92,9 @@ const TabsDonation = () => {
                                 <Card key={index} className="gap-2 pb-0">
                                     <CardHeader>
                                         <div className="flex items-center gap-x-4">
-                                            <Avatar className="w-10 h-10">
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
+                                            <Avatar className="w-14 h-14">
+                                                <AvatarImage src={item.isAnonim ? "https://github.com/shadcn.png" : item.imageUrl} />
+                                                <AvatarFallback>{item.isAnonim ? getInitial("Orang Baik") : getInitial(item.name)}</AvatarFallback>
                                             </Avatar>
 
                                             <div className="text-sm/6">

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import Navbar from '../Landing/Navbar'
 import EachUtils from "@/utils/EachUtils"
+import { getInitial } from '@/utils/getInitial'
 import { LIST_STATS } from "@/constants/listStat"
 import { Progress } from "@/components/ui/progress"
 import Footer from '@/components/Modules/Landing/Footer'
@@ -10,6 +11,7 @@ import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import TabsDonation from '@/components/Modules/Landing/TabsDonation'
 import DialogDonation from "@/components/Modules/Landing/DialogDonation"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const DetailDonasi = () => {
     const { id } = useParams();
@@ -28,7 +30,11 @@ const DetailDonasi = () => {
                         
                         <section className="lg:pt-4 lg:pr-8">
                             <header className="relative my-8 flex items-center gap-x-4">
-                                <img alt={campaign.author.name} src={campaign.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
+                                <Avatar className="size-10 bg-gray-50">
+                                    <AvatarImage src={campaign.author.imageUrl} />
+                                    <AvatarFallback>{getInitial(campaign.author?.name)}</AvatarFallback>
+                                </Avatar>
+
                                 <div className="text-sm/6">
                                     <p className="font-semibold text-gray-900">
                                         <a href={campaign.author.href} className="hover:underline">

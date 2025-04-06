@@ -33,7 +33,7 @@ export const LIST_TEAM = [
         id: 6,
         name: "Fitri Handayani",
         job: "Pengembang Mobile",
-        image: "https://randomuser.me/api/portraits/women/6.jpg",
+        image: "https://randomuser.me/api/portraits/women/9.jpg",
     },
     {
         id: 7,

@@ -8,11 +8,13 @@ import { isCommentAtom } from '@/jotai/atoms'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Toggle } from "@/components/ui/toggle"
+import { getInitial } from '@/utils/getInitial'
 import { LIST_ARTICLE } from '@/constants/listArticle'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import DialogShare from '@/components/Modules/Landing/DialogShare'
 import DrawerComment from '@/components/Modules/Landing/DrawerComment'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const DetailArticle = () => {
     const { id } = useParams();
@@ -51,11 +53,11 @@ const DetailArticle = () => {
                 <img src={`/slide-${index + 1}.png`} alt="" className="w-full h-full sm:h-screen object-cover object-center" />
                 <article className="mx-auto my-12 flex flex-col gap-6 w-full h-full lg:w-4xl items-start px-6">
                     <div className="flex items-center gap-x-4">
-                        <img 
-                            alt={article.author.name} 
-                            src={article.author.imageUrl} 
-                            className="w-10 h-10 rounded-full bg-gray-200 object-cover"
-                        />
+                        <Avatar className="size-10 bg-gray-50">
+                            <AvatarImage src={article.author.imageUrl} />
+                            <AvatarFallback>{getInitial(article.author?.name)}</AvatarFallback>
+                        </Avatar>
+
                         <div className="text-sm/6">
                             <p className="font-semibold text-gray-900 truncate">
                                 <a href={article.author.href} className="hover:underline">{article.author.name}</a>

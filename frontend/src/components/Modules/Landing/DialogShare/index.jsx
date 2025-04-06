@@ -42,9 +42,9 @@ const DialogShare = () => {
 
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Share link</DialogTitle>
+                    <DialogTitle>Bagikan Tautan</DialogTitle>
                     <DialogDescription>
-                        Anyone who has this link will be able to view this.
+                        Siapa pun yang memiliki tautan ini dapat melihat konten ini.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -64,7 +64,7 @@ const DialogShare = () => {
 
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
-                        <Button>Close</Button>
+                        <Button>Tutup</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

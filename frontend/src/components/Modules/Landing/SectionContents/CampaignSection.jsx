@@ -2,11 +2,13 @@ import React from 'react'
 
 import EachUtils from '@/utils/EachUtils'
 import { Badge } from '@/components/ui/badge'
+import { getInitial } from '@/utils/getInitial'
 import ClipPathUp from '../../Element/ClipPathUp'
 import { Progress } from '@/components/ui/progress'
 import ClipPathDown from '../../Element/ClipPathDown'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import SectionLayout from '@/components/Layouts/SectionLayout'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const CampaignSection = () => {
     return (
@@ -57,7 +59,11 @@ const CampaignSection = () => {
                                 </div>
 
                                 <footer className="relative flex items-center gap-x-4">
-                                    <img alt={item.author.name} src={item.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
+                                    <Avatar className="size-10 bg-gray-50">
+                                        <AvatarImage src={item.author.imageUrl} />
+                                        <AvatarFallback>{getInitial(item.author?.name)}</AvatarFallback>
+                                    </Avatar>
+                                    
                                     <div className="text-sm/6">
                                         <p className="relative font-semibold text-gray-900">
                                             <a href={item.author.href} className="hover:underline">
