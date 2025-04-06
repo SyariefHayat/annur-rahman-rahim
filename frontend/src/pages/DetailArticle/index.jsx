@@ -47,8 +47,8 @@ const DetailArticle = () => {
     return (
         <DefaultLayout>
             <Navbar position={"relative"} />
-            <section>
-                <img src={`/slide-${index + 1}.png`} alt="" className="w-full h-screen object-cover object-center" />
+            <section aria-label="Article Detail">
+                <img src={`/slide-${index + 1}.png`} alt="" className="w-full h-full sm:h-screen object-cover object-center" />
                 <article className="mx-auto my-12 flex flex-col gap-6 w-full h-full lg:w-4xl items-start px-6">
                     <div className="flex items-center gap-x-4">
                         <img 

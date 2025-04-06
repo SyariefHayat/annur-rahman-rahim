@@ -19,11 +19,11 @@ const DetailDonasi = () => {
     return (
         <DefaultLayout>
             <Navbar position="relative" />
-            <section className="overflow-hidden px-6">
+            <section aria-label="Donation Detail" className="overflow-hidden px-6">
                 <div className="mx-auto max-w-7xl">
                     <article className="mx-auto max-w-2xl grid grid-cols-1 gap-x-8 gap-y-4 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                         <figure>
-                            <img src={campaign.backgroundImage} alt={campaign.title} className="w-full max-h-screen sm:h-screen max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 md:-ml-4 lg:-ml-0 object-cover object-center" />
+                            <img src={campaign.backgroundImage} alt={campaign.title} className="w-full max-h-screen sm:h-screen max-w-none rounded-xl ring-1 ring-gray-400/10 md:-ml-4 lg:-ml-0 object-cover object-center" />
                         </figure>
                         
                         <section className="lg:pt-4 lg:pr-8">

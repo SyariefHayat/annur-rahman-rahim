@@ -48,10 +48,8 @@ const FormSchema = z.object({
         .regex(/^(\+62|62|0)[0-9]{9,14}$/, { message: "Nomor HP tidak valid" }),
 
     message: z.string()
-        .optional()
-        .refine((val) => !val || val.length <= 280, {
-            message: "Pesan maksimal 280 karakter",
-        }),
+        .min(1, { message: "Pesan wajib diisi" })
+        .max(280, { message: "Pesan maksimal 280 karakter" }),
 })
 
 const ContactForm = () => {
@@ -90,8 +88,7 @@ Message: ${data.message}
                         <FormItem>
                             <FormLabel className="block text-sm/6 font-semibold text-gray-900">Nama Depan</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="John" {...field}
-                                />
+                                <Input type="text" placeholder="John" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -102,8 +99,7 @@ Message: ${data.message}
                         <FormItem>
                             <FormLabel className="block text-sm/6 font-semibold text-gray-900">Nama Belakang</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="Doe" {...field}
-                                />
+                                <Input type="text" placeholder="Doe" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -114,8 +110,7 @@ Message: ${data.message}
                         <FormItem className="sm:col-span-2">
                             <FormLabel className="block text-sm/6 font-semibold text-gray-900">Email</FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="example@gmail.com" {...field}
-                                />
+                                <Input type="email" placeholder="example@gmail.com" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -126,8 +121,7 @@ Message: ${data.message}
                         <FormItem className="sm:col-span-2">
                             <FormLabel className="block text-sm/6 font-semibold text-gray-900">Subjek</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="Masalah" {...field}
-                                />
+                                <Input type="text" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -138,8 +132,7 @@ Message: ${data.message}
                         <FormItem className="sm:col-span-2">
                             <FormLabel className="block text-sm/6 font-semibold text-gray-900">No Hp</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="Masalah" {...field}
-                                />
+                                <Input type="text" inputMode="numeric" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -150,6 +143,7 @@ Message: ${data.message}
                         <FormItem className="sm:col-span-2">
                             <FormLabel>Pesan</FormLabel>
                             <Textarea  {...field} />
+                            <FormMessage />
                         </FormItem>
                     )}
                     />
