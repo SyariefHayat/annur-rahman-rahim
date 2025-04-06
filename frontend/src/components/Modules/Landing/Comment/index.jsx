@@ -1,7 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import React from 'react'
+import { ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import {
     Drawer,
@@ -24,7 +22,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
+import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const Comment = ({ article, children, size }) => {
     return (
