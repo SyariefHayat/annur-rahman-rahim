@@ -82,8 +82,8 @@ const SignUp = ({ className, ...props }) => {
         try {
             const register = await createUserWithEmailAndPassword(
                 auth,
-                email,
-                password,
+                data.email,
+                data.password,
             )
 
             if (register) {

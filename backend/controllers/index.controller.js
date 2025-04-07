@@ -4,6 +4,7 @@ const midtransClient = require('midtrans-client');
 
 const { User, Donation, Article } = require("../models/index.model");
 const { SUCC, ERR } = require("../utils/response");
+const admin = require("../config/firebaseAdmin");
 const path = require("path");
 const fs = require("fs");
 
@@ -14,6 +15,23 @@ const snap = new midtransClient.Snap({
     serverKey: SERVER_KEY,
     clientKey: CLIENT_KEY,
 });
+
+const VerifyToken = async (req, res) => {
+    const { token } = req.body;
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const email = decodedToken.email;
+
+        const user = await User.findOne({ email });
+        if (!user) return ERR(res, 404, "User not found");
+
+        return SUCC(res, 200, user, "Email registered");
+    } catch (error) {
+        console.error(error);
+        return ERR(res, 401, "Token tidak valid");
+    }
+}
 
 const CheckEmail = async (req, res) => {
     const email = req.params.email;
@@ -84,7 +102,6 @@ const SignOutUser = async (req, res) => {
     const email = req.user.email;
     try {
         const user = await User.findOne({ email });
-        console.log(user);
         
         user.token = null;
         await user.save();
@@ -352,6 +369,7 @@ const DeleteArticle = async (req, res) => {
 };
 
 module.exports = {
+    VerifyToken,
     CheckEmail,
     SignUpUser, 
     SignInUser, 

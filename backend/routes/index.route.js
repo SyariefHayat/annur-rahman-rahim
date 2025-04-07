@@ -1,11 +1,13 @@
 const router = require("express").Router();
-const userController = require("../controllers/index.controller");
 const { checkToken } = require("../utils/auth");
 const upload = require('../middlewares/upload');
+const userController = require("../controllers/index.controller");
 
 router.get("/", (req, res) => {
     res.send("Server is running!");
 })
+
+router.post("/verify-token", userController.VerifyToken);
 
 router.post("/sign-up", userController.SignUpUser);
 router.post("/sign-in", userController.SignInUser);

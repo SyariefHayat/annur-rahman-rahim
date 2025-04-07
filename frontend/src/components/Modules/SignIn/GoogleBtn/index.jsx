@@ -4,15 +4,13 @@ import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import { getIdToken, signInWithPopup } from 'firebase/auth';
 
+import { userAtomStorage } from '@/jotai/atoms';
 import { Button } from '@/components/ui/button';
 import { auth, provider } from '@/services/firebase/firebase';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
-import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms';
 
 const GoogleButton = () => {
-    const [, setEmailStorage] = useAtom(emailStorageAtom);
-    const [, setTokenStorage] = useAtom(tokenStorageAtom);
-    const [, setUser] = useAtom(userAtom);
+    const [, setUser] = useAtom(userAtomStorage);
 
     const navigate = useNavigate();
 
@@ -74,8 +72,6 @@ const GoogleButton = () => {
                     if (addToken.status === 200) {
                         toast.success("Login berhasil !");
 
-                        setEmailStorage(email);
-                        setTokenStorage(firebaseToken);
                         setUser(addToken.data.data);
 
                         setTimeout(() => {

@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
+import { userAtomStorage } from '@/jotai/atoms';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -35,7 +36,6 @@ import ClipPathUp from "@/components/Modules/Element/ClipPathUp";
 import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 import ClipPathDown from "@/components/Modules/Element/ClipPathDown";
-import { emailStorageAtom, tokenStorageAtom, userAtom } from '@/jotai/atoms';
 
 const LoginSchema = z.object({
     email: z.string()
@@ -43,19 +43,13 @@ const LoginSchema = z.object({
         .email({ message: "Format email tidak valid" }),
 
     password: z.string()
-        .min(8, { message: "Password minimal 8 karakter" })
-        .regex(/[A-Z]/, { message: "Password harus mengandung huruf besar" })
-        .regex(/[a-z]/, { message: "Password harus mengandung huruf kecil" })
-        .regex(/[0-9]/, { message: "Password harus mengandung angka" })
-        .regex(/[^A-Za-z0-9]/, { message: "Password harus mengandung simbol" }),
+        .min(1, { message: "Password harus diisi" })
 })
 
 const SignIn = ({ className, ...props }) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const [, setEmailStorage] = useAtom(emailStorageAtom);
-    const [, setTokenStorage] = useAtom(tokenStorageAtom);
-    const [, setUser] = useAtom(userAtom);
+    const [, setUser] = useAtom(userAtomStorage);
 
     const navigate = useNavigate();
 
@@ -71,7 +65,7 @@ const SignIn = ({ className, ...props }) => {
         setIsLoading(true);
         
         try {
-            const signIn = await signInWithEmailAndPassword(auth, email, password);
+            const signIn = await signInWithEmailAndPassword(auth, data.email, data.password);
 
             if (signIn) {
                 const firebaseToken = await getIdToken(signIn.user);
@@ -83,10 +77,14 @@ const SignIn = ({ className, ...props }) => {
 
                 if (addToken.status === 200) {
                     toast.success("Login berhasil !");
-    
-                    setEmailStorage(signIn.user.email);
-                    setTokenStorage(firebaseToken)
-                    setUser(addToken.data.data);
+
+                    const userData = addToken.data.data;
+                    setUser({
+                        name: userData.name,
+                        email: userData.email,
+                        role: userData.role,
+                        token: userData.token,
+                    });
                     
                     setTimeout(() => {
                         navigate("/dashboard")
