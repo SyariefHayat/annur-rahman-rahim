@@ -17,39 +17,36 @@ const About = () => {
             <section className="relative w-full h-screen flex items-center justify-center">
                 <ClipPathUp />
                 <div className="mx-auto max-w-3xl mt-20 px-3 sm:px-0 text-center">
-                    <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Selamat Datang di Website Yatallatop</h1>
-                    <p className="mt-8 text-lg font-medium text-gray-500 sm:text-xl">Kami adalah yayasan amal yang berkomitmen untuk menciptakan perubahan positif dengan semangat modern, bersih, dan profesional.</p>
+                    <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Selamat Datang di Website Annur Rahman Rahim</h1>
+                    <p className="mt-8 text-lg font-medium text-gray-500 sm:text-xl">Kami adalah komunitas yang bergerak dalam bidang sosial dan edukasi, siap memberikan kontribusi nyata bagi masa depan yang inklusif dan berkelanjutan.</p>
                 </div>
                 <ClipPathDown />
             </section>
 
             <FlexLayout image="/campaign2.png">
-                <h2 className="text-base/7 font-semibold text-blue-600">Perjalanan Menuju Perubahan</h2>
-                <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Sejarah Kami</p>
+                <h2 className="text-base/7 font-semibold text-blue-600">Langkah Awal</h2>
+                <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Tentang Kami</p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                    Yayasan Yatalatop didirikan pada tahun 2018, berawal dari keinginan tulus individu yang memiliki visi untuk memberikan dampak positif bagi masyarakat. Kami memulai dengan langkah kecil namun penuh makna, membantu. komunitas lokal dalam ber UMKM, pendidikan, kesehatan
+                    Terinspirasi dari berbagai isu sosial dan tantangan zaman, organisasi ini lahir sebagai bentuk kepedulian terhadap sesama. Kami berusaha menjembatani kesenjangan melalui program-program pendidikan, pelatihan keterampilan, dan bantuan sosial.
                 </p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                    Melangkah ke masa depan, kami berkomitmen untuk terus mengembangkan program-program yang inovatif dan relevan dengan kebutuhan masyarakat. Kami percaya bahwa melalui kerja keras dan kolaborasi, kami dapat mencapai lebih banyak lagi.
-                </p>
-                <p className="mt-6 text-lg/8 text-gray-600">
-                    Haltoytop Halalan Toyibban Yatalatop
+                    Dengan semangat kolaboratif dan pemanfaatan teknologi, kami terus mengembangkan ekosistem yang mendukung pertumbuhan sosial yang adil dan merata.
                 </p>
             </FlexLayout>
 
             <FlexLayout isClip={true} isReverse={true} image="/slide-2.png">
-                <h2 className="text-base/7 font-semibold text-blue-600">Perjalanan Menuju Perubahan</h2>
+                <h2 className="text-base/7 font-semibold text-blue-600">Arah dan Tujuan</h2>
                 <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Visi Kami</p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                    Dalam merumuskan visi, pihak-pihak terkait (stakeholders) melakukan musyawarah sehingga visi tersebut benar-benar mewakili aspirasi semua pihak yang terkait. Harapannya, semua pihak yang terkait dalam kegiatan pembelajaran (guru, karyawan, peserta didik, dan wali murid) benar-benar menyadari visi tersebut untuk selanjutnya memegang komitmen terhadap visi yang telah disepakati bersama.
+                    Menjadi pusat kolaborasi sosial terdepan yang mendorong perubahan melalui inovasi, edukasi, dan penguatan komunitas.
                 </p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                    Untuk mencapai visi tersebut perlu dilakukan suatu misi berupa kegiatan jangka panjang dengan arah yang jelas dan sistematis.
+                    Visi ini menjadi pedoman kami dalam merancang setiap program dan inisiatif yang berdampak luas, terukur, dan berkelanjutan.
                 </p>
             </FlexLayout>
 
             <FlexLayout image="/slide-3.png">
-                <h2 className="text-base/7 font-semibold text-indigo-600">Perjalanan Menuju Perubahan</h2>
+                <h2 className="text-base/7 font-semibold text-indigo-600">Nilai dan Tindakan</h2>
                 <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Misi Kami</p>
                 <ol className="list-decimal pl-4 text-gray-600 text-lg/8">
                     <EachUtils

@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { userAtomStorage } from "@/jotai/atoms";
 import { apiInstanceExpress } from "@/services/express/apiInstance";
 
-// const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 menit
-const INACTIVITY_LIMIT = 10000; // Untuk testing: 10 detik
+const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 menit
+// const INACTIVITY_LIMIT = 10000; // Untuk testing: 10 detik
 
 const useAutoLogout = () => {
     const timeoutRef = useRef(null);
@@ -73,12 +73,12 @@ const useAutoLogout = () => {
         };
     }, [user]);
 
-    useEffect(() => {
-        if (!user) return;
-        const minutes = Math.floor(remainingTime / 60000);
-        const seconds = String(Math.floor((remainingTime % 60000) / 1000)).padStart(2, "0");
-        console.log(`⏳ Sisa waktu sebelum logout otomatis: ${minutes}:${seconds}`);
-    }, [remainingTime]);
+    // useEffect(() => {
+    //     if (!user) return;
+    //     const minutes = Math.floor(remainingTime / 60000);
+    //     const seconds = String(Math.floor((remainingTime % 60000) / 1000)).padStart(2, "0");
+    //     console.log(`⏳ Sisa waktu sebelum logout otomatis: ${minutes}:${seconds}`);
+    // }, [remainingTime]);
 };
 
 export default useAutoLogout;
