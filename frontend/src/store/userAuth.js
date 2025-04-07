@@ -17,6 +17,7 @@ export const listenToAuth = (setUser) => {
                     email: userData.email,
                     role: userData.role,
                     token: userData.token,
+                    id: userData._id,
                 });
             } catch (error) {
                 console.error("Token verification failed:", err);

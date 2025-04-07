@@ -1,5 +1,6 @@
 import React from 'react'
-import { BadgeCheck, Bell, LogOut, PanelLeft } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { BadgeCheck, Bell, PanelLeft } from 'lucide-react'
 
 import {
     DropdownMenu,
@@ -11,11 +12,13 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import LogoutBtn from '../Button/LogoutBtn'
 import { getInitial } from '@/utils/getInitial'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import LogoutBtn from '../Button/LogoutBtn'
 
 const AccountDesktop = ({ user }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {user ? (
@@ -54,7 +57,7 @@ const AccountDesktop = ({ user }) => {
                             </>
                         )}
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigate(`/profile/${user.id}`)}>
                                 <BadgeCheck className="mr-2 h-4 w-4" />
                                 Profile
                             </DropdownMenuItem>

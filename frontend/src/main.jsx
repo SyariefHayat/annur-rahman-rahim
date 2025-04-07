@@ -16,6 +16,7 @@ import Donasi from "./pages/Donasi";
 import Landing from "./pages/Landing";
 import Article from "./pages/Article";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DetailDonasi from "./pages/DetailDonasi";
 import DetailArticle from "./pages/DetailArticle";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         path: "/donation/:id",
         element: <DetailDonasi />
+    },
+    {
+        path: "/profile/:id",
+        element: <Profile />
     },
     {
         path: "/article",

@@ -4,7 +4,6 @@ import {
     BadgeCheck, 
     Bell, 
     ChevronsUpDown, 
-    LogOut, 
     Menu, 
     PanelLeft 
 } from 'lucide-react'

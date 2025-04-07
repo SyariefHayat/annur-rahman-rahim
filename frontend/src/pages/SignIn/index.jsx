@@ -84,6 +84,7 @@ const SignIn = ({ className, ...props }) => {
                         email: userData.email,
                         role: userData.role,
                         token: userData.token,
+                        id: userData._id,
                     });
                     
                     setTimeout(() => {
