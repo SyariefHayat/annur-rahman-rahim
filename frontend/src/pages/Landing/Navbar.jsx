@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 
 import EachUtils from '@/utils/EachUtils';
 import { userAtomStorage } from '@/jotai/atoms';
+import { Toaster } from '@/components/ui/sonner';
 import { LIST_NAVBAR } from '@/constants/listNavbar';
 import AccountMobile from '@/components/Modules/Landing/Account/AccountMobile';
 import AccountDesktop from '@/components/Modules/Landing/Account/AccountDesktop';
@@ -12,6 +13,7 @@ const Navbar = ({ position }) => {
 
     return (
         <header className={`w-full ${position ? `${position}` : "absolute z-10"}`}>
+            <Toaster />
             <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">

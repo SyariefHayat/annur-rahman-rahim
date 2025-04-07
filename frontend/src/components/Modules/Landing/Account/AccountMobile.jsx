@@ -33,6 +33,7 @@ import { Button } from '@/components/ui/button'
 import { getInitial } from '@/utils/getInitial'
 import { LIST_NAVBAR } from '@/constants/listNavbar'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import LogoutBtn from '../Button/LogoutBtn'
 
 const AccountMobile = ({ user }) => {
     return (
@@ -100,13 +101,17 @@ const AccountMobile = ({ user }) => {
                                         </div>
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>
-                                            <PanelLeft />
-                                            Dashboard
-                                        </DropdownMenuItem>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
+                                    {user.role === "admin" && (
+                                        <>
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuItem>
+                                                    <PanelLeft />
+                                                    Dashboard
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
+                                            <DropdownMenuSeparator />
+                                        </>
+                                    )}
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>
                                             <BadgeCheck />
@@ -118,10 +123,7 @@ const AccountMobile = ({ user }) => {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
-                                        <LogOut />
-                                        Keluar
-                                    </DropdownMenuItem>
+                                    <LogoutBtn isMobile={true} />
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (

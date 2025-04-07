@@ -13,6 +13,7 @@ import {
 
 import { getInitial } from '@/utils/getInitial'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import LogoutBtn from '../Button/LogoutBtn'
 
 const AccountDesktop = ({ user }) => {
     return (
@@ -41,13 +42,17 @@ const AccountDesktop = ({ user }) => {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <PanelLeft className="mr-2 h-4 w-4" />
-                                Dashboard
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator />
+                        {user.role === "admin" && (
+                            <>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <PanelLeft className="mr-2 h-4 w-4" />
+                                        Dashboard
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <BadgeCheck className="mr-2 h-4 w-4" />
@@ -59,10 +64,7 @@ const AccountDesktop = ({ user }) => {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <LogOut className="mr-2 h-4 w-4" />
-                            Keluar
-                        </DropdownMenuItem>
+                        <LogoutBtn isMobile={false}/>
                     </DropdownMenuContent>
                 </DropdownMenu>
             ) : (
