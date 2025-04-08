@@ -1,68 +1,32 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 import Navbar from '../Landing/Navbar';
 import { userAtomStorage } from '@/jotai/atoms';
-import DefaultLayout from '@/components/Layouts/DefaultLayout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getInitial } from '@/utils/getInitial';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Modules/Landing/Footer';
+import DefaultLayout from '@/components/Layouts/DefaultLayout';
+import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileForm';
+import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { BellIcon } from 'lucide-react';
+import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 
-const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ]
+
 
 const Profile = () => {
     const [user] = useAtom(userAtomStorage);
@@ -72,23 +36,47 @@ const Profile = () => {
             <Navbar position="relative" />
             <main className="mx-auto max-w-7xl h-full px-6 lg:px-8">
                 {/* Cover */}
-                <header className="w-full h-64 bg-gray-300 rounded-md" />
+                <header className="relative w-full h-64 bg-gray-300 rounded-md bg-[url(https://github.com/shadcn.png)] bg-cover bg-center" />
 
                 {/* User Info */}
                 <section className="w-full flex gap-5 my-5" aria-label="User Profile">
-                <aside className="flex justify-center items-start">
-                    <figure>
-                    <div className="w-40 h-40 bg-gray-300 rounded-full" />
-                    </figure>
-                </aside>
+                    <aside className="flex justify-center items-start">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Avatar className="w-40 h-40 cursor-pointer border-2 border-gray-200 hover:opacity-90 transition">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback className="text-5xl bg-gray-200 flex items-center justify-center">
+                                        {getInitial(user.name)}
+                                    </AvatarFallback>
+                                </Avatar>
+                            </DialogTrigger>
 
-                <article className="w-full flex flex-col justify-center gap-2">
-                    <h1 className="text-4xl font-semibold">{user.name}</h1>
-                    <p className="text-gray-600">{user.email}</p>
-                    <p className="text-sm text-gray-500">
-                    Member sejak Januari 2024.
-                    </p>
-                </article>
+                            <DialogContent className="max-w-sm">
+                                <DialogHeader>
+                                    <DialogTitle>Kelola Foto</DialogTitle>
+                                    <DialogDescription>Pilih tindakan untuk mengelola foto profil Anda.</DialogDescription>
+                                </DialogHeader>
+
+                                <div className="space-y-2 mt-4">
+                                    <button className="w-full text-left px-4 py-2 rounded-md hover:bg-gray-100 transition">
+                                        Ubah Foto Album
+                                    </button>
+                                    <DropdownMenuSeparator />
+                                    <button className="w-full text-left px-4 py-2 rounded-md hover:bg-gray-100 transition">
+                                        Ubah Foto Profil
+                                    </button>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </aside>
+
+                    <article className="w-full flex flex-col justify-center gap-2">
+                        <h1 className="text-4xl font-semibold">{user.name}</h1>
+                        <p className="text-gray-600">{user.email}</p>
+                        <p className="text-sm text-gray-500">
+                        Member sejak Januari 2024.
+                        </p>
+                    </article>
                 </section>
 
                 {/* Tabs */}
@@ -103,45 +91,28 @@ const Profile = () => {
                     <Separator className="my-4" />
 
                     <TabsContent value="history-donation">
-                        <Table>
-                            <TableCaption>A list of your recent invoices.</TableCaption>
-                            <TableHeader>
-                                <TableRow>
-                                <TableHead className="w-[100px]">Invoice</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Method</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {invoices.map((invoice) => (
-                                <TableRow key={invoice.invoice}>
-                                    <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                                    <TableCell>{invoice.paymentStatus}</TableCell>
-                                    <TableCell>{invoice.paymentMethod}</TableCell>
-                                    <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-                                </TableRow>
-                                ))}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                <TableCell colSpan={3}>Total</TableCell>
-                                <TableCell className="text-right">$2,500.00</TableCell>
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
+                        <HistoryDonationTable />
                     </TabsContent>
 
                     <TabsContent value="edit-profile">
-                        <div className="w-full h-52 bg-gray-300 rounded-md"></div>
+                        <EditProfileForm user={user} />
                     </TabsContent>
 
+
                     <TabsContent value="edit-password">
-                        <div className="w-full h-52 bg-gray-300 rounded-md"></div>
+                        <NewPasswordForm />
                     </TabsContent>
 
                     <TabsContent value="notification">
-                        <div className="w-full h-52 bg-gray-300 rounded-md"></div>
+                        <div className="space-y-4">
+                            <Alert>
+                                <BellIcon className="h-4 w-4" />
+                                <AlertTitle>Pengumuman</AlertTitle>
+                                <AlertDescription>
+                                    Sistem akan maintenance tanggal 10 April pukul 00:00 - 03:00 WIB.
+                                </AlertDescription>
+                            </Alert>
+                        </div>
                     </TabsContent>
                 </Tabs>
             </main>

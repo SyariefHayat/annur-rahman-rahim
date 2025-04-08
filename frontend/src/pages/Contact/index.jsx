@@ -6,9 +6,9 @@ import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import { LIST_OPERASIONAL } from '@/constants/listOperasional'
 import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
-import ContactForm from '@/components/Modules/Landing/ContactForm'
 import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
 import ClipPathDarkUp from '@/components/Modules/Element/ClipPathDarkUp'
+import ContactForm from '@/components/Modules/Landing/ZodForm/ContactForm'
 import ClipPathDarkDown from '@/components/Modules/Element/ClipPathDarkDown'
 
 const Contact = () => {

@@ -37,7 +37,7 @@ import ClipPathDown from "@/components/Modules/Element/ClipPathDown";
 
 const SignUpSchema = z.object({
     fullName: z.string()
-        .min(1, { message: "Masukkan Nama Depan" })
+        .min(1, { message: "Masukkan Nama anda" })
         .trim()
         .refine((val) => /^[a-zA-Z\s']+$/.test(val), {
             message: "Nama hanya boleh berisi huruf"
