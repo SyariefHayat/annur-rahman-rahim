@@ -29,9 +29,7 @@ const admin = require("../config/firebaseAdmin");
 const checkToken = async (req, res, next) => {
     const token =  req.headers.authorization?.split(" ")[1];
 
-    if (!token) {
-        return ERR(res, 401, "Unauthorized: No Token Provided");
-    }
+    if (!token) return ERR(res, 401, "Unauthorized: No Token Provided");
 
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);

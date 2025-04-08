@@ -113,18 +113,41 @@ const SignOutUser = async (req, res) => {
     }
 }
 
+const UpdatePassword = async (req, res) => {
+    const userId = req.params.id;
+    const { oldPassword, newPassword } = req.body;
+
+    try {
+        if (!userId) return ERR(res, 400, "User ID not found");
+
+        if (!oldPassword || !newPassword) return ERR(res, 400, "Data not found");
+
+        const user = await User.findById(userId);
+        if (!user) return ERR(res, 404, "User not found");
+
+        const decodedPass = await argon2.verify(user.password, oldPassword);
+        if (!decodedPass) return ERR(res, 401, "Invalid password");
+
+        const hassPass = await argon2.hash(newPassword);
+
+        user.password = hassPass
+        await user.save();
+
+        return SUCC(res, 200, user, "Success update user data");
+    } catch (error) {
+        console.error(error);
+        return ERR(res, 500, "Internal server error");
+    }
+}
+
 const UpdateUser = async (req, res) => {
     const userId = req.params.id;
     const data = req.body;
 
     try {
-        if (!userId) {
-            return ERR(res, 400, "User ID not found");
-        }
+        if (!userId) return ERR(res, 400, "User ID not found");
 
-        if (!data || Object.keys(data).length === 0) {
-            return ERR(res, 400, "Data not found");
-        }
+        if (!data || Object.keys(data).length === 0) return ERR(res, 400, "Data not found");
 
         const user = await User.findByIdAndUpdate(userId, data, { new: true });
 
@@ -138,7 +161,6 @@ const UpdateUser = async (req, res) => {
         return ERR(res, 500, "Internal server error");
     }
 }
-
 
 const AddDonation = async (req, res) => {
     // const data = req.body;
@@ -402,6 +424,7 @@ module.exports = {
     SignInUser, 
     SignOutUser,
     UpdateUser,
+    UpdatePassword,
     AddDonation, 
     GetDonation, 
     GetDonationById, 

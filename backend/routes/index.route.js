@@ -14,6 +14,7 @@ router.post("/sign-in", userController.SignInUser);
 router.get("/check-user/:email", userController.CheckEmail);
 router.delete("/sign-in", checkToken, userController.SignOutUser);
 router.put("/update-user/:id", checkToken, userController.UpdateUser);
+router.post("/update-user-password/:id", checkToken, userController.UpdatePassword);
 
 router.post("/donation", checkToken, upload.single('image'), userController.AddDonation);
 router.get("/donation", userController.GetDonation);

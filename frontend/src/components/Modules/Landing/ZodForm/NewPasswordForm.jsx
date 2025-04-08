@@ -1,7 +1,15 @@
 import { z } from "zod"
 import React from 'react'
+import { toast } from "sonner";
+import { useAtom } from "jotai";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod"
+
+import { 
+    EmailAuthProvider, 
+    reauthenticateWithCredential, 
+    updatePassword 
+} from "firebase/auth";
 
 import {
     Form,
@@ -14,6 +22,9 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { userAtomStorage } from "@/jotai/atoms";
+import { auth } from "@/services/firebase/firebase";
+import { apiInstanceExpress } from "@/services/express/apiInstance";
 
 const NewPasswordSchema = z.object({
     oldPassword: z.string()
@@ -28,6 +39,8 @@ const NewPasswordSchema = z.object({
 })
 
 const NewPasswordForm = () => {
+    const [user, setUser] = useAtom(userAtomStorage);
+
     const form = useForm({
         resolver: zodResolver(NewPasswordSchema),
         defaultValues: {
@@ -38,19 +51,36 @@ const NewPasswordForm = () => {
 
     const changePassword = async (data) => {
         try {
-            const user = auth.currentUser;
+            const firebaseUser = auth.currentUser;
         
-            if (!user) throw new Error("Tidak ada user yang login");
+            if (!firebaseUser) throw new Error("Tidak ada user yang login");
         
             // Reauthenticate (wajib sebelum ubah password)
-            const credential = EmailAuthProvider.credential(user.email, data.oldPassword);
-            await reauthenticateWithCredential(user, credential);
+            const credential = EmailAuthProvider.credential(firebaseUser.email, data.oldPassword);
+            await reauthenticateWithCredential(firebaseUser, credential);
         
             // Update password
-            await updatePassword(user, data.newPassword);
-        
-            console.log("Password berhasil diperbarui");
+            await updatePassword(firebaseUser, data.newPassword);
+
+            const response = await apiInstanceExpress.post(`update-user-password/${user.id}`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    }
+                }
+            );
+
+            if (response.status === 200) toast.success("Password berhasil diperbarui");
         } catch (error) {
+            if (error.code === "auth/wrong-password") {
+                toast.error("Kata sandi lama salah!");
+            } else if (error.code === "auth/too-many-requests") {
+                toast.error("Terlalu banyak percobaan. Coba lagi nanti.");
+            } else {
+                toast.error("Gagal mengubah kata sandi. Coba lagi.");
+            }
+            
             console.error("Gagal mengubah password:", error.message);
         }
     }
