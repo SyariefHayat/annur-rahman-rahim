@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
+import { Toaster } from 'sonner';
+import { BellIcon } from 'lucide-react';
 
 import {
     Dialog,
@@ -17,12 +19,11 @@ import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Modules/Landing/Footer';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileForm';
 import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { BellIcon } from 'lucide-react';
 import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
 
 
@@ -34,6 +35,7 @@ const Profile = () => {
     return (
         <DefaultLayout>
             <Navbar position="relative" />
+            <Toaster />
             <main className="mx-auto max-w-7xl h-full px-6 lg:px-8">
                 {/* Cover */}
                 <header className="relative w-full h-64 bg-gray-300 rounded-md bg-[url(https://github.com/shadcn.png)] bg-cover bg-center" />
@@ -46,7 +48,7 @@ const Profile = () => {
                                 <Avatar className="w-40 h-40 cursor-pointer border-2 border-gray-200 hover:opacity-90 transition">
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback className="text-5xl bg-gray-200 flex items-center justify-center">
-                                        {getInitial(user.name)}
+                                        {getInitial(user?.name)}
                                     </AvatarFallback>
                                 </Avatar>
                             </DialogTrigger>
@@ -71,11 +73,10 @@ const Profile = () => {
                     </aside>
 
                     <article className="w-full flex flex-col justify-center gap-2">
-                        <h1 className="text-4xl font-semibold">{user.name}</h1>
-                        <p className="text-gray-600">{user.email}</p>
-                        <p className="text-sm text-gray-500">
-                        Member sejak Januari 2024.
-                        </p>
+                        <h1 className="text-4xl font-semibold">{user?.name}</h1>
+                        <p className="text-gray-600">{user?.email}</p>
+                        <p className="text-sm text-gray-500">{user?.bio}</p>
+                        {/* Member sejak Januari 2024. */}
                     </article>
                 </section>
 
@@ -95,7 +96,7 @@ const Profile = () => {
                     </TabsContent>
 
                     <TabsContent value="edit-profile">
-                        <EditProfileForm user={user} />
+                        <EditProfileForm />
                     </TabsContent>
 
 

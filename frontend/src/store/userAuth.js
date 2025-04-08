@@ -15,6 +15,7 @@ export const listenToAuth = (setUser) => {
                 setUser({
                     name: userData.name,
                     email: userData.email,
+                    bio: userData.bio,
                     role: userData.role,
                     token: userData.token,
                     id: userData._id,

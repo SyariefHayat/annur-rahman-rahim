@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const UserSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
+    bio: { type: String },
     password: { type: String },
     token: { type: String },
     role: { type: String, enum: ["admin", "author", "user"], default: "user" },
     createdAt: { type: Date, default: Date.now }
-});
+},{ timestamps: true });
 
 const DonationSchema = mongoose.Schema({
     title: { type: String, required: true },

@@ -113,6 +113,33 @@ const SignOutUser = async (req, res) => {
     }
 }
 
+const UpdateUser = async (req, res) => {
+    const userId = req.params.id;
+    const data = req.body;
+
+    try {
+        if (!userId) {
+            return ERR(res, 400, "User ID not found");
+        }
+
+        if (!data || Object.keys(data).length === 0) {
+            return ERR(res, 400, "Data not found");
+        }
+
+        const user = await User.findByIdAndUpdate(userId, data, { new: true });
+
+        if (!user) {
+            return ERR(res, 404, "User not found");
+        }
+
+        return SUCC(res, 200, user, "Success update user data");
+    } catch (error) {
+        console.error(error);
+        return ERR(res, 500, "Internal server error");
+    }
+}
+
+
 const AddDonation = async (req, res) => {
     // const data = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -373,7 +400,8 @@ module.exports = {
     CheckEmail,
     SignUpUser, 
     SignInUser, 
-    SignOutUser, 
+    SignOutUser,
+    UpdateUser,
     AddDonation, 
     GetDonation, 
     GetDonationById, 
