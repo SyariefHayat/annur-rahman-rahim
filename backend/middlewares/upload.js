@@ -1,13 +1,33 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Konfigurasi penyimpanan file
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Folder penyimpanan gambar
+        let folder = 'uploads/others'; // default folder
+
+        // Tentukan folder berdasarkan nama field (fieldname)
+        switch (file.fieldname) {
+            case 'profileImage':
+                folder = 'uploads/profile';
+                break;
+            case 'articleImage':
+                folder = 'uploads/article';
+                break;
+            case 'campaignImage':
+                folder = 'uploads/campaign';
+                break;
+        }
+
+        // Pastikan folder ada
+        fs.mkdirSync(folder, { recursive: true });
+
+        cb(null, folder);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // Nama unik
+        const uniqueName = Date.now() + path.extname(file.originalname);
+        cb(null, uniqueName);
     }
 });
 

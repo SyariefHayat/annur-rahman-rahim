@@ -83,12 +83,28 @@ const DonationSchema = mongoose.Schema({
 //     image: { type: String },
 // }, { timestamps: true });
 
+const CommentSchema = new mongoose.Schema({
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+        text: { type: String, required: true },
+        likes: { type: Number, default: 0 },
+        dislikes: { type: Number, default: 0 },
+        replies: [], // nanti ditimpa setelah deklarasi
+        createdAt: { type: Date, default: Date.now }
+    });
+
+CommentSchema.add({
+    replies: [CommentSchema] // ini kunci untuk membuat nested balasan
+});
+
 const ArticleSchema = mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     image: { type: String, default: "default-article.jpg" },
-    tags: [{ type: String, trim: true, maxlength: 20 }]
+    tags: [{ type: String, trim: true, maxlength: 20 }],
+    likes: { type: Number, default: 0 },
+    shares: { type: Number, default: 0 },
+    comments: [CommentSchema],
 }, { timestamps: true });
 
 // const ArticleSchema = mongoose.Schema({

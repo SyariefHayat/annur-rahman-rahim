@@ -29,7 +29,7 @@ router.delete("/donation/:id", checkToken, userController.DeleteDonation);
 
 router.post("/create-transaction", userController.AddTransaction);
 
-router.post("/article", upload.single('image'), userController.AddArticle);
+router.post("/article", checkToken, upload.single('articleImage'), userController.AddArticle);
 router.get("/article", userController.GetArticle);
 router.get("/article/:id", userController.GetArticleById);
 router.put("/article/:id", upload.single('image'), userController.UpdateArticle);

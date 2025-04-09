@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { Toaster } from 'sonner';
-import { BellIcon, EllipsisVertical, MessageCircle, Share2, ThumbsUp } from 'lucide-react';
 
 import {
     Dialog,
@@ -26,14 +25,8 @@ import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileFor
 import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
 import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
 import Notification from '@/components/Modules/Landing/Notification';
-import EachUtils from '@/utils/EachUtils';
-import { LIST_ARTICLE } from '@/constants/listArticle';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { getRelativeTime } from '@/utils/formatDate';
 
-
-
+import Post from '@/components/Modules/Landing/Post';
 
 const Profile = () => {
     const [user] = useAtom(userAtomStorage);
@@ -101,50 +94,7 @@ const Profile = () => {
 
                     {user.role === "author" && (
                         <TabsContent value="postingan">
-                            <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                                <EachUtils
-                                of={LIST_ARTICLE}
-                                render={(item, index) => (
-                                        <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
-                                            <figure className="w-full h-[70%] rounded-xl overflow-hidden">
-                                                <img 
-                                                    src={`/slide-${index + 1}.png`} 
-                                                    alt={item.title} 
-                                                    className="w-full h-full object-cover object-center"
-                                                />
-                                            </figure>
-
-                                            <div className="w-full h-[30%] flex pt-4">
-                                                <a href={item.href}>
-                                                    <h3 className="text-lg/6 font-semibold">{item.title}</h3>
-                                                </a>
-
-                                                <Button variant="ghost" size="icon" className="size-6 rounded-sm cursor-pointer">
-                                                    <EllipsisVertical />
-                                                </Button>
-                                            </div>
-
-                                            <footer className="w-full flex items-center justify-between text-sm/6 text-gray-600">
-                                                <div className="flex gap-3">
-                                                    <Button variant="ghost">
-                                                        <ThumbsUp/>
-                                                        20
-                                                    </Button>
-                                                    <Button variant="ghost">
-                                                        <MessageCircle/>
-                                                        30
-                                                    </Button>
-                                                    <Button variant="ghost">
-                                                        <Share2/>
-                                                        10
-                                                    </Button>
-                                                </div>
-                                                <p>{getRelativeTime(item.createdAt)}</p>
-                                            </footer>
-                                        </article>
-                                    )}
-                                />
-                            </div>
+                            <Post/>
                         </TabsContent>
                     )}
 

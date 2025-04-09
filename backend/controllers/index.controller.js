@@ -376,13 +376,18 @@ const AddTransaction = async (req, res) => {
 }
 
 const AddArticle = async (req, res) => {
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-    const { title, content, createdBy, tags } = req.body;
+    const imageUrl = req.file ? `uploads/article/${req.file.filename}` : null;
+    let { title, content, createdBy, tags } = req.body;
 
     try {
         if (!title || !content || !createdBy || !tags) {
             return ERR(res, 400, "Data not found");
         }
+
+        // Jika tags dikirim sebagai string dari form-data
+        tags = typeof tags === "string"
+            ? tags.split(",").map(tag => tag.trim())
+            : tags;
 
         const newArticle = new Article({
             title,
@@ -390,10 +395,11 @@ const AddArticle = async (req, res) => {
             createdBy,
             image: imageUrl,
             tags
-        })
+        });
+
         await newArticle.save();
 
-        return SUCC(res, 201, newArticle, "Article created succesfully");
+        return SUCC(res, 201, newArticle, "Article created successfully");
     } catch (error) {
         console.error(error);
         return ERR(res, 500, "Internal server error");
@@ -402,7 +408,10 @@ const AddArticle = async (req, res) => {
 
 const GetArticle = async (req, res) => {
     try {
-        const articles = await Article.find().populate("createdBy");
+        const articles = await Article.find()
+            .populate("createdBy", "name email")
+            .sort({ createdAt: -1 });
+
         return SUCC(res, 200, articles, "Success getting data");
     } catch (error) {
         console.error(error);
