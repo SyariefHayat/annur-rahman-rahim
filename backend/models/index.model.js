@@ -1,42 +1,103 @@
 const mongoose = require("mongoose");
 
+// const UserSchema = mongoose.Schema({
+//     name: { type: String, required: true, unique: true },
+//     email: { type: String, required: true, unique: true },
+//     bio: { type: String },
+//     password: { type: String },
+//     token: { type: String },
+//     role: { type: String, enum: ["admin", "author", "user"], default: "user" },
+//     notification: {
+//         title: { type: String, required: true, },
+//         description: { type: String },
+//         read: { type: Boolean, default: false, },
+//         createdAt: { type: Date, default: Date.now },
+//         required: function() {return this.role === "user" || this.role === "author"}
+//     },
+//     createdAt: { type: Date, default: Date.now }
+// },{ timestamps: true });
+
 const UserSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     bio: { type: String },
     password: { type: String },
     token: { type: String },
-    role: { type: String, enum: ["admin", "author", "user"], default: "user" },
-    createdAt: { type: Date, default: Date.now }
-},{ timestamps: true });
+    role: {
+        type: String,
+        enum: ["admin", "author", "user"],
+        default: "user"
+    },
+    notifications: [{
+        title: { type: String, required: true },
+        description: { type: String },
+        read: { type: Boolean, default: false },
+        createdAt: { type: Date, default: Date.now }
+    }]
+}, { timestamps: true });
 
 const DonationSchema = mongoose.Schema({
     title: { type: String, required: true },
-    desc: { type: String, required: true },
+    description: { type: String, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     targetAmount: { type: Number, required: true },
     collectedAmount: { type: Number, default: 0 },
     deadline: { type: Date, required: true },
-    status: { 
-        type: String, 
-        enum: ["Ongoing", "Completed", "Cancelled"], 
-        default: "Ongoing" 
+    status: {
+        type: String,
+        enum: ["Ongoing", "Completed", "Cancelled"],
+        default: "Ongoing"
     },
-    donors: [{ 
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, 
-        amount: { type: Number, required: true }, 
-        donatedAt: { type: Date, default: Date.now } 
+    donors: [{
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        name: { type: String, default: "Orang baik" },
+        amount: { type: Number, required: true },
+        message: { type: String },
+        amens: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+        donatedAt: { type: Date, default: Date.now }
     }],
-    image: { type: String },
+    image: { type: String, default: "default-donation.jpg" }
 }, { timestamps: true });
+
+// const DonationSchema = mongoose.Schema({
+//     title: { type: String, required: true },
+//     desc: { type: String, required: true },
+//     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+//     targetAmount: { type: Number, required: true },
+//     collectedAmount: { type: Number, default: 0 },
+//     deadline: { type: Date, required: true },
+//     status: { 
+//         type: String, 
+//         enum: ["Ongoing", "Completed", "Cancelled"], 
+//         default: "Ongoing" 
+//     },
+//     donors: [{ 
+//         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, 
+//         amount: { type: Number, required: true }, 
+//         donatedAt: { type: Date, default: Date.now } 
+//     }],
+//     image: { type: String },
+// }, { timestamps: true });
 
 const ArticleSchema = mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    image: { type: String },
-    tags: { type: [String], default: [] },
+    image: { type: String, default: "default-article.jpg" },
+    tags: [{ type: String, trim: true, maxlength: 20 }]
 }, { timestamps: true });
+
+// const ArticleSchema = mongoose.Schema({
+//     title: { type: String, required: true },
+//     content: { type: String, required: true },
+//     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+//     image: { type: String },
+//     tags: { type: [String], default: [] },
+// }, { timestamps: true });
 
 module.exports = {
     User: mongoose.model("User", UserSchema),

@@ -162,6 +162,52 @@ const UpdateUser = async (req, res) => {
     }
 }
 
+const AddNotification = async (req, res) => {
+    try {
+        const { userId, title, description } = req.body;
+
+        if (!userId || !title) {
+            return ERR(res, 400, "userId dan title wajib diisi.");
+        }
+
+        const user = await User.findById(userId);
+        if (!user) return ERR(res, 404, "User tidak ditemukan.");
+
+        const newNotification = {
+            title,
+            description,
+            read: false,
+            createdAt: new Date()
+        };
+
+        user.notifications.push(newNotification);
+        await user.save();
+
+        return ERR(res, 200, user.notifications, "Notifikasi berhasil ditambahkan." );
+    } catch (error) {
+        console.error("Gagal menambahkan notifikasi:", error);
+        return ERR(res, 500, "Terjadi kesalahan pada server.");
+    }
+}
+
+const GetNotification = async (req, res) => {
+    try {
+        const { userId } = req.params;
+    
+        if (!userId) {
+            return ERR(res, 400, "userId wajib diisi.");
+        }
+    
+        const user = await User.findById(userId);
+        if (!user) return ERR(res, 404, "User tidak ditemukan.");
+    
+        return SUCC(res, 200, user.notifications, "Berhasil mengambil notifikasi.");
+    } catch (error) {
+        console.error("Gagal mengambil notifikasi:", error);
+        return ERR(res, 500, "Terjadi kesalahan pada server.");
+    }
+};
+
 const AddDonation = async (req, res) => {
     // const data = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -425,6 +471,8 @@ module.exports = {
     SignOutUser,
     UpdateUser,
     UpdatePassword,
+    AddNotification,
+    GetNotification,
     AddDonation, 
     GetDonation, 
     GetDonationById, 

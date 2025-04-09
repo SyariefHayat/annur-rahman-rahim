@@ -54,6 +54,15 @@ const NewPasswordForm = () => {
             const firebaseUser = auth.currentUser;
         
             if (!firebaseUser) throw new Error("Tidak ada user yang login");
+
+            const isEmailPasswordUser = firebaseUser.providerData.some(
+                (provider) => provider.providerId === "password"
+            );
+
+            if (!isEmailPasswordUser) {
+                toast.error("Akun Google tidak bisa mengubah password di sini.");
+                return;
+            }
         
             // Reauthenticate (wajib sebelum ubah password)
             const credential = EmailAuthProvider.credential(firebaseUser.email, data.oldPassword);

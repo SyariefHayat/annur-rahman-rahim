@@ -25,6 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileForm';
 import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
 import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
+import Notification from '@/components/Modules/Landing/Notification';
 
 
 
@@ -105,7 +106,8 @@ const Profile = () => {
                     </TabsContent>
 
                     <TabsContent value="notification">
-                        <div className="space-y-4">
+                        <Notification/>
+                        {/* <div className="space-y-4">
                             <Alert>
                                 <BellIcon className="h-4 w-4" />
                                 <AlertTitle>Pengumuman</AlertTitle>
@@ -113,7 +115,7 @@ const Profile = () => {
                                     Sistem akan maintenance tanggal 10 April pukul 00:00 - 03:00 WIB.
                                 </AlertDescription>
                             </Alert>
-                        </div>
+                        </div> */}
                     </TabsContent>
                 </Tabs>
             </main>

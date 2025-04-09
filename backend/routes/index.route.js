@@ -13,8 +13,12 @@ router.post("/sign-up", userController.SignUpUser);
 router.post("/sign-in", userController.SignInUser);
 router.get("/check-user/:email", userController.CheckEmail);
 router.delete("/sign-in", checkToken, userController.SignOutUser);
+
 router.put("/update-user/:id", checkToken, userController.UpdateUser);
 router.post("/update-user-password/:id", checkToken, userController.UpdatePassword);
+
+router.post("/notification", checkToken, userController.AddNotification);
+router.get("/notification/:userId", checkToken, userController.GetNotification);
 
 router.post("/donation", checkToken, upload.single('image'), userController.AddDonation);
 router.get("/donation", userController.GetDonation);
