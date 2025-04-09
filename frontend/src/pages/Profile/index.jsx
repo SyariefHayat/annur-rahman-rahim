@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { Toaster } from 'sonner';
-import { BellIcon } from 'lucide-react';
+import { BellIcon, EllipsisVertical, MessageCircle, Share2, ThumbsUp } from 'lucide-react';
 
 import {
     Dialog,
@@ -26,6 +26,11 @@ import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileFor
 import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
 import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
 import Notification from '@/components/Modules/Landing/Notification';
+import EachUtils from '@/utils/EachUtils';
+import { LIST_ARTICLE } from '@/constants/listArticle';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { getRelativeTime } from '@/utils/formatDate';
 
 
 
@@ -77,7 +82,6 @@ const Profile = () => {
                         <h1 className="text-4xl font-semibold">{user?.name}</h1>
                         <p className="text-gray-600">{user?.email}</p>
                         <p className="text-sm text-gray-500">{user?.bio}</p>
-                        {/* Member sejak Januari 2024. */}
                     </article>
                 </section>
 
@@ -85,12 +89,64 @@ const Profile = () => {
                 <Tabs defaultValue="history-donation" className="w-full mt-10">
                     <TabsList>
                         <TabsTrigger value="history-donation">Riwayat Donasi</TabsTrigger>
+                        {user.role === "author" && (
+                            <TabsTrigger value="postingan">Postingan</TabsTrigger>
+                        )}
                         <TabsTrigger value="edit-profile">Edit Profil</TabsTrigger>
                         <TabsTrigger value="edit-password">Ubah Password</TabsTrigger>
                         <TabsTrigger value="notification">Pemberitahuan</TabsTrigger>
                     </TabsList>
 
                     <Separator className="my-4" />
+
+                    {user.role === "author" && (
+                        <TabsContent value="postingan">
+                            <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                                <EachUtils
+                                of={LIST_ARTICLE}
+                                render={(item, index) => (
+                                        <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
+                                            <figure className="w-full h-[70%] rounded-xl overflow-hidden">
+                                                <img 
+                                                    src={`/slide-${index + 1}.png`} 
+                                                    alt={item.title} 
+                                                    className="w-full h-full object-cover object-center"
+                                                />
+                                            </figure>
+
+                                            <div className="w-full h-[30%] flex pt-4">
+                                                <a href={item.href}>
+                                                    <h3 className="text-lg/6 font-semibold">{item.title}</h3>
+                                                </a>
+
+                                                <Button variant="ghost" size="icon" className="size-6 rounded-sm cursor-pointer">
+                                                    <EllipsisVertical />
+                                                </Button>
+                                            </div>
+
+                                            <footer className="w-full flex items-center justify-between text-sm/6 text-gray-600">
+                                                <div className="flex gap-3">
+                                                    <Button variant="ghost">
+                                                        <ThumbsUp/>
+                                                        20
+                                                    </Button>
+                                                    <Button variant="ghost">
+                                                        <MessageCircle/>
+                                                        30
+                                                    </Button>
+                                                    <Button variant="ghost">
+                                                        <Share2/>
+                                                        10
+                                                    </Button>
+                                                </div>
+                                                <p>{getRelativeTime(item.createdAt)}</p>
+                                            </footer>
+                                        </article>
+                                    )}
+                                />
+                            </div>
+                        </TabsContent>
+                    )}
 
                     <TabsContent value="history-donation">
                         <HistoryDonationTable />
@@ -107,15 +163,6 @@ const Profile = () => {
 
                     <TabsContent value="notification">
                         <Notification/>
-                        {/* <div className="space-y-4">
-                            <Alert>
-                                <BellIcon className="h-4 w-4" />
-                                <AlertTitle>Pengumuman</AlertTitle>
-                                <AlertDescription>
-                                    Sistem akan maintenance tanggal 10 April pukul 00:00 - 03:00 WIB.
-                                </AlertDescription>
-                            </Alert>
-                        </div> */}
                     </TabsContent>
                 </Tabs>
             </main>

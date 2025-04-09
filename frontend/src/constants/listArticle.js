@@ -2,6 +2,7 @@ export const LIST_ARTICLE = [
     {
         datetime: "2024-03-23",
         date: "March 23, 2024",
+        createdAt: "2024-03-23T10:00:00.000Z",
         category: {
             href: "#",
             title: "Kegiatan Sosial",
@@ -19,6 +20,7 @@ export const LIST_ARTICLE = [
     {
         datetime: "2024-03-20",
         date: "March 20, 2024",
+        createdAt: "2024-03-20T09:30:00.000Z",
         category: {
             href: "#",
             title: "Kesehatan",
@@ -36,6 +38,7 @@ export const LIST_ARTICLE = [
     {
         datetime: "2024-03-18",
         date: "March 18, 2024",
+        createdAt: "2024-03-18T08:45:00.000Z",
         category: {
             href: "#",
             title: "Lingkungan",

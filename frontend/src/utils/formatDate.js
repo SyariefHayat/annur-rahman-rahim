@@ -25,11 +25,15 @@ const getRelativeTime = (createdAt) => {
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
 
     if (seconds < 60) return "baru saja";
     if (minutes < 60) return `${minutes} menit yang lalu`;
     if (hours < 24) return `${hours} jam yang lalu`;
-    return `${days} hari yang lalu`;
+    if (days < 30) return `${days} hari yang lalu`;
+    if (months < 12) return `${months} bulan yang lalu`;
+    return `${years} tahun yang lalu`;
 };
 
 export { differenceTime, formatDate, getRelativeTime };

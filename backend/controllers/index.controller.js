@@ -208,6 +208,29 @@ const GetNotification = async (req, res) => {
     }
 };
 
+const DeleteNotification = async (req, res) => {
+    try {
+        const { userId, notificationId } = req.params;
+
+        const result = await User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: {
+                    notifications: { _id: notificationId }
+                }
+            },
+            { new: true }
+        );
+
+        if (!result) return ERR(res, 404, "User tidak ditemukan.");
+
+        return SUCC(res, 200, result.notifications, "Notifikasi berhasil dihapus.");
+    } catch (error) {
+        console.error("Gagal menghapus notifikasi:", error);
+        return ERR(res, 500, "Terjadi kesalahan pada server.");
+    }
+};
+
 const AddDonation = async (req, res) => {
     // const data = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -473,6 +496,7 @@ module.exports = {
     UpdatePassword,
     AddNotification,
     GetNotification,
+    DeleteNotification,
     AddDonation, 
     GetDonation, 
     GetDonationById, 

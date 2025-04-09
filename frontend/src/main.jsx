@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { StrictMode, useEffect } from 'react'
+import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -80,13 +80,20 @@ const router = createBrowserRouter([
 
 const App = () => {
     const [, setUser] = useAtom(userAtomStorage);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        listenToAuth(setUser);
+        listenToAuth((user) => {
+            setUser(user);
+            setLoading(false);
+        });
     }, []);
+
+    if (loading) return <div>Loading...</div>;
 
     return <RouterProvider router={router} />;
 };
+
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>

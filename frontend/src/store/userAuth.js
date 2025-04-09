@@ -7,7 +7,7 @@ export const listenToAuth = (setUser) => {
     onAuthStateChanged(auth, async (firebaseUser) => {
         if (firebaseUser) {
             try {
-                const token = await getIdToken(firebaseUser);
+                const token = await getIdToken(firebaseUser, true);
 
                 const response = await apiInstanceExpress.post("verify-token", { token });
 

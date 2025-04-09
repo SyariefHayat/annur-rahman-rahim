@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { BellIcon } from 'lucide-react'
 import { getRelativeTime } from '@/utils/formatDate'
 import EachUtils from '@/utils/EachUtils'
+import { toast } from 'sonner'
 
 const Notification = () => {
     const [user] = useAtom(userAtomStorage)
@@ -31,6 +32,24 @@ const Notification = () => {
 
         fetchNotifications()
     }, [user])
+
+    const handleDelete = async (notifId) => {
+        try {
+            const response = await apiInstanceExpress.delete(`notification/${user.id}/${notifId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    }
+                })
+            
+                if (response.status === 200) {
+                    toast.success("Berhasil menghapus notifikasi");
+                    return setNotifications((prev) => prev.filter(n => n._id !== notifId))
+                }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="space-y-4">
@@ -61,7 +80,7 @@ const Notification = () => {
                             </div>
 
                             <button
-                                // onClick={() => handleDelete(item._id)} // ganti sesuai ID notifikasi kamu
+                                onClick={() => handleDelete(item._id)}
                                 className="absolute top-2 right-2 text-muted-foreground hover:text-destructive text-sm"
                             >
                                 ✕

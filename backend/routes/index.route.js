@@ -19,6 +19,7 @@ router.post("/update-user-password/:id", checkToken, userController.UpdatePasswo
 
 router.post("/notification", checkToken, userController.AddNotification);
 router.get("/notification/:userId", checkToken, userController.GetNotification);
+router.delete('/notification/:userId/:notificationId', checkToken, userController.DeleteNotification);
 
 router.post("/donation", checkToken, upload.single('image'), userController.AddDonation);
 router.get("/donation", userController.GetDonation);
