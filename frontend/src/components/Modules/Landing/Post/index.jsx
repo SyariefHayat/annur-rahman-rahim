@@ -86,15 +86,15 @@ const Post = () => {
                             <div className="flex gap-3">
                                 <Button variant="ghost">
                                     <ThumbsUp/>
-                                    20
+                                    {item.likes}
                                 </Button>
                                 <Button variant="ghost">
                                     <MessageCircle/>
-                                    30
+                                    {item.comments.length}
                                 </Button>
                                 <Button variant="ghost">
                                     <Share2/>
-                                    10
+                                    {item.shares}
                                 </Button>
                             </div>
                             <p>{getRelativeTime(item.createdAt)}</p>

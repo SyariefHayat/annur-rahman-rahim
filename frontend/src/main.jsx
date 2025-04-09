@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import DetailDonasi from "./pages/DetailDonasi";
 import DetailArticle from "./pages/DetailArticle";
+import PostArticle from "./pages/PostArticle";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     {
         path: "/article/:id",
         element: <DetailArticle />
+    },
+    {
+        path: "/add-article/:id",
+        element: <PostArticle />
     },
     {
         path: "/contact",

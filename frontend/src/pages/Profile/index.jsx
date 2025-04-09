@@ -27,6 +27,9 @@ import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDona
 import Notification from '@/components/Modules/Landing/Notification';
 
 import Post from '@/components/Modules/Landing/Post';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import AddArticleBtn from '@/components/Modules/Landing/Button/AddArticleBtn';
 
 const Profile = () => {
     const [user] = useAtom(userAtomStorage);
@@ -80,15 +83,19 @@ const Profile = () => {
 
                 {/* Tabs */}
                 <Tabs defaultValue="history-donation" className="w-full mt-10">
-                    <TabsList>
-                        <TabsTrigger value="history-donation">Riwayat Donasi</TabsTrigger>
-                        {user.role === "author" && (
-                            <TabsTrigger value="postingan">Postingan</TabsTrigger>
-                        )}
-                        <TabsTrigger value="edit-profile">Edit Profil</TabsTrigger>
-                        <TabsTrigger value="edit-password">Ubah Password</TabsTrigger>
-                        <TabsTrigger value="notification">Pemberitahuan</TabsTrigger>
-                    </TabsList>
+                    <div className="flex justify-between">
+                        <TabsList>
+                            <TabsTrigger value="history-donation">Riwayat Donasi</TabsTrigger>
+                            {user.role === "author" && (
+                                <TabsTrigger value="postingan">Postingan</TabsTrigger>
+                            )}
+                            <TabsTrigger value="edit-profile">Edit Profil</TabsTrigger>
+                            <TabsTrigger value="edit-password">Ubah Password</TabsTrigger>
+                            <TabsTrigger value="notification">Pemberitahuan</TabsTrigger>
+                        </TabsList>
+
+                        <AddArticleBtn />
+                    </div>
 
                     <Separator className="my-4" />
 
