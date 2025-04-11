@@ -1,85 +1,53 @@
 import { Button } from "@/components/ui/button";
+import { Image, Smile } from "lucide-react";
 import { useState } from "react";
 
 export default function EditorPage() {
-  const [title, setTitle] = useState("Programming");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [filter, setFilter] = useState("");
+    const [hovered, setHovered] = useState(false);
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
-  const blocks = [
-    { type: "Text", icon: "T" },
-    { type: "Heading 1", icon: "H1", hint: "#" },
-    { type: "Heading 2", icon: "H2", hint: "##" },
-    { type: "Heading 3", icon: "H3", hint: "###" },
-    { type: "Bulleted list", icon: "•", hint: "-" },
-    { type: "Numbered list", icon: "1.", hint: "1." },
-  ];
-
-  const filteredBlocks = blocks.filter((block) =>
-    block.type.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  return (
-    <div className="min-h-screen px-6 py-10 bg-white text-neutral-900">
-      {/* Title */}
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full text-4xl font-bold bg-transparent focus:outline-none placeholder:text-gray-300"
-      />
-
-      {/* Baris di bawah title */}
-      <div className="relative flex items-center gap-2 mt-6 text-gray-400">
-        <Button
-          variant="ghost"
-          className="p-1 h-auto text-lg font-bold hover:text-gray-600"
-          onClick={() => setShowDropdown((prev) => !prev)}
-        >
-          +
-        </Button>
-        <span className="text-lg font-bold cursor-move">⋮⋮</span>
-        <input
-          type="text"
-          placeholder="Write, press ‘space’ for AI, ‘/’ for commands..."
-          className="flex-1 bg-transparent focus:outline-none text-sm text-neutral-700 placeholder:text-gray-400"
-        />
-
-        {/* Dropdown */}
-        {showDropdown && (
-          <div className="absolute top-10 left-0 w-64 mt-2 p-2 rounded-md bg-white shadow-xl border z-10">
-            <input
-              type="text"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              placeholder="Type to filter..."
-              className="w-full mb-2 px-2 py-1 text-sm border rounded bg-gray-100 text-gray-700 focus:outline-none"
-            />
-            <div className="max-h-60 overflow-y-auto">
-              <p className="text-xs font-semibold text-gray-400 px-2 mb-1">
-                Basic blocks
-              </p>
-              {filteredBlocks.map((block, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between px-2 py-1 rounded hover:bg-gray-100 cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm w-6 text-center">{block.icon}</span>
-                    <span className="text-sm">{block.type}</span>
-                  </div>
-                  {block.hint && (
-                    <span className="text-xs text-gray-400">{block.hint}</span>
-                  )}
+    return (
+        <div className="min-h-screen mx-auto py-40 w-full h-full lg:max-w-4xl items-start bg-white text-neutral-900">
+            <div className="w-full group flex flex-col gap-2">
+                <div className="group-hover:opacity-100 opacity-0 flex gap-2 text-sm text-gray-500 transition-opacity">
+                    <Button variant="ghost" className="p-2 text-xs cursor-pointer">
+                        <Smile /> Tambah icon
+                    </Button>
+                    <Button variant="ghost" className="p-2 text-xs cursor-pointer">
+                        <Image /> Tambah cover
+                    </Button>
                 </div>
-              ))}
+
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="New page"
+                    className="w-full text-5xl font-bold text-neutral-900 bg-transparent focus:outline-none placeholder:text-gray-300"
+                />
             </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+            {/* Baris input di bawah title */}
+            {/* <div className="flex items-center gap-2 mt-6 text-gray-400">
+                    <Button
+                        variant="ghost"
+                        className="p-1 h-auto text-lg font-bold hover:text-gray-600"
+                    >
+                        +
+                    </Button>
+                <span className="text-lg font-bold cursor-move">⋮⋮</span>
+                <input
+                    type="text"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Write, press ‘space’ for AI, ‘/’ for commands..."
+                    className="flex-1 bg-transparent focus:outline-none text-sm text-neutral-700 placeholder:text-gray-400"
+                />
+                </div> */}
+        </div>
+    );
 }
+
 
 
 // import {
