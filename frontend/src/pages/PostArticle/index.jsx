@@ -70,7 +70,7 @@ export default function EditorPage() {
                 />
             </div>
             {/* Baris input di bawah title */}
-            {/* <div className="flex items-center gap-2 mt-6 text-gray-400">
+            <div className="flex items-center gap-2 mt-6 text-gray-400">
                     <Button
                         variant="ghost"
                         className="p-1 h-auto text-lg font-bold hover:text-gray-600"
@@ -85,7 +85,7 @@ export default function EditorPage() {
                     placeholder="Write, press ‘space’ for AI, ‘/’ for commands..."
                     className="flex-1 bg-transparent focus:outline-none text-sm text-neutral-700 placeholder:text-gray-400"
                 />
-                </div> */}
+            </div>
         </div>
     );
 }
