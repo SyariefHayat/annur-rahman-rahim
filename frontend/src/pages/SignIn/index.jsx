@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 import { toast } from "sonner";
 import { useAtom } from 'jotai';
 import { Loader2 } from 'lucide-react';
@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { userAtomStorage } from '@/jotai/atoms';
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
 
 import {
@@ -15,7 +15,7 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 import {
     Form,
@@ -24,7 +24,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -32,10 +32,10 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
 import { Separator } from "@/components/ui/separator";
-import ClipPathUp from "@/components/Modules/Element/ClipPathUp";
 import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
 import { apiInstanceExpress } from '@/services/express/apiInstance';
-import ClipPathDown from "@/components/Modules/Element/ClipPathDown";
+import ClipPathUp from "@/components/Modules/Element/ClipPath/ClipPathUp";
+import ClipPathDown from "@/components/Modules/Element/ClipPath/ClipPathDown";
 
 const LoginSchema = z.object({
     email: z.string()

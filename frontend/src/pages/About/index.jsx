@@ -5,10 +5,10 @@ import EachUtils from '@/utils/EachUtils'
 import { LIST_MISI } from '@/constants/listMisi'
 import Footer from '@/components/Modules/Landing/Footer'
 import FlexLayout from '@/components/Layouts/FlexLayout'
-import OurTeam from '@/components/Modules/Landing/OurTeam'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
-import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
+import TeamSection from '@/components/Modules/About/TeamSection'
+import ClipPathUp from '@/components/Modules/Element/ClipPath/ClipPathUp'
+import ClipPathDown from '@/components/Modules/Element/ClipPath/ClipPathDown'
 
 const About = () => {
     return (
@@ -60,7 +60,7 @@ const About = () => {
                 </ol>
             </FlexLayout>
 
-            <OurTeam />
+            <TeamSection />
 
             <Footer/>
         </DefaultLayout>

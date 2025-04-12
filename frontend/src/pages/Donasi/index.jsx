@@ -8,9 +8,9 @@ import { Progress } from '@/components/ui/progress'
 import Footer from '@/components/Modules/Landing/Footer'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
-import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
+import ClipPathUp from '@/components/Modules/Element/ClipPath/ClipPathUp'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import ClipPathDown from '@/components/Modules/Element/ClipPath/ClipPathDown'
 
 const Donasi = () => {
     return (

@@ -3,17 +3,17 @@ import React from 'react'
 import EachUtils from '@/utils/EachUtils'
 import { Badge } from '@/components/ui/badge'
 import { getInitial } from '@/utils/getInitial'
-import ClipPathUp from '../../Element/ClipPathUp'
 import { Progress } from '@/components/ui/progress'
-import ClipPathDown from '../../Element/ClipPathDown'
 import { LIST_CAMPAIGN } from '@/constants/listCampaign'
+import ClipPathUp from '../../Element/ClipPath/ClipPathUp'
+import ClipPathDown from '../../Element/ClipPath/ClipPathDown'
 import SectionLayout from '@/components/Layouts/SectionLayout'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const CampaignSection = () => {
     return (
         <SectionLayout label="Campaign Section">
-            <ClipPathUp/>
+            <ClipPathUp />
             
             <div className="mx-auto max-w-2xl lg:mx-0">
                 <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Campaign Kami</h2>
@@ -79,7 +79,7 @@ const CampaignSection = () => {
                 />
             </div>
 
-            <ClipPathDown/>
+            <ClipPathDown />
         </SectionLayout>
     )
 }

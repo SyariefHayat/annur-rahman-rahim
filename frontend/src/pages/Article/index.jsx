@@ -3,14 +3,14 @@ import React from 'react'
 import Navbar from '../Landing/Navbar'
 import EachUtils from '@/utils/EachUtils'
 import { Badge } from '@/components/ui/badge'
+import { getInitial } from '@/utils/getInitial'
 import { Separator } from '@/components/ui/separator'
 import { LIST_ARTICLE } from '@/constants/listArticle'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
-import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
+import ClipPathUp from '@/components/Modules/Element/ClipPath/ClipPathUp'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { getInitial } from '@/utils/getInitial'
+import ClipPathDown from '@/components/Modules/Element/ClipPath/ClipPathDown'
 
 const Article = () => {
 

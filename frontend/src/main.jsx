@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
-import { StrictMode, useEffect, useState } from 'react'
-import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createRoot } from 'react-dom/client';
+import { StrictMode, useEffect, useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import "./index.css";
 import { userAtomStorage } from "./jotai/atoms";
@@ -18,9 +18,9 @@ import Article from "./pages/Article";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
-import DetailDonasi from "./pages/DetailDonasi";
-import DetailArticle from "./pages/DetailArticle";
-import PostArticle from "./pages/PostArticle";
+import SlugDonasi from "./pages/Donasi/slug";
+import SlugArticle from "./pages/Article/Slug";
+import CreateArticle from "./pages/Article/create";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/donation/:id",
-        element: <DetailDonasi />
+        element: <SlugDonasi />
     },
     {
         path: "/profile/:id",
@@ -45,11 +45,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/article/:id",
-        element: <DetailArticle />
+        element: <SlugArticle />
     },
     {
-        path: "/add-article/:id",
-        element: <PostArticle />
+        path: "/article/create/:id",
+        element: <CreateArticle />
     },
     {
         path: "/contact",

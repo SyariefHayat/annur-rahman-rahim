@@ -5,11 +5,11 @@ import EachUtils from '@/utils/EachUtils'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import { LIST_OPERASIONAL } from '@/constants/listOperasional'
-import ClipPathUp from '@/components/Modules/Element/ClipPathUp'
-import ClipPathDown from '@/components/Modules/Element/ClipPathDown'
-import ClipPathDarkUp from '@/components/Modules/Element/ClipPathDarkUp'
-import ContactForm from '@/components/Modules/Landing/ZodForm/ContactForm'
-import ClipPathDarkDown from '@/components/Modules/Element/ClipPathDarkDown'
+import ContactForm from '@/components/Modules/Contact/ContactForm'
+import ClipPathUp from '@/components/Modules/Element/ClipPath/ClipPathUp'
+import ClipPathDown from '@/components/Modules/Element/ClipPath/ClipPathDown'
+import ClipPathDarkUp from '@/components/Modules/Element/ClipPath/ClipPathDarkUp'
+import ClipPathDarkDown from '@/components/Modules/Element/ClipPath/ClipPathDarkDown'
 
 const Contact = () => {
 

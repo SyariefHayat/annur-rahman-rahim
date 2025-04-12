@@ -1,10 +1,10 @@
-import { z } from "zod"
+import { z } from "zod";
 import { toast } from "sonner";
 import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 import {
@@ -22,7 +22,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -31,9 +31,9 @@ import { Toaster } from "@/components/ui/sonner";
 import { auth } from '@/services/firebase/firebase';
 import { Separator } from "@/components/ui/separator";
 import GoogleButton from "@/components/Modules/SignIn/GoogleBtn";
-import ClipPathUp from "@/components/Modules/Element/ClipPathUp";
 import { apiInstanceExpress } from '@/services/express/apiInstance';
-import ClipPathDown from "@/components/Modules/Element/ClipPathDown";
+import ClipPathUp from "@/components/Modules/Element/ClipPath/ClipPathUp";
+import ClipPathDown from "@/components/Modules/Element/ClipPath/ClipPathDown";
 
 const SignUpSchema = z.object({
     fullName: z.string()

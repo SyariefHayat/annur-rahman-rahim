@@ -9,27 +9,23 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import Navbar from '../Landing/Navbar';
 import { userAtomStorage } from '@/jotai/atoms';
 import { getInitial } from '@/utils/getInitial';
+import Post from '@/components/Modules/Profile/Post';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Modules/Landing/Footer';
+import History from '@/components/Modules/Profile/History';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
+import EditProfile from '@/components/Modules/Profile/EditProfile';
+import NewPassword from '@/components/Modules/Profile/NewPassword';
+import Notification from '@/components/Modules/Profile/Notification';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import AddArticleBtn from '@/components/Modules/Profile/AddArticleBtn';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import EditProfileForm from '@/components/Modules/Landing/ZodForm/EditProfileForm';
-import NewPasswordForm from '@/components/Modules/Landing/ZodForm/NewPasswordForm';
-import HistoryDonationTable from '@/components/Modules/Landing/Table/HistoryDonationTable';
-import Notification from '@/components/Modules/Landing/Notification';
-
-import Post from '@/components/Modules/Landing/Post';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import AddArticleBtn from '@/components/Modules/Landing/Button/AddArticleBtn';
 
 const Profile = () => {
     const [user] = useAtom(userAtomStorage);
@@ -101,25 +97,25 @@ const Profile = () => {
 
                     {user.role === "author" && (
                         <TabsContent value="postingan">
-                            <Post/>
+                            <Post />
                         </TabsContent>
                     )}
 
                     <TabsContent value="history-donation">
-                        <HistoryDonationTable />
+                        <History />
                     </TabsContent>
 
                     <TabsContent value="edit-profile">
-                        <EditProfileForm />
+                        <EditProfile />
                     </TabsContent>
 
 
                     <TabsContent value="edit-password">
-                        <NewPasswordForm />
+                        <NewPassword />
                     </TabsContent>
 
                     <TabsContent value="notification">
-                        <Notification/>
+                        <Notification />
                     </TabsContent>
                 </Tabs>
             </main>
