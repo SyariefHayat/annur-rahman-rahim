@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAtom } from 'jotai';
 import { Toaster } from 'sonner';
 
@@ -108,7 +108,6 @@ const Profile = () => {
                     <TabsContent value="edit-profile">
                         <EditProfile />
                     </TabsContent>
-
 
                     <TabsContent value="edit-password">
                         <NewPassword />

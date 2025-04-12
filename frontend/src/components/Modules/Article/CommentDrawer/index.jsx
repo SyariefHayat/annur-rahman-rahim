@@ -20,7 +20,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
-import Comment from '../../Landing/Comment'
+import Comment from '../Comment'
 import { Input } from '@/components/ui/input'
 import { isCommentAtom } from '@/jotai/atoms'
 import { Button } from '@/components/ui/button'

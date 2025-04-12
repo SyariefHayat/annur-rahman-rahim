@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import LogoutBtn from '../Button/LogoutBtn'
+import LogoutBtn from '../LogoutBtn'
 import { getInitial } from '@/utils/getInitial'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 

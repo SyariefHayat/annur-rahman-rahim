@@ -27,12 +27,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import LogoutBtn from '../LogoutBtn'
 import EachUtils from '@/utils/EachUtils'
 import { Button } from '@/components/ui/button'
 import { getInitial } from '@/utils/getInitial'
 import { LIST_NAVBAR } from '@/constants/listNavbar'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import LogoutBtn from '../Button/LogoutBtn'
 
 const AccountMobile = ({ user }) => {
     return (

@@ -1,69 +1,61 @@
 import { useRef, useState } from "react";
-
-import { 
-    Heading1, 
-    Heading2, 
-    Heading3, 
-    Image, 
-    ImagePlus, 
-    Smile, 
-    Type 
+import {
+    Heading1, Heading2, Heading3, Image, ImagePlus, Plus, Smile, Type
 } from "lucide-react";
 
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
+    Select, SelectContent, SelectGroup, SelectItem, SelectLabel,
+    SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function CreateArticle() {
-    const [title, setTitle] = useState("");
     const [emoji, setEmoji] = useState(false);
     const [cover, setCover] = useState(false);
     const [coverUrl, setCoverUrl] = useState("");
     const [showSelect, setShowSelect] = useState(false);
-    const [selectedContent, setSelectedContent] = useState("text");
+    const [contents, setContents] = useState([]);
 
-    const fileInputRef = useRef(null)
+    const fileInputRef = useRef(null);
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0]
-        const MAX_SIZE = 5 * 1024 * 1024
+        const file = e.target.files[0];
+        const MAX_SIZE = 5 * 1024 * 1024;
 
         if (file && file.size > MAX_SIZE) {
             alert('Ukuran file maksimal 5MB');
             return;
         }
 
-        const imageUrl = URL.createObjectURL(file)
+        const imageUrl = URL.createObjectURL(file);
         return setCoverUrl(imageUrl);
-    }
+    };
 
     const handleSelect = (value) => {
-        setSelectedContent(value);
+        setContents((prev) => [
+            ...prev,
+            { id: Date.now(), type: value }
+        ]);
         setShowSelect(false);
     };
 
-    const renderContent = () => {
-        switch (selectedContent) {
+    const renderContent = (type, id) => {
+        switch (type) {
             case "text":
-            return (
-                <Textarea
-                    rows={1}
-                    placeholder="Apa yang anda pikirkan..."
-                    className="w-full min-h-0 p-0 resize-none border-none outline-none shadow-none bg-transparent md:text-lg text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
-                />
-            );
+                return (
+                    <Textarea
+                        key={id}
+                        rows={1}
+                        placeholder="Apa yang anda pikirkan..."
+                        className="w-full min-h-0 p-0 resize-none border-none outline-none shadow-none bg-transparent md:text-lg text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
+                    />
+                );
             case "heading-1":
                 return (
                     <Textarea
+                        key={id}
                         rows={1}
                         placeholder="Heading 1"
                         className="w-full px-0 py-2 resize-none border-none outline-none shadow-none bg-transparent md:text-4xl font-bold text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
@@ -72,6 +64,7 @@ export default function CreateArticle() {
             case "heading-2":
                 return (
                     <Textarea
+                        key={id}
                         rows={1}
                         placeholder="Heading 2"
                         className="w-full px-0 py-2 resize-none border-none outline-none shadow-none bg-transparent md:text-3xl font-semibold text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
@@ -80,13 +73,21 @@ export default function CreateArticle() {
             case "heading-3":
                 return (
                     <Textarea
+                        key={id}
                         rows={1}
                         placeholder="Heading 3"
                         className="w-full min-h-0 p-0 resize-none border-none outline-none shadow-none bg-transparent md:text-2xl font-medium text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
                     />
                 );
             case "image":
-                return <div className="w-full h-40 bg-gray-300 rounded-md">📷 Image Placeholder</div>;
+                return (
+                    <div
+                        key={id}
+                        className="w-full h-40 bg-gray-300 rounded-md flex items-center justify-center text-gray-500"
+                    >
+                        📷 Image Placeholder
+                    </div>
+                );
             default:
                 return null;
         }
@@ -116,7 +117,7 @@ export default function CreateArticle() {
                     <Button variant="ghost" onClick={() => {
                         setCoverUrl("");
                         setCover(!cover);
-                        }} className="p-2 text-xs cursor-pointer">
+                    }} className="p-2 text-xs cursor-pointer">
                         <Image /> Tambah cover
                     </Button>
                 </div>
@@ -135,8 +136,13 @@ export default function CreateArticle() {
                     className="w-full min-h-0 px-0 py-2 resize-none overflow-hidden border-none outline-none shadow-none bg-transparent md:text-5xl font-bold text-neutral-900 placeholder:text-gray-300 break-words focus-visible:ring-0"
                 />
             </div>
-            
-            {/* Baris input di bawah title */}
+
+            {/* Konten hasil looping */}
+            <div className="flex flex-col gap-3 mt-6">
+                {contents.map((item) => renderContent(item.type, item.id))}
+            </div>
+
+            {/* Tombol untuk menambah konten baru */}
             <div className="flex items-center gap-2 mt-3 text-gray-400 -ml-10">
                 <Button
                     variant="ghost"
@@ -144,10 +150,9 @@ export default function CreateArticle() {
                     className="text-xl cursor-pointer"
                     onClick={() => setShowSelect((prev) => !prev)}
                 >
-                    +
+                    <Plus />
                 </Button>
 
-                {/* Conditional render Textarea or Select */}
                 {showSelect ? (
                     <Select onValueChange={handleSelect}>
                         <SelectTrigger className="w-[180px]">
@@ -178,7 +183,7 @@ export default function CreateArticle() {
                         </SelectContent>
                     </Select>
                 ) : (
-                    <div className="w-full">{renderContent()}</div>
+                    <div className="w-full">{renderContent("text", "text-default")}</div>
                 )}
             </div>
         </div>

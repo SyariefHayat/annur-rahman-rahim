@@ -5,8 +5,8 @@ import EachUtils from '@/utils/EachUtils';
 import { userAtomStorage } from '@/jotai/atoms';
 import { Toaster } from '@/components/ui/sonner';
 import { LIST_NAVBAR } from '@/constants/listNavbar';
-import AccountMobile from '@/components/Modules/Landing/Account/AccountMobile';
-import AccountDesktop from '@/components/Modules/Landing/Account/AccountDesktop';
+import AccountMobile from '@/components/Modules/Landing/AccountMobile';
+import AccountDesktop from '@/components/Modules/Landing/AccountDesktop';
 
 const Navbar = ({ position }) => {
     const [user] = useAtom(userAtomStorage);
