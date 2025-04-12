@@ -1,13 +1,27 @@
 import { useRef, useState } from "react";
-import { Image, Smile } from "lucide-react";
+import { Heading1, Heading2, Heading3, Image, ImagePlus, Smile, Text, Type } from "lucide-react";
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectSeparator,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function EditorPage() {
     const [title, setTitle] = useState("");
     const [emoji, setEmoji] = useState(false);
     const [cover, setCover] = useState(false);
     const [coverUrl, setCoverUrl] = useState("");
+    const [showSelect, setShowSelect] = useState(false);
+    const [selectedContent, setSelectedContent] = useState("text");
 
     const fileInputRef = useRef(null)
 
@@ -23,6 +37,52 @@ export default function EditorPage() {
         const imageUrl = URL.createObjectURL(file)
         return setCoverUrl(imageUrl);
     }
+
+    const handleSelect = (value) => {
+        setSelectedContent(value);
+        setShowSelect(false);
+    };
+
+    const renderContent = () => {
+        switch (selectedContent) {
+            case "text":
+            return (
+                <Textarea
+                    rows={1}
+                    placeholder="Apa yang anda pikirkan..."
+                    className="w-full min-h-0 p-0 resize-none border-none outline-none shadow-none bg-transparent md:text-lg text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
+                />
+            );
+            case "heading-1":
+                return (
+                    <Textarea
+                        rows={1}
+                        placeholder="Heading 1"
+                        className="w-full px-0 py-2 resize-none border-none outline-none shadow-none bg-transparent md:text-4xl font-bold text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
+                    />
+                );
+            case "heading-2":
+                return (
+                    <Textarea
+                        rows={1}
+                        placeholder="Heading 2"
+                        className="w-full px-0 py-2 resize-none border-none outline-none shadow-none bg-transparent md:text-3xl font-semibold text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
+                    />
+                );
+            case "heading-3":
+                return (
+                    <Textarea
+                        rows={1}
+                        placeholder="Heading 3"
+                        className="w-full min-h-0 p-0 resize-none border-none outline-none shadow-none bg-transparent md:text-2xl font-medium text-neutral-700 placeholder:text-gray-400 break-words focus-visible:ring-0"
+                    />
+                );
+            case "image":
+                return <div className="w-full h-40 bg-gray-300 rounded-md">📷 Image Placeholder</div>;
+            default:
+                return null;
+        }
+    };
 
     return (
         <div className="min-h-screen mx-auto py-12 w-full h-full lg:max-w-4xl items-start bg-white text-neutral-900">
@@ -61,30 +121,57 @@ export default function EditorPage() {
                     onChange={handleFileChange}
                 />
 
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="New page"
-                    className="w-full text-5xl pl-2 font-bold text-neutral-900 bg-transparent focus:outline-none placeholder:text-gray-300"
+                <Textarea
+                    rows={1}
+                    placeholder="Halaman Baru"
+                    className="w-full min-h-0 px-0 py-2 resize-none overflow-hidden border-none outline-none shadow-none bg-transparent md:text-5xl font-bold text-neutral-900 placeholder:text-gray-300 break-words focus-visible:ring-0"
                 />
             </div>
+            
             {/* Baris input di bawah title */}
-            <div className="flex items-center gap-2 mt-6 text-gray-400">
-                    <Button
-                        variant="ghost"
-                        className="p-1 h-auto text-lg font-bold hover:text-gray-600"
-                    >
-                        +
-                    </Button>
-                <span className="text-lg font-bold cursor-move">⋮⋮</span>
-                <input
-                    type="text"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Write, press ‘space’ for AI, ‘/’ for commands..."
-                    className="flex-1 bg-transparent focus:outline-none text-sm text-neutral-700 placeholder:text-gray-400"
-                />
+            <div className="flex items-center gap-2 mt-3 text-gray-400 -ml-10">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-xl cursor-pointer"
+                    onClick={() => setShowSelect((prev) => !prev)}
+                >
+                    +
+                </Button>
+
+                {/* Conditional render Textarea or Select */}
+                {showSelect ? (
+                    <Select onValueChange={handleSelect}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Pilih Konten" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Basic</SelectLabel>
+                                <SelectItem value="text">
+                                    <Type /> Text
+                                </SelectItem>
+                                <SelectItem value="heading-1">
+                                    <Heading1 /> Heading 1
+                                </SelectItem>
+                                <SelectItem value="heading-2">
+                                    <Heading2 /> Heading 2
+                                </SelectItem>
+                                <SelectItem value="heading-3">
+                                    <Heading3 /> Heading 3
+                                </SelectItem>
+                            </SelectGroup>
+                            <SelectGroup>
+                                <SelectLabel>Media</SelectLabel>
+                                <SelectItem value="image">
+                                    <ImagePlus /> Image
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                ) : (
+                    <div className="w-full">{renderContent()}</div>
+                )}
             </div>
         </div>
     );
