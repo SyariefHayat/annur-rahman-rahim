@@ -3,5 +3,6 @@ import { atomWithStorage } from "jotai/utils";
 
 export const userAtomStorage = atomWithStorage("user", null);
 
+export const contentsAtom = atom([]);
 export const isCommentAtom = atom(false);
 export const dataDonationsAtom = atom(null);
