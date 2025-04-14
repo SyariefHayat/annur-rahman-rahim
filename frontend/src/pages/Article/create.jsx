@@ -15,9 +15,22 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import FormCover from "@/components/Modules/Article/FormCover";
 import FormContent from "@/components/Modules/Article/FormContent";
+import { apiInstanceExpress } from "@/services/express/apiInstance";
+import { useAtom } from "jotai";
+import { userAtomStorage } from "@/jotai/atoms";
 
 const postArticleSchema = z.object({
-    cover: z.string().min(1, { message: "Banner harus diisi" }),
+    // cover: z
+    // .any()
+    // .refine(file => file instanceof File || (file && file.length > 0), {
+    //     message: "Banner harus diisi"
+    // }),
+    cover: z
+    .any()
+    .refine(
+        (file) => file instanceof File || (file && file.length > 0),
+        { message: "Banner harus diisi",}
+    ),
     title: z.string().min(1, { message: "Title harus diisi" }),
     content: z.array(
         z.object({
@@ -29,6 +42,7 @@ const postArticleSchema = z.object({
 });
 
 const CreateArticle = () => {
+    const [user] = useAtom(userAtomStorage)
     const [contents, setContents] = useState([
         {
             type: "text",
@@ -66,8 +80,50 @@ const CreateArticle = () => {
 
     const onSubmit = async (data) => {
         console.log("✅ Submit:", data);
-        alert(JSON.stringify(data, null, 2));
+
+        const formData = new FormData();
+    
+        // Tambahkan cover (pastikan data.cover adalah File)
+        if (data.cover) {
+            formData.append("cover", data.cover);
+        }
+    
+        // Tambahkan field biasa
+        formData.append("title", data.title);
+        formData.append("description", "");
+        formData.append("createdBy", user.id);
+    
+        // Tambahkan tags jika ada
+        (data.tags || []).forEach((tag) => {
+            formData.append("tags", tag);
+        });
+    
+        // Tambahkan konten (harus diubah ke string JSON dulu)
+        formData.append("content", JSON.stringify(data.content));
+    
+        // Cari item konten yang berupa image
+        data.content.forEach((item) => {
+            if (item.type === "image" && item.file) {
+                formData.append("image", item.file); // Tambahkan file gambar ke formData
+            }
+        });
+    
+        try {
+            const response = await apiInstanceExpress.post("article", formData, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
+            if (response.status === 201) {
+                alert("Berhasil");
+            }
+        } catch (error) {
+            console.error("❌ Submit error:", error);
+        }
     };
+    
 
     return (
         <Form {...form}>

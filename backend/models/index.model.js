@@ -99,6 +99,7 @@ CommentSchema.add({
 const ArticleSchema = mongoose.Schema({
     cover: { type: String, required: true },
     title: { type: String, required: true },
+    description: { type: String },
     content: [{
         type: {
             type: String,

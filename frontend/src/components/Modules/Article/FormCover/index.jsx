@@ -22,11 +22,12 @@ const FormCover = ({ form }) => {
 
         const imageUrl = URL.createObjectURL(file);
         setCoverUrl(imageUrl);
-        form.setValue("cover", imageUrl);
+        console.log(file)
+        form.setValue("cover", file.name);
     };
 
     return (
-        <FormField control={form.control} name="banner" render={() => (
+        <FormField control={form.control} name="cover" render={() => (
             <FormItem>
                 <div onClick={() => fileInputRef.current?.click()} className="w-full h-80 bg-gray-300 rounded-md cursor-pointer">
                     <img src={coverUrl} alt="Preview" className={`w-full h-full object-cover object-center rounded-md ${!coverUrl && "hidden" }`} />

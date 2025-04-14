@@ -376,14 +376,12 @@ const AddTransaction = async (req, res) => {
 }
 
 const AddArticle = async (req, res) => {
-    const coverFile = req.files['cover']?.[0];
-    const cover = coverFile ? `uploads/article/${coverFile.filename}` : null;
-
-    let { title, content, createdBy, tags } = req.body;
+    let { title, content, description, createdBy, tags } = req.body;
+    const cover = `uploads/article/${req.files["cover"]?.[0].filename}`;
 
     try {
-        if (!title || !content || !createdBy || !tags) {
-            return ERR(res, 400, "Data not found");
+        if (!title || !content || !createdBy) {
+            return ERR(res, 400, "Required data is missing");
         }
 
         // Convert tags dari string ke array (jika perlu)
@@ -421,11 +419,12 @@ const AddArticle = async (req, res) => {
         });
 
         const newArticle = new Article({
+            cover,
             title,
+            description,
             content,
             createdBy,
-            cover,
-            tags
+            tags,
         });
 
         await newArticle.save();
