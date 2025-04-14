@@ -34,11 +34,18 @@ const postArticleSchema = z.object({
     tags: z.array(z.string()).optional(),
 });
 
-const renderContent = (item, onChange) => {
+const renderContent = (item, onChange, index, handleContentBanner, contentInputRefs) => {
     return (
         <>
             {item.type === "image" ? (
-                <div className="w-full h-52 rounded-md border bg-gray-300"></div>
+                <>
+                    <div onClick={() => contentInputRefs.current[index]?.click()} className="w-full h-52 rounded-md border bg-gray-300 cursor-pointer">
+                        {item.value && (
+                            <img src={item.value} alt="Preview" className="w-full h-full object-cover object-center rounded-md" />
+                        )}
+                    </div>
+                    <input ref={(el) => (contentInputRefs.current[index] = el)} type="file" className="hidden" accept="image/*" onChange={(e) => handleContentBanner(e, index)} />
+                </>
             ) : (
                 <Textarea
                     value={item.value}
@@ -58,6 +65,7 @@ const renderContent = (item, onChange) => {
 
 const CreateArticle = () => {
     const fileInputRef = useRef(null);
+    const contentInputRefs = useRef({});
 
     const [emoji, setEmoji] = useState(false);
     const [cover, setCover] = useState(false);
@@ -103,6 +111,24 @@ const CreateArticle = () => {
         form.setValue("banner", imageUrl);
     };
 
+    const handleContentBanner = (e, index) => {
+        const file = e.target.files[0];
+        const MAX_SIZE = 5 * 1024 * 1024;
+    
+        if (file && file.size > MAX_SIZE) {
+            alert("Ukuran file maksimal 5MB");
+            return;
+        }
+    
+        const imageUrl = URL.createObjectURL(file);
+    
+        // Simpan juga value url gambar di konten
+        const newContents = [...contents];
+        newContents[index].value = imageUrl;
+        setContents(newContents);
+    };
+    
+
     const handleContentChange = (index, value) => {
         const newContents = [...contents];
         newContents[index].value = value;
@@ -138,7 +164,7 @@ const CreateArticle = () => {
                 
                 {/* COVER IMAGE */}
                 {cover && (
-                    <FormField control={form.control} name="banner" render={({ field }) => (
+                    <FormField control={form.control} name="banner" render={() => (
                         <FormItem>
                             <div onClick={() => fileInputRef.current?.click()} className="w-full h-80 bg-gray-300 rounded-md cursor-pointer">
                                 {coverUrl && (
@@ -146,7 +172,7 @@ const CreateArticle = () => {
                                 )}
                             </div>
                             <FormControl>
-                                <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} {...field} />
+                                <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -155,10 +181,16 @@ const CreateArticle = () => {
 
                 {/* EMOJI */}
                 {emoji && (
-                    <FormField control={form.control} name="emote" render={() => (
+                    <FormField control={form.control} name="emote" render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <div className="w-20 h-20 flex items-center justify-center text-center text-7xl">📒</div>
+                                <input
+                                    type="text"
+                                    {...field}
+                                    maxLength={2}
+                                    placeholder="📒"
+                                    className="w-20 h-20 text-6xl text-center"
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -252,7 +284,15 @@ const CreateArticle = () => {
                                                         </SelectContent>
                                                     </Select>
                                                 ) : (
-                                                    renderContent({ ...item, value: field.value }, (value) => handleContentChange(index, value))
+                                                    renderContent(
+                                                        { ...item, value: field.value },
+                                                        (value) => handleContentChange(index, value),
+                                                        index,
+                                                        handleContentBanner,
+                                                        contentInputRefs
+                                                    )
+                                                    
+
                                                 )}
                                             </div>
                                         </div>
