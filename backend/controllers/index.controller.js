@@ -376,7 +376,9 @@ const AddTransaction = async (req, res) => {
 }
 
 const AddArticle = async (req, res) => {
-    const imageUrl = req.file ? `uploads/article/${req.file.filename}` : null;
+    const coverFile = req.files['cover']?.[0];
+    const cover = coverFile ? `uploads/article/${coverFile.filename}` : null;
+
     let { title, content, createdBy, tags } = req.body;
 
     try {
@@ -384,16 +386,45 @@ const AddArticle = async (req, res) => {
             return ERR(res, 400, "Data not found");
         }
 
-        // Jika tags dikirim sebagai string dari form-data
-        tags = typeof tags === "string"
-            ? tags.split(",").map(tag => tag.trim())
-            : tags;
+        // Convert tags dari string ke array (jika perlu)
+        if (typeof tags === "string") {
+            tags = tags.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0);
+        }
+
+        // Parse content jika masih string (karena dikirim dari form-data)
+        if (typeof content === "string") {
+            try {
+                content = JSON.parse(content);
+                if (!Array.isArray(content)) throw new Error();
+            } catch {
+                return ERR(res, 400, "Content harus berupa JSON array yang valid");
+            }
+        }
+
+        const imageFiles = req.files['image'] || [];
+        let imageIndex = 0;
+
+        content = content.map((item, idx) => {
+        if (item.type === "image") {
+            const imageFile = imageFiles[imageIndex++];
+            if (imageFile) {
+            return {
+                ...item,
+                value: `uploads/image/${imageFile.filename}`  // Ganti value dengan path file yang benar
+            };
+            } else {
+            // Jika tidak ada gambar yang dikirimkan oleh user
+            return ERR(res, 400, `Konten image di index ${idx} tidak memiliki file yang diupload`);
+            }
+        }
+        return item;
+        });
 
         const newArticle = new Article({
             title,
             content,
             createdBy,
-            image: imageUrl,
+            cover,
             tags
         });
 

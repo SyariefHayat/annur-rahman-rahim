@@ -17,7 +17,7 @@ import FormCover from "@/components/Modules/Article/FormCover";
 import FormContent from "@/components/Modules/Article/FormContent";
 
 const postArticleSchema = z.object({
-    banner: z.string().min(1, { message: "Banner harus diisi" }),
+    cover: z.string().min(1, { message: "Banner harus diisi" }),
     title: z.string().min(1, { message: "Title harus diisi" }),
     content: z.array(
         z.object({
@@ -40,7 +40,7 @@ const CreateArticle = () => {
     const form = useForm({
         resolver: zodResolver(postArticleSchema),
         defaultValues: {
-            banner: "",
+            cover: "",
             title: "",
             content: [],
             author: "",

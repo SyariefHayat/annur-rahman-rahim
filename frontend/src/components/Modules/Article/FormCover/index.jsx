@@ -22,7 +22,7 @@ const FormCover = ({ form }) => {
 
         const imageUrl = URL.createObjectURL(file);
         setCoverUrl(imageUrl);
-        form.setValue("banner", imageUrl);
+        form.setValue("cover", imageUrl);
     };
 
     return (

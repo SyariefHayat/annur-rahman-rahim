@@ -12,8 +12,11 @@ const storage = multer.diskStorage({
             case 'profileImage':
                 folder = 'uploads/profile';
                 break;
-            case 'articleImage':
+            case 'cover':
                 folder = 'uploads/article';
+                break;
+            case 'image':
+                folder = 'uploads/image';
                 break;
             case 'campaignImage':
                 folder = 'uploads/campaign';

@@ -97,10 +97,21 @@ CommentSchema.add({
 });
 
 const ArticleSchema = mongoose.Schema({
+    cover: { type: String, required: true },
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: [{
+        type: {
+            type: String,
+            enum: ["heading-1", "heading-2", "heading-3", "text", "image"],
+            required: true,
+        },
+        value: {
+            type: String,
+            required: true,
+        }
+    }],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    image: { type: String, default: "default-article.jpg" },
+    // image: { type: String, default: "default-article.jpg" },
     tags: [{ type: String, trim: true, maxlength: 20 }],
     likes: { type: Number, default: 0 },
     shares: { type: Number, default: 0 },
