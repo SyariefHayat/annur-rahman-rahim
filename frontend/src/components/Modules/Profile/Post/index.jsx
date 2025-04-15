@@ -48,6 +48,28 @@ const Post = () => {
         getArticles();
     }, []);
 
+    const handleDelete = async (id) => {
+        try {
+            const response = await apiInstanceExpress.delete(`article/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            });
+    
+            if (response.status === 200) {
+                setArticles(prev => prev.filter(item => item._id !== id));
+            }
+        } catch (error) {
+            console.error("Gagal menghapus artikel", error);
+        }
+    };
+    
+    const handleEdit = (id) => {
+        // Arahkan ke halaman edit
+        window.location.href = `/dashboard/edit-article/${id}`;
+    };
+    
+
     return (
         <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <EachUtils
@@ -77,8 +99,8 @@ const Post = () => {
                                     <DropdownMenuLabel>Pengaturan</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem>Lihat</DropdownMenuItem>
-                                    <DropdownMenuItem>Hapus</DropdownMenuItem>
-                                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => handleDelete(item._id)}>Hapus</DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => handleEdit(item._id)}>Edit</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
