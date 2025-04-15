@@ -18,6 +18,9 @@ import FormContent from "@/components/Modules/Article/FormContent";
 import { apiInstanceExpress } from "@/services/express/apiInstance";
 import { useAtom } from "jotai";
 import { userAtomStorage } from "@/jotai/atoms";
+import { Input } from "@/components/ui/input";
+import { Plus, Trash } from "lucide-react";
+import FormTag from "@/components/Modules/Article/FormTag";
 
 const postArticleSchema = z.object({
     cover: z
@@ -138,6 +141,9 @@ const CreateArticle = () => {
                 
                 {/* COVER IMAGE */}
                 <FormCover form={form} />
+
+                {/* TAGS */}
+                <FormTag form={form} />
 
                 {/* TITLE */}
                 <FormField control={form.control} name="title" render={({ field }) => (
