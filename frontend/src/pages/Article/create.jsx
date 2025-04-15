@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,16 +12,13 @@ import {
     FormMessage 
 } from "@/components/ui/form";
 
+import { userAtomStorage } from "@/jotai/atoms";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import FormTag from "@/components/Modules/Article/FormTag";
 import FormCover from "@/components/Modules/Article/FormCover";
 import FormContent from "@/components/Modules/Article/FormContent";
 import { apiInstanceExpress } from "@/services/express/apiInstance";
-import { useAtom } from "jotai";
-import { userAtomStorage } from "@/jotai/atoms";
-import { Input } from "@/components/ui/input";
-import { Plus, Trash } from "lucide-react";
-import FormTag from "@/components/Modules/Article/FormTag";
 
 const postArticleSchema = z.object({
     cover: z
