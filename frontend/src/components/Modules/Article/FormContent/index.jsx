@@ -33,6 +33,7 @@ import { Button } from '@/components/ui/button';
 
 const FormContent = ({ contents, setContents, form }) => {
     const contentInputRefs = useRef({});
+    const [contentImgUrl, setContentImgUrl] = useState("");
     const [showSelectIndex, setShowSelectIndex] = useState(null);
 
     const handleContentBanner = (e, index) => {
@@ -45,10 +46,13 @@ const FormContent = ({ contents, setContents, form }) => {
         }
 
         const imageUrl = URL.createObjectURL(file);
+        setContentImgUrl(imageUrl);
+
+        console.log(file);
 
         // Simpan juga value url gambar di konten
         const newContents = [...contents];
-        newContents[index].value = imageUrl;
+        newContents[index].value = file;
         setContents(newContents);
     };
 
@@ -130,7 +134,8 @@ const FormContent = ({ contents, setContents, form }) => {
                                                     (value) => handleContentChange(index, value),
                                                     index,
                                                     handleContentBanner,
-                                                    contentInputRefs
+                                                    contentInputRefs,
+                                                    contentImgUrl
                                                 )
                                             )}
                                         </div>

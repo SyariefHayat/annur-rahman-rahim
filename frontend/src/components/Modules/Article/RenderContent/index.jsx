@@ -2,15 +2,13 @@ import React from 'react'
 
 import { Textarea } from '@/components/ui/textarea'
 
-const RenderContent = (item, onChange, index, handleContentBanner, contentInputRefs) => {
+const RenderContent = (item, onChange, index, handleContentBanner, contentInputRefs, contentImgUrl) => {
     return (
         <>
             {item.type === "image" ? (
                 <>
                     <div onClick={() => contentInputRefs.current[index]?.click()} className="w-full h-52 rounded-md border bg-gray-300 cursor-pointer">
-                        {item.value && (
-                            <img src={item.value} alt="Preview" className="w-full h-full object-cover object-center rounded-md" />
-                        )}
+                        <img src={contentImgUrl} alt="preview" className={`w-full h-full object-cover object-center rounded-md ${contentImgUrl ? "block" : "hidden"}`} />
                     </div>
                     <input ref={(el) => (contentInputRefs.current[index] = el)} type="file" className="hidden" accept="image/*" onChange={(e) => handleContentBanner(e, index)} />
                 </>

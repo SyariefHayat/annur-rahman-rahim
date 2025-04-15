@@ -20,11 +20,6 @@ import { useAtom } from "jotai";
 import { userAtomStorage } from "@/jotai/atoms";
 
 const postArticleSchema = z.object({
-    // cover: z
-    // .any()
-    // .refine(file => file instanceof File || (file && file.length > 0), {
-    //     message: "Banner harus diisi"
-    // }),
     cover: z
     .any()
     .refine(
@@ -35,9 +30,21 @@ const postArticleSchema = z.object({
     content: z.array(
         z.object({
             type: z.enum(["heading-1", "heading-2", "heading-3", "text", "image"]),
-            value: z.string().min(1, { message: "Konten tidak boleh kosong" })
-        })
-    ).min(1, { message: "Konten artikel tidak boleh kosong" }),
+            value: z.any(),
+        }).refine(
+            (data) => {
+                if (data.type === "image") {
+                return data.value instanceof File || (data.value && data.value.length > 0);
+                } else {
+                return typeof data.value === "string" && data.value.trim().length > 0;
+                }
+            },
+            {
+                message: "Konten tidak boleh kosong",
+                path: ["value"], // supaya error muncul di field value
+            }
+        )
+        ).min(1, { message: "Konten artikel tidak boleh kosong" }),
     tags: z.array(z.string()).optional(),
 });
 
@@ -103,8 +110,8 @@ const CreateArticle = () => {
     
         // Cari item konten yang berupa image
         data.content.forEach((item) => {
-            if (item.type === "image" && item.file) {
-                formData.append("image", item.file); // Tambahkan file gambar ke formData
+            if (item.type === "image" && item.value) {
+                formData.append("image", item.value);
             }
         });
     

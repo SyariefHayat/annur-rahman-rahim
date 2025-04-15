@@ -376,8 +376,10 @@ const AddTransaction = async (req, res) => {
 }
 
 const AddArticle = async (req, res) => {
+    const coverFile = req.files["cover"]?.[0];
+    const cover = coverFile ? `uploads/article/${coverFile.filename}` : null;
+
     let { title, content, description, createdBy, tags } = req.body;
-    const cover = `uploads/article/${req.files["cover"]?.[0].filename}`;
 
     try {
         if (!title || !content || !createdBy) {
