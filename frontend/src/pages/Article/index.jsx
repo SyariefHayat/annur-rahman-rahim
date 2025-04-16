@@ -38,7 +38,7 @@ const Article = () => {
                                 <article key={index} className="relative flex max-w-xl h-[650px] flex-col items-start justify-between overflow-hidden">
                                     <figure className="w-full h-full rounded-xl overflow-hidden">
                                         <img 
-                                            src={`/slide-${index + 1}.png`} 
+                                            src={item.cover} 
                                             alt={item.title} 
                                             className="w-full h-full object-cover object-center"
                                         />

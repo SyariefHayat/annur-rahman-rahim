@@ -78,13 +78,12 @@ const Post = () => {
                     <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
                         <figure className="w-full h-[70%] rounded-xl overflow-hidden">
                             <img 
-                                src={`${import.meta.env.VITE_BASE_URL_EXPRESS}${item.image}`} 
+                                src={`${import.meta.env.VITE_BASE_URL_EXPRESS}${item.cover}`} 
                                 alt={item.title} 
                                 className="w-full h-full object-cover object-center"
                             />
-                                {console.log(`${import.meta.env.VITE_BASE_URL_EXPRESS}${item.image}`)}
                         </figure>
-                        <div className="w-full h-[30%] flex items-start pt-4">
+                        <div className="w-full h-[30%] flex items-start justify-between pt-4">
                             <a href={item.href}>
                                 <h3 className="text-lg/6 font-semibold">{item.title}</h3>
                             </a>

@@ -504,23 +504,34 @@ const DeleteArticle = async (req, res) => {
     const articleId = req.params.id;
 
     try {
-        if (!articleId) return ERR(res, 200, "Data not found");
+        if (!articleId) return ERR(res, 400, "Data not found");
 
         const article = await Article.findById(articleId);
         if (!article) return ERR(res, 404, "Article not found");
 
-        if (article.image) {
-            const imagePath = path.join(__dirname, "..", article.image);
-
-            fs.unlink(imagePath, (err) => {
-                if (err) {
-                    console.error("Error deleting image:", err);
-                }
+        // Hapus file cover
+        if (article.cover) {
+            const coverPath = path.join(__dirname, "..", article.cover);
+            fs.unlink(coverPath, err => {
+                if (err) console.error("Error deleting cover:", err);
             });
         }
 
+        // Hapus semua file gambar dari content
+        if (Array.isArray(article.content)) {
+            article.content.forEach(item => {
+                if (item.type === "image" && item.value) {
+                    const imagePath = path.join(__dirname, "..", item.value);
+                    fs.unlink(imagePath, err => {
+                        if (err) console.error(`Error deleting image at ${item.value}:`, err);
+                    });
+                }
+            });
+        }
+        
+
         await Article.findByIdAndDelete(articleId);
-        return SUCC(res, 200, null, "Article removed succesfully");
+        return SUCC(res, 200, null, "Article removed successfully");
     } catch (error) {
         console.error(error);
         return ERR(res, 500, "Remove error");

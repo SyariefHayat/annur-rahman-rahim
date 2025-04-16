@@ -79,28 +79,30 @@ const FormContent = ({ contents, setContents, form }) => {
                         control={form.control}
                         name={`content.${index}.value`}
                         render={({ field }) => (
-                            <FormItem className="flex flex-col gap-2 mt-3 text-gray-400 -ml-20">
+                            <FormItem className="flex flex-col gap-2 mt-3 text-gray-400">
                                 <FormControl>
-                                    <div className="w-full flex gap-1 items-center">
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            className="text-xl"
-                                            onClick={() => setShowSelectIndex(index === showSelectIndex ? null : index)}
-                                        >
-                                            <Plus />
-                                        </Button>
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => handleRemoveContent(index)}
-                                            className="hover:text-red-500"
-                                        >
-                                            <Trash />
-                                        </Button>
-                                        <div className="flex-1">
+                                    <div className="min-w-full flex flex-col-reverse md:flex-row gap-1 items-start md:items-center md:-ml-20">
+                                        <div className="flex gap-3 md:gap-2">
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                className="text-xl"
+                                                onClick={() => setShowSelectIndex(index === showSelectIndex ? null : index)}
+                                            >
+                                                <Plus />
+                                            </Button>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => handleRemoveContent(index)}
+                                                className="hover:text-red-500"
+                                            >
+                                                <Trash />
+                                            </Button>
+                                        </div>
+                                        <div className="w-full flex-1">
                                             {showSelectIndex === index ? (
                                                 <Select
                                                     onValueChange={(val) => {
@@ -111,7 +113,7 @@ const FormContent = ({ contents, setContents, form }) => {
                                                         setShowSelectIndex(null);
                                                     }}
                                                 >
-                                                    <SelectTrigger className="w-[180px]">
+                                                    <SelectTrigger className="w-full md:w-[180px]">
                                                         <SelectValue placeholder="Pilih Konten" />
                                                     </SelectTrigger>
                                                     <SelectContent>

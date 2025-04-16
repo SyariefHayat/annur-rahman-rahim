@@ -135,7 +135,7 @@ const CreateArticle = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="min-h-screen mx-auto py-12 w-full h-full lg:max-w-4xl items-start bg-white text-neutral-900">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="min-h-screen mx-auto px-5 py-12 w-full h-full lg:max-w-4xl items-start bg-white text-neutral-900">
                 
                 {/* COVER IMAGE */}
                 <FormCover form={form} />
@@ -145,9 +145,9 @@ const CreateArticle = () => {
 
                 {/* TITLE */}
                 <FormField control={form.control} name="title" render={({ field }) => (
-                    <FormItem className="mt-3">
+                    <FormItem>
                         <FormControl>
-                            <Textarea rows={1} placeholder="Halaman Baru" className="w-full min-h-0 px-0 py-2 resize-none overflow-hidden border-none outline-none shadow-none bg-transparent md:text-5xl font-bold text-neutral-900 placeholder:text-gray-300 break-words focus-visible:ring-0" {...field} />
+                            <Textarea rows={1} placeholder="Halaman Baru" className="w-full min-h-0 px-0 py-2 resize-none overflow-hidden border-none outline-none shadow-none bg-transparent text-4xl md:text-5xl font-bold text-neutral-900 placeholder:text-gray-300 break-words focus-visible:ring-0" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
