@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { useAtom } from 'jotai';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
 import { 
@@ -95,7 +96,9 @@ const Post = () => {
                                 <DropdownMenuContent>
                                     <DropdownMenuLabel>Pengaturan</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>Lihat</DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link to={`/article/${item._id}`}>Lihat</Link>
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => handleDelete(item._id)}>Hapus</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
