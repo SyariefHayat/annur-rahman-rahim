@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react';
 
@@ -23,10 +24,8 @@ import { userAtomStorage } from '@/jotai/atoms';
 import { getRelativeTime } from '@/utils/formatDate';
 import { apiInstanceExpress } from '@/services/express/apiInstance';
 
-
 const Post = () => {
     const [articles, setArticles] = useState([]);
-    const [loading, setIsLoading] = useState(false);
 
     const [user] = useAtom(userAtomStorage);
 
@@ -49,24 +48,23 @@ const Post = () => {
     }, []);
 
     const handleDelete = async (id) => {
+        const toastId = toast.loading("Menghapus artikel...");
+    
         try {
             const response = await apiInstanceExpress.delete(`article/${id}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
-                }
+                },
             });
     
             if (response.status === 200) {
                 setArticles(prev => prev.filter(item => item._id !== id));
+                toast.success("Artikel berhasil dihapus!", { id: toastId });
             }
         } catch (error) {
             console.error("Gagal menghapus artikel", error);
+            toast.error("Gagal menghapus artikel. Silakan coba lagi.", { id: toastId });
         }
-    };
-    
-    const handleEdit = (id) => {
-        // Arahkan ke halaman edit
-        window.location.href = `/dashboard/edit-article/${id}`;
     };
     
 
@@ -99,7 +97,6 @@ const Post = () => {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem>Lihat</DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => handleDelete(item._id)}>Hapus</DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => handleEdit(item._id)}>Edit</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>

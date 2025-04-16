@@ -143,7 +143,7 @@ const FormContent = ({ contents, setContents, form }) => {
                                         </div>
                                     </div>
                                 </FormControl>
-                                <FormMessage className="ml-20" />
+                                <FormMessage className="ml-1" />
                             </FormItem>
                         )}
                     />

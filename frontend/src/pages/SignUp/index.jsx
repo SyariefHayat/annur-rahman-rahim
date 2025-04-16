@@ -96,9 +96,7 @@ const SignUp = ({ className, ...props }) => {
                 });
 
                 if (addUser.status === 201) {
-                    toast.success("Pendaftaran berhasil! Mengarahkan ke halaman login...", {
-                        duration: 3000,
-                    });
+                    toast.success("Pendaftaran berhasil! Mengarahkan ke halaman login...");
                     
                     setTimeout(() => {
                         navigate("/sign-in")

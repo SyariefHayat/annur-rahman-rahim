@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
+import { toast, Toaster } from "sonner";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -51,6 +54,10 @@ const postArticleSchema = z.object({
 
 const CreateArticle = () => {
     const [user] = useAtom(userAtomStorage)
+
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
     const [contents, setContents] = useState([
         {
             type: "text",
@@ -87,8 +94,7 @@ const CreateArticle = () => {
     };
 
     const onSubmit = async (data) => {
-        console.log("✅ Submit:", data);
-
+        setIsLoading(true);
         const formData = new FormData();
     
         // Tambahkan cover (pastikan data.cover adalah File)
@@ -125,10 +131,24 @@ const CreateArticle = () => {
             });
     
             if (response.status === 201) {
-                alert("Berhasil");
+                toast.success("Artikel berhasil dibuat!")
+
+                setTimeout(() => {
+                    navigate(`/profile/${user.id}`);
+                }, 2000)
             }
         } catch (error) {
-            console.error("❌ Submit error:", error);
+            if (error?.response?.status === 400) {
+                toast.error("Data tidak valid. Periksa kembali input kamu.");
+            } else if (error?.response?.status === 401) {
+                toast.error("Sesi kamu telah habis. Silakan login ulang.");
+            } else {
+                toast.error("Terjadi kesalahan saat membuat artikel. Silakan coba lagi.");
+            }
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000)
         }
     };
     
@@ -136,6 +156,7 @@ const CreateArticle = () => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="min-h-screen mx-auto px-5 py-12 w-full h-full lg:max-w-4xl items-start bg-white text-neutral-900">
+                <Toaster />
                 
                 {/* COVER IMAGE */}
                 <FormCover form={form} />
@@ -160,7 +181,17 @@ const CreateArticle = () => {
                     <Button type="button" variant="outline" onClick={handleAddContent}>
                         Tambah Konten
                     </Button>
-                    <Button type="submit">Posting</Button>
+
+                    {isLoading ? (
+                        <Button disabled>
+                            <Loader2 className="animate-spin" />
+                            Sedang membuat artikel anda...
+                        </Button>
+                    ) : (
+                        <Button type="submit" className="cursor-pointer">
+                            Posting
+                        </Button>
+                    )}
                 </div>
             </form>
         </Form>

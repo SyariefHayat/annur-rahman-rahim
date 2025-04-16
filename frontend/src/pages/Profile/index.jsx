@@ -21,6 +21,7 @@ import History from '@/components/Modules/Profile/History';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import EditProfile from '@/components/Modules/Profile/EditProfile';
 import NewPassword from '@/components/Modules/Profile/NewPassword';
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Notification from '@/components/Modules/Profile/Notification';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import AddArticleBtn from '@/components/Modules/Profile/AddArticleBtn';
@@ -36,16 +37,16 @@ const Profile = () => {
             <Toaster />
             <main className="mx-auto max-w-7xl h-full px-6 lg:px-8">
                 {/* Cover */}
-                <header className="relative w-full h-64 bg-gray-300 rounded-md bg-[url(https://github.com/shadcn.png)] bg-cover bg-center" />
+                <header className="relative w-full h-40 md:h-64 bg-gray-300 rounded-md bg-[url(https://github.com/shadcn.png)] bg-cover bg-center" />
 
                 {/* User Info */}
                 <section className="w-full flex gap-5 my-5" aria-label="User Profile">
-                    <aside className="flex justify-center items-start">
+                    <aside className="flex justify-center items-center">
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Avatar className="w-40 h-40 cursor-pointer border-2 border-gray-200 hover:opacity-90 transition">
+                                <Avatar className="w-20 h-20 md:w-40 md:h-40 cursor-pointer hover:opacity-90 transition">
                                     <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback className="text-5xl bg-gray-200 flex items-center justify-center">
+                                    <AvatarFallback className="text-3xl md:text-5xl bg-gray-200 flex items-center justify-center">
                                         {getInitial(user?.name)}
                                     </AvatarFallback>
                                 </Avatar>
@@ -71,24 +72,27 @@ const Profile = () => {
                     </aside>
 
                     <article className="w-full flex flex-col justify-center gap-2">
-                        <h1 className="text-4xl font-semibold">{user?.name}</h1>
-                        <p className="text-gray-600">{user?.email}</p>
-                        <p className="text-sm text-gray-500">{user?.bio}</p>
+                        <h1 className="text-xl md:text-4xl font-semibold">{user?.name}</h1>
+                        <p className="text-sm md:text-base text-gray-600">{user?.email}</p>
+                        <p className="text-xs md:text-sm text-gray-500">{user?.bio}</p>
                     </article>
                 </section>
 
                 {/* Tabs */}
                 <Tabs defaultValue="history-donation" className="w-full mt-10">
-                    <div className="flex justify-between">
-                        <TabsList>
-                            <TabsTrigger value="history-donation">Riwayat Donasi</TabsTrigger>
-                            {user.role === "author" && (
+                    <div className="flex justify-between items-start gap-4 flex-col-reverse sm:flex-row">
+                        <ScrollArea className="w-full sm:w-auto">
+                            <TabsList className="flex w-max">
+                                <TabsTrigger value="history-donation">Riwayat Donasi</TabsTrigger>
+                                {user.role === "author" && (
                                 <TabsTrigger value="postingan">Postingan</TabsTrigger>
-                            )}
-                            <TabsTrigger value="edit-profile">Edit Profil</TabsTrigger>
-                            <TabsTrigger value="edit-password">Ubah Password</TabsTrigger>
-                            <TabsTrigger value="notification">Pemberitahuan</TabsTrigger>
-                        </TabsList>
+                                )}
+                                <TabsTrigger value="edit-profile">Edit Profil</TabsTrigger>
+                                <TabsTrigger value="edit-password">Ubah Password</TabsTrigger>
+                                <TabsTrigger value="notification">Pemberitahuan</TabsTrigger>
+                            </TabsList>
+                            <ScrollBar orientation="horizontal" />
+                        </ScrollArea>
 
                         <AddArticleBtn />
                     </div>

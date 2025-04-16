@@ -18,7 +18,7 @@ const AddArticleBtn = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <Button className="cursor-pointer">
+                <Button className="w-full cursor-pointer">
                     <Plus /> Tambah Konten
                 </Button>
             </DropdownMenuTrigger>
