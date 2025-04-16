@@ -16,8 +16,8 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-const ShareDialog = () => {
-    const [shareCount, setShareCount] = useState(39);
+const ShareDialog = ({ article }) => {
+    const [shareCount, setShareCount] = useState(article?.shares);
     const [copied, setCopied] = useState(false);
     const articleUrl = window.location.href;
     
@@ -36,7 +36,7 @@ const ShareDialog = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">
-                    <Share2 /> {shareCount}
+                    <Share2 /> {article?.shares}
                 </Button>
             </DialogTrigger>
 

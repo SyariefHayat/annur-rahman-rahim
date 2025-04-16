@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { MessageCircle, ThumbsUp } from 'lucide-react'
 
@@ -15,16 +15,28 @@ import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import ShareDialog from '@/components/Modules/Article/ShareDialog'
 import CommentDrawer from '@/components/Modules/Article/CommentDrawer'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { apiInstanceExpress } from '@/services/express/apiInstance'
+import EachUtils from '@/utils/EachUtils'
+import { formatDate } from '@/utils/formatDate'
 
 const SlugArticle = () => {
     const { id } = useParams();
-    const index = parseInt(id, 10);
-    const article = LIST_ARTICLE[index];
 
-    const [like, setLike] = useState(999);
-    const [isLiked, setIsLiked] = useState(false);
+    const [article, SetArticle] = useState("");
 
-    const [isComment, setIsComment] = useAtom(isCommentAtom);
+    useEffect(() => {
+        const getArticleData = async () => {
+            try {
+                const response = await apiInstanceExpress.get(`article/${id}`)
+
+                if (response.status === 200) return SetArticle(response.data.data);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        }
+
+        getArticleData();
+    })
 
     const handleToggleLike = () => {
         if (isLiked) {
@@ -50,49 +62,86 @@ const SlugArticle = () => {
         <DefaultLayout>
             <Navbar position={"relative"} />
             <section aria-label="Article Detail">
-                <img src={`/slide-${index + 1}.png`} alt="" className="w-full h-full sm:h-screen object-cover object-center" />
+                <img src={`${import.meta.env.VITE_BASE_URL_EXPRESS}${article.cover}`} alt="" className="w-full h-full sm:h-screen object-cover object-center" />
                 <article className="mx-auto my-12 flex flex-col gap-6 w-full h-full lg:w-4xl items-start px-6">
                     <div className="flex items-center gap-x-4">
                         <Avatar className="size-10 bg-gray-50">
-                            <AvatarImage src={article.author.imageUrl} />
-                            <AvatarFallback>{getInitial(article.author?.name)}</AvatarFallback>
+                            <AvatarImage src={article.createdBy} />
+                            <AvatarFallback>{getInitial(article.createdBy?.name)}</AvatarFallback>
                         </Avatar>
 
                         <div className="text-sm/6">
                             <p className="font-semibold text-gray-900 truncate">
-                                <a href={article.author.href} className="hover:underline">{article.author.name}</a>
+                                <a href="#" className="hover:underline">{article.createdBy?.name}</a>
                             </p>
                             <div className="w-full flex items-center justify-center gap-3">
-                                <p className="text-gray-600">{article.author.role}</p>
-                                <p>.</p>
-                                <p className="text-sm text-gray-600">29 Maret</p>
+                                <p className="text-gray-600">{article.createdBy?.role}</p>
+                                <div className="w-1 h-1 rounded-full bg-gray-600"></div>
+                                <p className="text-sm text-gray-600">{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
                     </div>
 
-                    <h2 className="text-4xl font-semibold tracking-tight text-gray-900">{article.title}</h2>
+                    <h1 className="text-4xl font-semibold tracking-tight text-gray-900">{article.title}</h1>
 
-                    <Badge className="rounded-full px-3 py-1.5 font-medium">{article.category.title}</Badge>
-                    
-                    <p className="text-gray-600 leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta culpa ipsum corrupti maxime eos iusto explicabo provident minima odit, sunt possimus. Commodi voluptate doloremque tempore repellat possimus esse laborum iusto.</p>
+                    <div className="flex gap-3">
+                        {article?.tags?.map((tag, index) => (
+                            <Badge key={index} className="rounded-full px-3 py-1.5 font-medium">{tag}</Badge>
+                        ))}
+                    </div>
 
-                    <p className="text-gray-600 leading-relaxed">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque reprehenderit sunt itaque atque repellat libero explicabo nam facere quibusdam consequatur doloribus, error eum sequi dolor tempora magnam ab! Impedit, rem illo! Rem consectetur ullam itaque voluptates quaerat exercitationem sapiente explicabo? Voluptatibus reprehenderit, expedita nulla dicta possimus saepe dolorum rerum tenetur quae obcaecati doloribus, non quis fugiat? Eaque incidunt autem cumque, neque numquam officia similique quis id accusantium voluptates ad, quos eos corrupti quaerat hic reprehenderit! Excepturi impedit quaerat, vero doloremque nisi dolorem ducimus, dicta odit perspiciatis cum illum ipsa debitis quam molestias harum esse vitae eaque aliquam cupiditate reiciendis incidunt?</p>
+                    {article.content && (
+                        <EachUtils 
+                            of={article?.content}
+                            render={(item, index) => {
+                                if (item.type === "heading-1") {
+                                    return (
+                                        <h2 key={index} className="md:text-4xl text-3xl font-bold">{item.value}</h2>
+                                    )
+                                }
 
-                    <p className="text-gray-700 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dolores animi, inventore eaque ipsam sapiente quisquam, facere iure repudiandae repellendus, eveniet numquam temporibus atque sed corrupti ad similique corporis soluta. Soluta voluptatum consectetur inventore, velit fugiat ducimus praesentium exercitationem nam saepe, quam pariatur aperiam maiores eaque sequi vel id. Mollitia.</p>
+                                if (item.type === "heading-2") {
+                                    return (
+                                        <h3 key={index} className="md:text-3xl text-2xl font-semibold">{item.value}</h3>
+                                    )
+                                }
 
-                    <p className="text-gray-700 leading-relaxed">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur reiciendis ducimus fuga repellendus numquam incidunt quibusdam tempore veniam dicta quam, nobis libero ipsum ipsam repellat minus blanditiis voluptatibus voluptas aut.</p>
+                                if (item.type === "heading-3") {
+                                    return (
+                                        <h4 key={index} className="md:text-2xl text-xl font-medium">{item.value}</h4>
+                                    )
+                                }
+
+                                if (item.type === "text") {
+                                    return (
+                                        <p key={index} className="text-gray-600 leading-relaxed">{item.value}</p>
+                                    )
+                                }
+
+                                if (item.type === "image") {
+                                    return (
+                                        <img key={index} src={`${import.meta.env.VITE_BASE_URL_EXPRESS}${item.value}`} alt="preview" className="w-full h-80 object-cover object-center rounded-md" />
+                                    )
+                                }
+                            }}
+                        />
+                    )}
 
                     <div className="w-full flex gap-3 flex-wrap items-center">
-                        <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
+                        <Toggle variant="outline" aria-label="Like" className="flex items-center gap-1 cursor-pointer">
+                        {/* <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer"> */}
                             <ThumbsUp />
-                            <span className="w-10 text-center">{formatNumber(like)}</span>
+                            <span className="w-10 text-center">{article.likes}</span>
                         </Toggle>
 
-                        <Button variant="outline" onClick={() => setIsComment(!isComment)} className={`${isComment ? "bg-accent" : ""} cursor-pointer`}>
-                            <MessageCircle /> 55
+                        <Button variant="outline">
+                            <MessageCircle /> {article.comments?.length}
                         </Button>
+                        {/* <Button variant="outline" onClick={() => setIsComment(!isComment)} className={`${isComment ? "bg-accent" : ""} cursor-pointer`}>
+                            <MessageCircle /> 55
+                        </Button> */}
 
-                        <ShareDialog />
+                        <ShareDialog article={article} />
                     </div>
 
                     <CommentDrawer article={article} />
