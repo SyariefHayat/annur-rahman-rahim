@@ -19,7 +19,7 @@ import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import SlugDonasi from "./pages/Donasi/slug";
-import SlugArticle from "./pages/Article/Slug";
+import SlugArticle from "./pages/Article/slug";
 import CreateArticle from "./pages/Article/create";
 import CreateDonation from "./pages/Donasi/create";
 
