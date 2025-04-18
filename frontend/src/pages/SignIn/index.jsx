@@ -86,9 +86,15 @@ const SignIn = ({ className, ...props }) => {
                         token: userData.token,
                         id: userData._id,
                     });
-                    
+
+                    if (userData.role === "admin") {
+                        setTimeout(() => {
+                            navigate("/dashboard")
+                        }, 2000);
+                    }
+
                     setTimeout(() => {
-                        navigate("/dashboard")
+                        navigate(`/profile/${userData._id}`);
                     }, 2000);
                 }
             }
