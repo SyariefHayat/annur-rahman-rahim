@@ -1,18 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Navbar from '../Landing/Navbar'
 import EachUtils from '@/utils/EachUtils'
 import { Badge } from '@/components/ui/badge'
 import { getInitial } from '@/utils/getInitial'
+import { getRelativeTime } from '@/utils/formatDate'
 import { Separator } from '@/components/ui/separator'
-import { LIST_ARTICLE } from '@/constants/listArticle'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
+import { apiInstanceExpress } from '@/services/express/apiInstance'
 import ClipPathUp from '@/components/Modules/Element/ClipPath/ClipPathUp'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import ClipPathDown from '@/components/Modules/Element/ClipPath/ClipPathDown'
 
 const Article = () => {
+    const [articleData, setArticleData] = useState("");
+
+    useEffect(() => {
+        const getArticleData = async () => {
+            try {
+                const response = await apiInstanceExpress.get("article");
+
+                if (response.status === 200) return setArticleData(response.data.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getArticleData();
+    }, [])
 
     return (
         <DefaultLayout>
@@ -32,13 +48,14 @@ const Article = () => {
             <main className="relative py-12">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        <EachUtils
-                            of={LIST_ARTICLE}
+                        {articleData && (
+                            <EachUtils
+                            of={articleData}
                             render={(item, index) => (
                                 <article key={index} className="relative flex max-w-xl h-[650px] flex-col items-start justify-between overflow-hidden">
                                     <figure className="w-full h-full rounded-xl overflow-hidden">
                                         <img 
-                                            src={item.cover} 
+                                            src={`${import.meta.env.VITE_BASE_URL_EXPRESS}${item.cover}`}
                                             alt={item.title} 
                                             className="w-full h-full object-cover object-center"
                                         />
@@ -46,42 +63,48 @@ const Article = () => {
 
                                     <div className="w-full h-full flex flex-col pt-8">
                                         <header className="flex items-center gap-x-4 text-xs text-gray-600">
-                                            <time dateTime={item.datetime}>{item.date}</time>
-                                            <Badge className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600">
-                                                {item.category.title}
-                                            </Badge>
+                                            {item?.tags?.map((tag, index) => (
+                                                <Badge key={index} className="rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600">
+                                                    {tag}
+                                                </Badge>
+                                            ))}
                                         </header>
 
                                         <div>
-                                            <a href={item.href}>
+                                            <a href={`/article/${item._id}`}>
                                                 <h3 className="mt-4 text-lg/6 font-semibold">{item.title}</h3>
                                             </a>
                                             <p className="mt-4 line-clamp-3 text-sm/6 text-gray-600"> 
-                                                {item.description}
+                                                {item.content[0].value}
                                             </p>
                                         </div>
 
                                         <Separator className="my-4" />
 
-                                        <footer className="relative flex items-center gap-x-4">
-                                            <Avatar className="size-10 bg-gray-50">
-                                                <AvatarImage src={item.author.imageUrl} />
-                                                <AvatarFallback>{getInitial(item.author?.name)}</AvatarFallback>
-                                            </Avatar>
+                                        <footer className="flex items-end justify-between">
+                                            <div className="flex items-center gap-x-4">
+                                                <Avatar className="size-10">
+                                                    <AvatarImage src={item.createdBy} />
+                                                    <AvatarFallback className="bg-gray-100">{getInitial(item.createdBy?.name)}</AvatarFallback>
+                                                </Avatar>
 
-                                            <div className="text-sm/6">
-                                                <p className="relative font-semibold text-gray-900">
-                                                    <a href={item.author.href} className="hover:underline">
-                                                        {item.author.name}
-                                                    </a>
-                                                </p>
-                                                <p className="text-gray-600">{item.author.role}</p>
+                                                <div className="text-sm/6">
+                                                    <p className="font-semibold text-gray-900">
+                                                        <a href="#" className="hover:underline">
+                                                            {item.createdBy?.name}
+                                                        </a>
+                                                    </p>
+                                                    <p className="text-gray-600">{item.createdBy?.email}</p>
+                                                </div>
                                             </div>
+
+                                            <time dateTime={item.createdAt} className="text-xs text-gray-600">{getRelativeTime(item.createdAt)}</time>
                                         </footer>
                                     </div>
                                 </article>
                             )}
                         />
+                        )}
                     </div>
                 </div>
             </main>

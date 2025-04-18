@@ -7,6 +7,8 @@ import {
     FormMessage 
 } from '@/components/ui/form';
 
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+
 const FormCover = ({ form }) => {
     const fileInputRef = useRef(null);
     const [coverUrl, setCoverUrl] = useState("");
@@ -28,8 +30,10 @@ const FormCover = ({ form }) => {
     return (
         <FormField control={form.control} name="cover" render={() => (
             <FormItem>
-                <div onClick={() => fileInputRef.current?.click()} className="w-full h-80 bg-gray-300 rounded-md cursor-pointer">
-                    <img src={coverUrl} alt="Preview" className={`w-full h-full object-cover object-center rounded-md ${!coverUrl && "hidden" }`} />
+                <div onClick={() => fileInputRef.current?.click()} className="w-full bg-gray-300 rounded-md cursor-pointer">
+                    <AspectRatio ratio={16 / 9}>
+                        <img src={coverUrl} alt="Preview" className={`w-full h-full object-cover object-center rounded-md ${!coverUrl && "hidden" }`} />
+                    </AspectRatio>
                 </div>
                 <FormControl>
                     <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} />

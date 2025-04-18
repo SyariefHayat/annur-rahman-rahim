@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAtom } from 'jotai';
 import { Toaster } from 'sonner';
+import { Plus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import {
     Dialog,
@@ -14,6 +16,7 @@ import {
 import Navbar from '../Landing/Navbar';
 import { userAtomStorage } from '@/jotai/atoms';
 import { getInitial } from '@/utils/getInitial';
+import { Button } from '@/components/ui/button';
 import Post from '@/components/Modules/Profile/Post';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Modules/Landing/Footer';
@@ -24,7 +27,6 @@ import NewPassword from '@/components/Modules/Profile/NewPassword';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Notification from '@/components/Modules/Profile/Notification';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import AddArticleBtn from '@/components/Modules/Profile/AddArticleBtn';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -94,7 +96,11 @@ const Profile = () => {
                             <ScrollBar orientation="horizontal" />
                         </ScrollArea>
 
-                        <AddArticleBtn />
+                        <Button className="cursor-pointer" asChild>
+                            <Link to={`/article/create/${user.id}`}>
+                                <Plus /> Tambah Konten
+                            </Link>
+                        </Button>
                     </div>
 
                     <Separator className="my-4" />

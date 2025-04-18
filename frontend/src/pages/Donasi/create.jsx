@@ -62,7 +62,18 @@ const PostDonationSchema = z.object({
         .transform((val) => parseInt(val, 10))
         .refine((val) => val >= 100_000, { message: "Target donasi minimal Rp 100.000" }),
 
-    deadline: z.date({ required_error: "Tanggal harus diisi", }),
+    deadline: z
+        .preprocess((arg) => {
+            if (typeof arg === 'string' || arg instanceof Date) {
+                return new Date(arg);
+            }
+            return arg;
+        }, z.date({ required_error: "Tanggal harus diisi" }))
+        .refine((date) => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return date >= today;
+        }, { message: "Tanggal tidak boleh di masa lalu" }),
 })
 
 const CreateDonation = () => {

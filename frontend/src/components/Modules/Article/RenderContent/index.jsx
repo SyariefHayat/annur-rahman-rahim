@@ -7,7 +7,7 @@ const RenderContent = (item, onChange, index, handleContentBanner, contentInputR
         <>
             {item.type === "image" ? (
                 <>
-                    <div onClick={() => contentInputRefs.current[index]?.click()} className="w-full h-56 rounded-md bg-gray-300 cursor-pointer">
+                    <div onClick={() => contentInputRefs.current[index]?.click()} className="w-full h-[300px] rounded-md bg-gray-300 cursor-pointer">
                         <img src={contentImgUrl} alt="preview" className={`w-full h-full object-cover object-center rounded-md ${contentImgUrl ? "block" : "hidden"}`} />
                     </div>
                     <input ref={(el) => (contentInputRefs.current[index] = el)} type="file" className="hidden" accept="image/*" onChange={(e) => handleContentBanner(e, index)} />

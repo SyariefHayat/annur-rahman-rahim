@@ -49,7 +49,9 @@ const postArticleSchema = z.object({
             }
         )
         ).min(1, { message: "Konten artikel tidak boleh kosong" }),
-    tags: z.array(z.string()).optional(),
+    tags: z
+        .array(z.string().min(1, "Tag tidak boleh kosong"))
+        .max(3, "Maksimal 3 tag diperbolehkan")
 });
 
 const CreateArticle = () => {
