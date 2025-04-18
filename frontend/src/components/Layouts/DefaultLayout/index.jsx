@@ -1,8 +1,8 @@
 import React from 'react'
-import useAutoLogout from '@/hooks/useAutoLogout';
+// import useAutoLogout from '@/hooks/useAutoLogout';
 
 const DefaultLayout = ({ children }) => {
-    useAutoLogout();
+    // useAutoLogout();
 
     return (
         <div className="relative font-Poppins">
