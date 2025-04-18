@@ -28,7 +28,11 @@ const AddArticleBtn = () => {
                         Article Baru
                     </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Campaign Donasi</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <a href={`/donation/create/${user.id}`}>
+                        Donasi Baru
+                    </a>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

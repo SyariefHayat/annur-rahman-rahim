@@ -41,12 +41,14 @@ const UserSchema = mongoose.Schema({
 }, { timestamps: true });
 
 const DonationSchema = mongoose.Schema({
+    image: { type: String, required: true },
+    category: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     targetAmount: { type: Number, required: true },
     collectedAmount: { type: Number, default: 0 },
-    deadline: { type: Date, required: true },
+    // deadline: { type: Date, required: true },
     status: {
         type: String,
         enum: ["Ongoing", "Completed", "Cancelled"],
@@ -60,7 +62,6 @@ const DonationSchema = mongoose.Schema({
         amens: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         donatedAt: { type: Date, default: Date.now }
     }],
-    image: { type: String, default: "default-donation.jpg" }
 }, { timestamps: true });
 
 // const DonationSchema = mongoose.Schema({
@@ -112,20 +113,11 @@ const ArticleSchema = mongoose.Schema({
         }
     }],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    // image: { type: String, default: "default-article.jpg" },
     tags: [{ type: String, trim: true, maxlength: 20 }],
     likes: { type: Number, default: 0 },
     shares: { type: Number, default: 0 },
     comments: [CommentSchema],
 }, { timestamps: true });
-
-// const ArticleSchema = mongoose.Schema({
-//     title: { type: String, required: true },
-//     content: { type: String, required: true },
-//     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-//     image: { type: String },
-//     tags: { type: [String], default: [] },
-// }, { timestamps: true });
 
 module.exports = {
     User: mongoose.model("User", UserSchema),

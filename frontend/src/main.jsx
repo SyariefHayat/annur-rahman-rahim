@@ -21,6 +21,7 @@ import Dashboard from "./pages/Dashboard";
 import SlugDonasi from "./pages/Donasi/slug";
 import SlugArticle from "./pages/Article/Slug";
 import CreateArticle from "./pages/Article/create";
+import CreateDonation from "./pages/Donasi/create";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     {
         path: "/donation",
         element: <Donasi />
+    },
+    {
+        path: "/donation/create/:id",
+        element: <CreateDonation />
     },
     {
         path: "/donation/:id",
