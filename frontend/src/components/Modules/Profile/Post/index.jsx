@@ -75,24 +75,6 @@ const Post = () => {
     return (
         <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {articles ? (
-                Array.from({ length: 3 }).map((_, index) => (
-                    <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
-                        <Skeleton className="w-full h-[70%] rounded-xl" />
-                        <div className="w-full h-[30%] flex items-start justify-between pt-4">
-                            <Skeleton className="w-3/4 h-6" />
-                            <Skeleton className="size-6 rounded-sm" />
-                        </div>
-                        <footer className="w-full flex items-center justify-between text-sm/6 text-gray-600">
-                            <div className="flex gap-3">
-                                <Skeleton className="w-10 h-6" />
-                                <Skeleton className="w-10 h-6" />
-                                <Skeleton className="w-10 h-6" />
-                            </div>
-                            <Skeleton className="w-16 h-4" />
-                        </footer>
-                    </article>
-                ))
-            ) : (
                 <EachUtils
                     of={articles}
                     render={(item, index) => (
@@ -108,7 +90,6 @@ const Post = () => {
                                 <a href={item.href}>
                                     <h3 className="text-lg/6 font-semibold">{item.title}</h3>
                                 </a>
-
                                 <DropdownMenu>
                                     <DropdownMenuTrigger>
                                         <Button variant="ghost" size="icon" className="size-6 rounded-sm cursor-pointer">
@@ -145,6 +126,24 @@ const Post = () => {
                         </article>
                     )}
                 />
+            ) : (
+                Array.from({ length: 3 }).map((_, index) => (
+                    <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
+                        <Skeleton className="w-full h-[70%] rounded-xl" />
+                        <div className="w-full h-[30%] flex items-start justify-between pt-4">
+                            <Skeleton className="w-3/4 h-6" />
+                            <Skeleton className="size-6 rounded-sm" />
+                        </div>
+                        <footer className="w-full flex items-center justify-between text-sm/6 text-gray-600">
+                            <div className="flex gap-3">
+                                <Skeleton className="w-10 h-6" />
+                                <Skeleton className="w-10 h-6" />
+                                <Skeleton className="w-10 h-6" />
+                            </div>
+                            <Skeleton className="w-16 h-4" />
+                        </footer>
+                    </article>
+                ))
             )}
         </div>
     );
