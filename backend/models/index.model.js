@@ -90,11 +90,16 @@ const CommentSchema = new mongoose.Schema({
         likes: { type: Number, default: 0 },
         dislikes: { type: Number, default: 0 },
         replies: [], // nanti ditimpa setelah deklarasi
-        createdAt: { type: Date, default: Date.now }
+        commentAt: { type: Date, default: Date.now }
     });
 
 CommentSchema.add({
     replies: [CommentSchema] // ini kunci untuk membuat nested balasan
+});
+
+const LikeSchema = mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    likedAt: { type: Date, default: Date.now },
 });
 
 const ArticleSchema = mongoose.Schema({
@@ -114,7 +119,7 @@ const ArticleSchema = mongoose.Schema({
     }],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     tags: [{ type: String, trim: true, maxlength: 20 }],
-    likes: { type: Number, default: 0 },
+    likes: [LikeSchema],
     shares: { type: Number, default: 0 },
     comments: [CommentSchema],
 }, { timestamps: true });

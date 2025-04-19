@@ -467,6 +467,39 @@ const GetArticleById = async (req, res) => {
     }
 };
 
+const LikeArticle = async (req, res) => {
+    const articleId = req.params.id;
+    const { userId } = req.body;
+
+    try {
+        const article = await Article.findById(articleId);
+        if (!article) return ERR(res, 404, "Article not found");
+
+        // Cek apakah user sudah like artikel ini
+        const alreadyLiked = article.likes.some(like => like.userId.toString() === userId);
+
+        if (alreadyLiked) {
+            // Un-like artikel
+            article.likes = article.likes.filter(like => like.userId.toString() !== userId);
+        } else {
+            // Like artikel
+            article.likes.push({ userId });
+        }
+
+        await article.save();
+
+        return SUCC(res, 200, {
+            liked: !alreadyLiked,
+            likesCount: article.likes.length,
+        }, alreadyLiked ? "Unliked the article" : "Liked the article");
+
+    } catch (error) {
+        console.error("Error liking article:", error);
+        return ERR(res, 500, "Internal server error");
+    }
+};
+
+
 const UpdateArticle = async (req, res) => {
     const articleId = req.params.id;
     const data = req.body;
@@ -558,6 +591,7 @@ module.exports = {
     AddArticle,
     GetArticle,
     GetArticleById,
+    LikeArticle,
     UpdateArticle,
     DeleteArticle,
 }

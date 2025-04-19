@@ -1,28 +1,30 @@
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { MessageCircle, ThumbsUp } from 'lucide-react'
 
 import Navbar from '../Landing/Navbar'
-import { isCommentAtom } from '@/jotai/atoms'
+import EachUtils from '@/utils/EachUtils'
 import { Badge } from '@/components/ui/badge'
+import { userAtomStorage } from '@/jotai/atoms'
 import { Button } from '@/components/ui/button'
+import { formatDate } from '@/utils/formatDate'
 import { Toggle } from "@/components/ui/toggle"
 import { getInitial } from '@/utils/getInitial'
-import { LIST_ARTICLE } from '@/constants/listArticle'
 import Footer from '@/components/Modules/Landing/Footer'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import ShareDialog from '@/components/Modules/Article/ShareDialog'
+import { apiInstanceExpress } from '@/services/express/apiInstance'
 import CommentDrawer from '@/components/Modules/Article/CommentDrawer'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { apiInstanceExpress } from '@/services/express/apiInstance'
-import EachUtils from '@/utils/EachUtils'
-import { formatDate } from '@/utils/formatDate'
 
 const SlugArticle = () => {
     const { id } = useParams();
 
     const [article, SetArticle] = useState("");
+    const [isLiked, setIsLiked] = useState(false);
+
+    const [user] = useAtom(userAtomStorage);
 
     useEffect(() => {
         const getArticleData = async () => {
@@ -38,25 +40,36 @@ const SlugArticle = () => {
         getArticleData();
     })
 
-    const handleToggleLike = () => {
-        if (isLiked) {
-            setLike((prev) => prev - 1);
-        } else {
-            setLike((prev) => prev + 1);
-        }
+    const handleToggleLike = async () => {
+        try {
+            const response = await apiInstanceExpress.post(
+                `article/like/${article._id}`,
+                { userId: user.id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                }
+            );
+    
+            const { liked, likesCount } = response.data.data;
 
-        setIsLiked(!isLiked);
+            setIsLiked(liked);
+            setLikesCount(likesCount);
+        } catch (err) {
+            console.error("Failed to toggle like:", err);
+        }
     };
 
-    const formatNumber = (num) => {
-        if (num >= 1_000_000) {
-            return (num / 1_000_000).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " jt";
-        } else if (num >= 1_000) {
-            return (num / 1_000).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " rb";
-        }
+    // const formatNumber = (num) => {
+    //     if (num >= 1_000_000) {
+    //         return (num / 1_000_000).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " jt";
+    //     } else if (num >= 1_000) {
+    //         return (num / 1_000).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " rb";
+    //     }
 
-        return num.toLocaleString("id-ID");
-    };
+    //     return num.toLocaleString("id-ID");
+    // };
 
     return (
         <DefaultLayout>
@@ -128,10 +141,9 @@ const SlugArticle = () => {
                     )}
 
                     <div className="w-full flex gap-3 flex-wrap items-center">
-                        <Toggle variant="outline" aria-label="Like" className="flex items-center gap-1 cursor-pointer">
-                        {/* <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer"> */}
+                        <Toggle variant="outline" aria-label="Like" pressed={isLiked} onPressedChange={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
                             <ThumbsUp />
-                            <span className="w-10 text-center">{article.likes}</span>
+                            <span className="w-10 text-center">{article.likes?.length}</span>
                         </Toggle>
 
                         <Button variant="outline">

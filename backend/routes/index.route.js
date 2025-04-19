@@ -32,6 +32,7 @@ router.post("/create-transaction", userController.AddTransaction);
 router.post("/article", checkToken, upload.fields([{ name: "cover", maxCount: 1 }, { name: "image", maxCount: 5 }]), userController.AddArticle);
 router.get("/article", userController.GetArticle);
 router.get("/article/:id", userController.GetArticleById);
+router.post("/article/like/:id", checkToken, userController.LikeArticle);
 router.put("/article/:id", upload.single('image'), userController.UpdateArticle);
 router.delete("/article/:id", userController.DeleteArticle);
 
