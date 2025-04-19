@@ -33,6 +33,7 @@ router.post("/article", checkToken, upload.fields([{ name: "cover", maxCount: 1 
 router.get("/article", userController.GetArticle);
 router.get("/article/:id", userController.GetArticleById);
 router.post("/article/like/:id", checkToken, userController.LikeArticle);
+router.post("/article/share/:id", checkToken, userController.ShareArticle);
 router.put("/article/:id", upload.single('image'), userController.UpdateArticle);
 router.delete("/article/:id", userController.DeleteArticle);
 

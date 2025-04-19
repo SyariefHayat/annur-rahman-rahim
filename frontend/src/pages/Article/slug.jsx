@@ -51,11 +51,10 @@ const SlugArticle = () => {
                     },
                 }
             );
-    
-            const { liked, likesCount } = response.data.data;
+
+            const { liked } = response.data.data;
 
             setIsLiked(liked);
-            setLikesCount(likesCount);
         } catch (err) {
             console.error("Failed to toggle like:", err);
         }

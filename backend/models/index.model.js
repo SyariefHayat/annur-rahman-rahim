@@ -102,6 +102,11 @@ const LikeSchema = mongoose.Schema({
     likedAt: { type: Date, default: Date.now },
 });
 
+const ShareSchema = mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    shareAt: { type: Date, default: Date.now },
+})
+
 const ArticleSchema = mongoose.Schema({
     cover: { type: String, required: true },
     title: { type: String, required: true },
@@ -120,7 +125,7 @@ const ArticleSchema = mongoose.Schema({
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     tags: [{ type: String, trim: true, maxlength: 20 }],
     likes: [LikeSchema],
-    shares: { type: Number, default: 0 },
+    shares: [ShareSchema],
     comments: [CommentSchema],
 }, { timestamps: true });
 

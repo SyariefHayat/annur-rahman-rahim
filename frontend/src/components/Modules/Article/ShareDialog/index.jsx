@@ -15,20 +15,38 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { userAtomStorage } from '@/jotai/atoms'
+import { useAtom } from 'jotai'
+import { apiInstanceExpress } from '@/services/express/apiInstance'
 
 const ShareDialog = ({ article }) => {
-    const [shareCount, setShareCount] = useState(article?.shares);
+    const [shareCount, setShareCount] = useState(article?.shares?.length || 0);
     const [copied, setCopied] = useState(false);
     const articleUrl = window.location.href;
+    
+    const [user] = useAtom(userAtomStorage);
     
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(articleUrl);
-
-            if (!copied) setShareCount(prev => prev + 1);
-            setCopied(true);
+    
+            if (!copied) {
+                const response = await apiInstanceExpress.post(
+                    `article/share/${article._id}`,
+                    { userId: user.id },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.token}`,
+                        }
+                    }
+                );
+    
+                setShareCount(response.data.data.sharesCount); // Update jumlah share dari backend
+            }
+    
+            setCopied(true); // Jangan taruh di dalam kondisi !copied
         } catch (err) {
-            console.error("Gagal menyalin link:", err);
+            console.error("Gagal menyalin link atau share artikel:", err);
         }
     };
 
@@ -36,7 +54,7 @@ const ShareDialog = ({ article }) => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">
-                    <Share2 /> {article?.shares}
+                    <Share2 /> {shareCount}
                 </Button>
             </DialogTrigger>
 

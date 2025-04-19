@@ -499,6 +499,37 @@ const LikeArticle = async (req, res) => {
     }
 };
 
+const ShareArticle = async (req, res) => {
+    const articleId = req.params.id;
+    const { userId } = req.body;
+
+    try {
+        const article = await Article.findById(articleId);
+        if (!article) return ERR(res, 404, "Article not found");
+
+        // Cek apakah user sudah share artikel ini
+        const alreadyShared = article.shares.some(share => share.userId.toString() === userId);
+
+        if (alreadyShared) {
+            // Un-share artikel
+            article.shares = article.shares.filter(share => share.userId.toString() !== userId);
+        } else {
+            // Share artikel
+            article.shares.push({ userId });
+        }
+
+        await article.save();
+
+        return SUCC(res, 200, {
+            shared: !alreadyShared,
+            sharesCount: article.shares.length,
+        }, alreadyShared ? "Unshared the article" : "Shared the article");
+
+    } catch (error) {
+        console.error("Error sharing article:", error);
+        return ERR(res, 500, "Internal server error");
+    }
+};
 
 const UpdateArticle = async (req, res) => {
     const articleId = req.params.id;
@@ -592,6 +623,7 @@ module.exports = {
     GetArticle,
     GetArticleById,
     LikeArticle,
+    ShareArticle,
     UpdateArticle,
     DeleteArticle,
 }
