@@ -28,6 +28,8 @@ import { apiInstanceExpress } from '@/services/express/apiInstance';
 
 const Post = () => {
     const [articles, setArticles] = useState([]);
+    const [isloading, setIsLoading] = useState(true);
+
     const [user] = useAtom(userAtomStorage);
 
     useEffect(() => {
@@ -42,10 +44,12 @@ const Post = () => {
                 if (response.status === 200) {
                     setTimeout(() => {
                         setArticles(response.data.data);
+                        setIsLoading(false);
                     }, 5000);
                 }
             } catch (error) {
                 console.error(error);
+                setIsLoading(false);
             }
         };
 
@@ -74,9 +78,7 @@ const Post = () => {
 
     return (
         <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {articles ? (
-                <>
-                {console.log(articles)}
+            {!isloading ? (
                 <EachUtils
                     of={articles}
                     render={(item, index) => (
@@ -128,7 +130,6 @@ const Post = () => {
                         </article>
                     )}
                 />
-                </>
             ) : (
                 Array.from({ length: 3 }).map((_, index) => (
                     <article key={index} className="flex max-w-xl h-[300px] flex-col items-start justify-between overflow-hidden">
